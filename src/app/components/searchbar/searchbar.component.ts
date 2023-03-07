@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 
 @Component({
     selector: 'app-searchbar',
@@ -7,10 +7,21 @@ import { Component, Input } from '@angular/core';
 })
 export class SearchbarComponent {
     @Input() SearchValue!: string;
-    @Input()
-    requestSearch!: (searchValue: string) => void;
 
-    searchFn(input: string) {
-        this.requestSearch(input);
+    @Input() searchQuery?: string;
+    @Output() onSearch: EventEmitter<string> = new EventEmitter();
+
+    @Output() onResetFilter: EventEmitter<void> = new EventEmitter();
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['searchQuery']) {
+            console.log(this.searchQuery);
+            console.log(changes);
+        }
     }
+
+    handleIconSearch = (input: string) => {
+        this.onSearch.emit(input);
+        console.log(input);
+    };
 }

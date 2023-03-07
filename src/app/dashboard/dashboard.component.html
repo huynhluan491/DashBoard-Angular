@@ -5,8 +5,16 @@
         </div>
         <div class="dashboard-content">
             <app-header></app-header>
-            <app-linkaction></app-linkaction>
-            <app-searchbar [requestSearch]="requestSearch"></app-searchbar>
+            <app-linkaction
+                [isShowProduct]="isShowProduct"
+                [isShowPost]="isShowPost"
+                (onFilter)="onFilter($event)"
+            ></app-linkaction>
+            <app-searchbar
+                (onResetFilter)="onResetFilter()"
+                (onSearch)="onSearch($event)"
+                [searchQuery]="searchQuery"
+            ></app-searchbar>
             <app-listlink [links]="filterData && filterData.length > 0 ? filterData : links"></app-listlink>
         </div>
     </div>
