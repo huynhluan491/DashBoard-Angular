@@ -12,6 +12,7 @@ export class DashboardComponent implements OnInit {
     searchQuery?: string;
     isShowProduct: boolean = true;
     isShowPost: boolean = true;
+    isShowSeeMore: boolean = false;
     constructor(private listLink: ListlinkService) {}
 
     ngOnInit(): void {
@@ -73,5 +74,10 @@ export class DashboardComponent implements OnInit {
         this.isShowPost = true;
         this.isShowProduct = true;
         this.getLinks();
+    };
+
+    onShowSeeMore = () => {
+        this.isShowSeeMore = !this.isShowSeeMore;
+        console.log(this.isShowSeeMore);
     };
 }

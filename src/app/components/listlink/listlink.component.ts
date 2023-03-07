@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Link } from 'src/app/link';
 
 @Component({
@@ -8,6 +8,8 @@ import { Link } from 'src/app/link';
 })
 export class ListlinkComponent implements OnInit {
     @Input() links: Link[] = [];
+    @Input() isShowSeeMore?: boolean = false;
+    @Output() onShowSeeMore: EventEmitter<void> = new EventEmitter<void>();
     constructor() {}
 
     ngOnInit(): void {}

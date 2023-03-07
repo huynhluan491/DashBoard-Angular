@@ -15,7 +15,12 @@
                 (onSearch)="onSearch($event)"
                 [searchQuery]="searchQuery"
             ></app-searchbar>
-            <app-listlink [links]="filterData && filterData.length > 0 ? filterData : links"></app-listlink>
+            <app-listlink
+                (onShowSeeMore)="onShowSeeMore()"
+                [isShowSeeMore]="isShowSeeMore"
+                [links]="filterData && filterData.length > 0 ? filterData : links"
+            ></app-listlink>
+            <app-formupdate></app-formupdate>
         </div>
     </div>
 </div>
