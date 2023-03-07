@@ -1,0 +1,22 @@
+.my-custom-td {
+    width: 460px;
+}
+
+.my-custom-tr {
+    margin-bottom: 1rem;
+}
+
+.see-more {
+    border-left: 1.5px solid #bdc2d2;
+    text-align: center;
+}
+
+td,
+th {
+    background-color: transparent;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0 1rem;
+}

@@ -6,7 +6,8 @@
         <div class="dashboard-content">
             <app-header></app-header>
             <app-linkaction></app-linkaction>
-            <app-searchbar></app-searchbar>
+            <app-searchbar [requestSearch]="requestSearch"></app-searchbar>
+            <app-listlink [links]="filterData && filterData.length > 0 ? filterData : links"></app-listlink>
         </div>
     </div>
 </div>
