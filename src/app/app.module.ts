@@ -12,6 +12,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { LinkactionComponent } from './components/linkaction/linkaction.component';
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { ListlinkComponent } from './components/listlink/listlink.component';
+import { FormupdateComponent } from './components/formupdate/formupdate.component';
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { ListlinkComponent } from './components/listlink/listlink.component';
         LinkactionComponent,
         SearchbarComponent,
         ListlinkComponent,
+        FormupdateComponent,
     ],
     imports: [BrowserModule, AppRoutingModule, FormsModule, MatFormFieldModule, MatPaginatorModule, MatTableModule],
     providers: [],

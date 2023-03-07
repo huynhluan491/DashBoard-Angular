@@ -1,0 +1,70 @@
+.wrapper {
+    background-color: white;
+
+    .form-header {
+        .title {
+            font-size: 1.3rem;
+            color: #1a6634;
+            font-weight: 600;
+        }
+    }
+
+    .cate-box {
+        .cate-title {
+            font-size: 1.3rem;
+            color: #343a40;
+            font-weight: 600;
+        }
+        .checkbtn-wrapper {
+            display: flex;
+            gap: 10px;
+
+            .type-check-btn {
+                display: flex;
+                gap: 11px;
+                align-items: center;
+                input {
+                    width: 12px;
+                    height: 13px;
+                }
+
+                label {
+                    color: #26282e;
+                    font-size: 1.3rem;
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+
+    .form-content-wrapper {
+        .description-box {
+            color: #343a40;
+            font-size: 1.3rem;
+            font-weight: 600;
+
+            input {
+                margin: 8px 0;
+                width: 380px;
+                border: 2px solid #dbdee7;
+                height: 34px;
+                padding-left: 10px;
+            }
+        }
+
+        .old-site-box,
+        .new-site-box {
+            color: #343a40;
+            font-size: 1.3rem;
+            font-weight: 600;
+
+            input {
+                margin: 8px 0;
+                width: 380px;
+                border: 2px solid #dbdee7;
+                height: 93px;
+                padding-left: 10px;
+            }
+        }
+    }
+}
