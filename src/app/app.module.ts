@@ -4,7 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -24,7 +24,15 @@ import { FormupdateComponent } from './components/formupdate/formupdate.componen
         ListlinkComponent,
         FormupdateComponent,
     ],
-    imports: [BrowserModule, AppRoutingModule, FormsModule, MatFormFieldModule, MatPaginatorModule, MatTableModule],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatPaginatorModule,
+        MatTableModule,
+        ReactiveFormsModule,
+    ],
     providers: [],
     bootstrap: [AppComponent],
 })

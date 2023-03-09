@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
     isShowProduct: boolean = true;
     isShowPost: boolean = true;
     isShowSeeMore: boolean = false;
+    isShowAddForm: boolean = false;
     constructor(private listLink: ListlinkService) {}
 
     ngOnInit(): void {
@@ -37,23 +38,22 @@ export class DashboardComponent implements OnInit {
                     this.filterData = x.filter((item) => item.type != 'post');
                 });
             }
-        } else {
+        } else if (this.searchQuery || this.searchQuery.length > 0) {
             if ((this.isShowProduct && this.isShowPost) || (!this.isShowProduct && !this.isShowPost)) {
                 this.listLink.getLinksByDescription(this.searchQuery).subscribe((items) => {
                     this.filterData = items;
-                    this.links = [];
+                    console.log(this.filterData);
+                    console.log(this.links);
                 });
             }
             if (!this.isShowProduct && this.isShowPost) {
                 this.listLink.getLinksByDescription(this.searchQuery).subscribe((items) => {
                     this.filterData = items.filter((item) => item.type != 'product');
-                    this.links = [];
                 });
             }
             if (this.isShowProduct && !this.isShowPost) {
                 this.listLink.getLinksByDescription(this.searchQuery).subscribe((items) => {
                     this.filterData = items.filter((item) => item.type != 'post');
-                    this.links = [];
                 });
             }
         }
@@ -61,6 +61,8 @@ export class DashboardComponent implements OnInit {
     onSearch = (searchValue: string) => {
         this.searchQuery = searchValue;
         this.getLinks();
+        console.log(this.searchQuery);
+        console.log(this.filterData);
     };
 
     onFilter = (filter: { post: boolean; product: boolean }) => {
@@ -79,5 +81,22 @@ export class DashboardComponent implements OnInit {
     onShowSeeMore = () => {
         this.isShowSeeMore = !this.isShowSeeMore;
         console.log(this.isShowSeeMore);
+    };
+
+    onShowAddForm = () => {
+        this.isShowAddForm = !this.isShowAddForm;
+        console.log(this.isShowAddForm);
+    };
+
+    onCloseForm() {
+        this.isShowAddForm = false;
+    }
+
+    onAddLink = (updatelink: any) => {
+        this.listLink.addLink(updatelink);
+    };
+
+    onDeleteLink = (id: number) => {
+        this.listLink.deleteLink(id);
     };
 }

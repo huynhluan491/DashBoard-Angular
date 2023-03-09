@@ -9,6 +9,10 @@
                 [isShowProduct]="isShowProduct"
                 [isShowPost]="isShowPost"
                 (onFilter)="onFilter($event)"
+                (onShowAddForm)="onShowAddForm()"
+                [isShowAddForm]="isShowAddForm"
+                (onCloseForm)="onCloseForm()"
+                [onAddLink]="onAddLink"
             ></app-linkaction>
             <app-searchbar
                 (onResetFilter)="onResetFilter()"
@@ -19,8 +23,8 @@
                 (onShowSeeMore)="onShowSeeMore()"
                 [isShowSeeMore]="isShowSeeMore"
                 [links]="filterData && filterData.length > 0 ? filterData : links"
+                (onDeleteLink)="onDeleteLink($event)"
             ></app-listlink>
-            <app-formupdate></app-formupdate>
         </div>
     </div>
 </div>

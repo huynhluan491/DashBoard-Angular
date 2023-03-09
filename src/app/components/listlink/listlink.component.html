@@ -1,11 +1,14 @@
 <div style="padding-bottom: 50vh">
-    <table mat-table [dataSource]="links">
+    <table mat-table [dataSource]="links" [(ngModel)]="links">
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef class="title">
-                <input type="checkbox" />
+                <input name="all" type="checkbox" [(ngModel)]="selectAllItems" />
                 Mô tả Link
             </th>
-            <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+            <td mat-cell *matCellDef="let element">
+                <input type="checkbox" [ngModel]="element.checked" />
+                {{ element.description }}
+            </td>
         </ng-container>
         <ng-container matColumnDef="old_link">
             <th mat-header-cell *matHeaderCellDef>Link site cũ</th>
@@ -18,7 +21,11 @@
         <ng-container matColumnDef="show-btn" class="show-btn">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element" class="see-more">
-                <div class="show-menu-btn" (click)="onShowSeeMore.emit()" [class.selected]="isShowSeeMore">
+                <div
+                    class="show-menu-btn"
+                    (click)="setActive(element.id)"
+                    [class.selected]="element.id === activeButton"
+                >
                     <svg width="16" height="3" viewBox="0 0 16 3" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M2 3C2.82843 3 3.5 2.32843 3.5 1.5C3.5 0.671573 2.82843 0 2 0C1.17157 0 0.5 0.671573 0.5 1.5C0.5 2.32843 1.17157 3 2 3Z"
@@ -34,7 +41,7 @@
                         />
                     </svg>
                 </div>
-                <div [hidden]="!isShowSeeMore" class="sub-menu">
+                <div [hidden]="element.id !== activeButton" class="sub-menu" (click)="handleOpenForm()">
                     <div class="edit-wrapper">
                         <div class="icon">
                             <svg
@@ -52,7 +59,7 @@
                         </div>
                         <p class="text">Chỉnh sửa</p>
                     </div>
-                    <div class="delete-mapping">
+                    <div class="delete-mapping" (click)="handleDeleteLink(element.id)">
                         <div class="icon">
                             <svg
                                 width="17"
@@ -76,7 +83,12 @@
         <tr mat-header-row *matHeaderRowDef="['id', 'old_link', 'new_link', 'show-btn']"></tr>
         <tr mat-row *matRowDef="let row; columns: ['id', 'old_link', 'new_link', 'show-btn']" class="table-row"></tr>
     </table>
-
+    <app-formupdate
+        [hidden]="!isShowEditForm"
+        [isShowEditForm]="isShowEditForm"
+        (handleCloseEditForm)="handleCloseEditForm()"
+        [selectedLink]="selectedLink"
+    ></app-formupdate>
     <div class="pg-container">
         <!-- <mat-paginator
             appPagination

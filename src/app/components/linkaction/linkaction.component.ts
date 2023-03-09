@@ -8,11 +8,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class LinkactionComponent {
     @Input() isShowProduct: boolean = true;
     @Input() isShowPost: boolean = true;
-
+    @Input() isShowAddForm!: boolean;
     @Output() onFilter: EventEmitter<{ post: boolean; product: boolean }> = new EventEmitter<{
         post: boolean;
         product: boolean;
     }>();
+
+    @Output() onShowAddForm: EventEmitter<void> = new EventEmitter<void>();
+    @Output() onCloseForm: EventEmitter<void> = new EventEmitter<void>();
+    @Input() onAddLink!: (link: object) => void;
 
     handleShowPost(value: boolean) {
         this.isShowPost = value;
@@ -23,4 +27,14 @@ export class LinkactionComponent {
         this.isShowProduct = value;
         this.onFilter.emit({ post: this.isShowPost, product: this.isShowProduct });
     }
+
+    handleCloseForm() {
+        this.onCloseForm.emit();
+    }
+
+    onAddLinkHandler = (newLink: any) => {
+        if (this.onAddLink) {
+            this.onAddLink(newLink);
+        }
+    };
 }
