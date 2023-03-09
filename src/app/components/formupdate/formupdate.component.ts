@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Output, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
     selector: 'app-formupdate',
     templateUrl: './formupdate.component.html',
@@ -22,14 +22,27 @@ export class FormupdateComponent implements OnInit {
 
     ngOnInit(): void {
         this.myForm = this.fb.group({
-            linkType: ['', Validators.required],
+            // linkType: ['', Validators.required],
             description: ['', Validators.required],
-            oldSite: ['', Validators.required],
-            newSite: ['', Validators.required],
+            // oldSite: ['', Validators.required],
+            // newSite: ['', Validators.required],
         });
+        this.myForm = new FormGroup({
+            description: new FormControl(this.selectedLink?.description, Validators.required)
+           
+        })
+
+        console.log('oninit',this.myForm.getRawValue())
+        
         this.myForm.get('linkFormGroup.linkType')?.valueChanges.subscribe((value) => {
             this.myForm.get('linkFormGroup')?.patchValue({ linkType: value }, { emitEvent: false });
         });
+    }
+
+    ngOnChanges(simpleChanges: SimpleChanges){
+        this.myForm.controls['description'].setValue(this.selectedLink?.description)
+        // console.log('onchange', this.selectedLink,simpleChanges,this.myForm.getRawValue())
+        // simpleChanges['selectedLink'].currentValue
     }
 
     constructor(private fb: FormBuilder) {}
