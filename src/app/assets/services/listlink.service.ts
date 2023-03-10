@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-
+import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { listLink } from 'src/app/listLink';
 import { Link } from 'src/app/link';
@@ -8,17 +8,14 @@ import { Link } from 'src/app/link';
     providedIn: 'root',
 })
 export class ListlinkService {
-    //private listLink$ = new BehaviorSubject<Link[]>(listLink);
     private listLink$ = new BehaviorSubject<Link[]>(listLink);
-
-    constructor() {}
+    selectedLinkList: [] = [];
+    // constructor(private db: AngularFireDatabase) {
+    //     this.listLink$ = this.db.list('/links').valueChanges();
+    // }
 
     getListLink(): Observable<Link[]> {
-        // const Links = of(listLink);
-        // console.log(Links);
-        // return Links;
-
-        return this.listLink$.asObservable();
+        return this.listLink$;
     }
 
     getLinksByDescription(description: string) {
@@ -39,21 +36,43 @@ export class ListlinkService {
         };
 
         this.listLink$.next([...this.listLink$.value, newObjectLink]);
+        window.alert('ADD SUCCESSFULLY');
     };
 
     editLink = (id: number, newlink: { type: string; description: string; oldLink: string; newLink: string }) => {
-        const newObjectLink = {
-            id: this.listLink$.value[this.listLink$.value.length - 1].id + 1,
+        const index = this.listLink$.value.findIndex((x) => x.id == id);
+        if (index === -1) {
+            window.alert('Khong tim thay link');
+        }
+        const updatedLink = {
+            ...this.listLink$.value[index],
             type: newlink.type,
             description: newlink.description,
             old_link: newlink.oldLink,
             new_link: newlink.newLink,
         };
-
-        this.listLink$.next([...this.listLink$.value, newObjectLink]);
+        const updatedList = [...this.listLink$.value];
+        updatedList[index] = updatedLink;
+        this.listLink$.next(updatedList);
     };
 
     deleteLink = (id: number) => {
-        this.listLink$.next(this.listLink$.value.filter((list) => list.id !== id));
+        const deletedLink = this.listLink$.value.filter((list) => list.id !== id);
+        this.listLink$.next(deletedLink);
+        window.alert('DELETE SUCCESSFULLy');
     };
+
+    deleteSelectedList(ids: number[]): Observable<Link[]> {
+        const currentLinks = this.listLink$.getValue();
+        const newLinks = currentLinks.filter((link) => !ids.includes(link.id));
+        this.listLink$.next(newLinks);
+        window.alert('DELETE SUCCESSFULLy');
+        return of(newLinks);
+    }
+
+    // deleteSelectedList = (list: []) => {
+    //     const newUpdatedList = list.filter((id) => !this.listLink$.value.includes(id));
+    //     this.listLink$.next(newUpdatedList);
+    //     console.log(this.listLink$.value);
+    // };
 }

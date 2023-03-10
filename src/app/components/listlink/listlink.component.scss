@@ -1,3 +1,13 @@
+.wrapper {
+    position: relative;
+
+    .handle-mapping-wrapper {
+        position: absolute;
+        top: 40%;
+        left: 40%;
+    }
+}
+
 .my-custom-td {
     width: 460px;
 }
@@ -7,12 +17,32 @@
 }
 
 .see-more {
-    border-left: 1.5px solid #bdc2d2;
+    border-left: 3px solid #edeff3;
     text-align: center;
+}
+.mat-mdc-table tbody,
+.mat-mdc-table tfoot,
+.mat-mdc-table thead,
+.mat-mdc-cell,
+.mat-mdc-footer-cell,
+.mat-mdc-row,
+.mat-mdc-footer-row,
+.mat-mdc-table .mat-mdc-header-cell {
+    background: #fff;
+}
+
+.mat-mdc-table {
+    border-spacing: 0 5px;
+    background: transparent;
 }
 
 .mat-mdc-table .mdc-data-table__row {
     position: relative;
+    background: transparent;
+}
+
+.mat-mdc-table thead {
+    background: #fff;
 }
 
 td,
@@ -43,6 +73,7 @@ th {
     position: absolute;
     right: 4%;
     bottom: -29%;
+    z-index: 2;
     .edit-wrapper {
         display: flex;
         gap: 10px;
@@ -61,7 +92,6 @@ th {
     .delete-mapping {
         display: flex;
         gap: 10px;
-
         align-items: center;
         background-color: #bdc2d2;
         color: white;
@@ -73,5 +103,64 @@ th {
         width: 150px;
         padding-left: 10px;
         cursor: pointer;
+    }
+}
+
+.handle-mapping-wrapper {
+    display: flex;
+    height: 66px;
+    box-shadow: 0px 5px 6px 0px #5a62764d;
+
+    .selected-quantity {
+        text-align: center;
+        background-color: #008000;
+        color: white;
+        width: 68px;
+        border-bottom-left-radius: 3px;
+        border-top-left-radius: 3px;
+        .quantity {
+            font-size: 30px;
+            font-weight: 600;
+        }
+        .text {
+            font-size: 13px;
+            font-weight: 400;
+        }
+    }
+
+    .delete-wrapper {
+        cursor: pointer;
+        text-align: center;
+        background-color: #ffffff;
+        color: #fd7676;
+        width: 20rem;
+        align-items: center;
+        padding-top: 8px;
+    }
+
+    .close-action {
+        display: flex;
+        background-color: #ffffff;
+        color: #959db3;
+        width: 5.5rem;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        border-bottom-right-radius: 3px;
+        border-top-right-radius: 3px;
+        position: relative;
+        &::after {
+            content: '';
+            position: absolute;
+            display: flex;
+            background: #bdc2d2;
+            width: 1px;
+            height: 50px;
+            left: 0;
+        }
+
+        .close-icon {
+            display: flex;
+        }
     }
 }

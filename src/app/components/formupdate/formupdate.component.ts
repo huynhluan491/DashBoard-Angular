@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ListlinkService } from 'src/app/assets/services/listlink.service';
 @Component({
     selector: 'app-formupdate',
     templateUrl: './formupdate.component.html',
@@ -18,34 +19,37 @@ export class FormupdateComponent implements OnInit {
 
     @Output() handleCloseEditForm: EventEmitter<void> = new EventEmitter<void>();
     @Output() handleCloseForm: EventEmitter<void> = new EventEmitter<void>();
-    @Output() addLink: EventEmitter<object> = new EventEmitter<object>();
+
+    constructor(private myService: ListlinkService) {}
 
     ngOnInit(): void {
-        this.myForm = this.fb.group({
-            // linkType: ['', Validators.required],
-            description: ['', Validators.required],
-            // oldSite: ['', Validators.required],
-            // newSite: ['', Validators.required],
-        });
+        // initialize formgroup
         this.myForm = new FormGroup({
-            description: new FormControl(this.selectedLink?.description, Validators.required)
-           
-        })
+            linkType: new FormControl(this.selectedLink?.linkType, Validators.required),
+            description: new FormControl(this.selectedLink?.description, Validators.required),
+            oldSite: new FormControl(this.selectedLink?.oldSite, Validators.required),
+            newSite: new FormControl(this.selectedLink?.newSite, Validators.required),
+        });
 
-        console.log('oninit',this.myForm.getRawValue())
-        
+        // console.log('oninit', this.myForm.getRawValue());
+
+        // check value condition of type radio input
         this.myForm.get('linkFormGroup.linkType')?.valueChanges.subscribe((value) => {
             this.myForm.get('linkFormGroup')?.patchValue({ linkType: value }, { emitEvent: false });
         });
     }
 
-    ngOnChanges(simpleChanges: SimpleChanges){
-        this.myForm.controls['description'].setValue(this.selectedLink?.description)
+    ngOnChanges(simpleChanges: SimpleChanges) {
+        // set value by onChanges when click edit button to bind value of selectedLink to form
+        this.myForm?.controls['linkType'].setValue(this.selectedLink?.type);
+        this.myForm?.controls['description'].setValue(this.selectedLink?.description);
+        this.myForm?.controls['oldSite'].setValue(this.selectedLink?.old_link);
+        this.myForm?.controls['newSite'].setValue(this.selectedLink?.new_link);
+        // console.log(this.myForm.value.linkType);
+
         // console.log('onchange', this.selectedLink,simpleChanges,this.myForm.getRawValue())
         // simpleChanges['selectedLink'].currentValue
     }
-
-    constructor(private fb: FormBuilder) {}
 
     handleOnSubmit = () => {
         const newUpdatedLink = {
@@ -54,10 +58,14 @@ export class FormupdateComponent implements OnInit {
             oldLink: this.myForm.value.oldSite,
             newLink: this.myForm.value.newSite,
         };
-
-        this.addLink.emit(newUpdatedLink);
-        this.myForm.reset();
-        console.log(newUpdatedLink);
+        if (this.isShowEditForm) {
+            this.myService.editLink(this.selectedLink.id, newUpdatedLink);
+            this.myForm.reset();
+        } else {
+            this.myService.addLink(newUpdatedLink);
+            this.myForm.reset();
+            console.log(newUpdatedLink);
+        }
     };
 
     handleResetForm() {

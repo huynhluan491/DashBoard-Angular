@@ -2,11 +2,16 @@
     <div class="filter-action">
         <div class="filter-box">
             <p class="title">Dead link Sản phẩm</p>
-            <input type="checkbox" [(ngModel)]="isShowProduct" (click)="handleShowProduct(!isShowProduct)" />
+            <input
+                type="checkbox"
+                ngDefaultControl
+                [(ngModel)]="isShowProduct"
+                (click)="handleShowProduct(!isShowProduct)"
+            />
         </div>
         <div class="filter-box">
             <p class="title">Dead link bài viết & khác</p>
-            <input type="checkbox" [(ngModel)]="isShowPost" (click)="handleShowPost(!isShowPost)" />
+            <input type="checkbox" ngDefaultControl [(ngModel)]="isShowPost" (click)="handleShowPost(!isShowPost)" />
         </div>
     </div>
     <div class="link-action">

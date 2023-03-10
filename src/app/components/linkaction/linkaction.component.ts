@@ -9,6 +9,7 @@ export class LinkactionComponent {
     @Input() isShowProduct: boolean = true;
     @Input() isShowPost: boolean = true;
     @Input() isShowAddForm!: boolean;
+    @Input() onAddLink!: (link: object) => void;
     @Output() onFilter: EventEmitter<{ post: boolean; product: boolean }> = new EventEmitter<{
         post: boolean;
         product: boolean;
@@ -16,7 +17,6 @@ export class LinkactionComponent {
 
     @Output() onShowAddForm: EventEmitter<void> = new EventEmitter<void>();
     @Output() onCloseForm: EventEmitter<void> = new EventEmitter<void>();
-    @Input() onAddLink!: (link: object) => void;
 
     handleShowPost(value: boolean) {
         this.isShowPost = value;

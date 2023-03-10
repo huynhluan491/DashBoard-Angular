@@ -2,18 +2,18 @@
     <div class="form-header">
         <p class="title">DEAD LINK</p>
     </div>
-    <form [formGroup]="myForm" class="form-wrapper" (ngSubmit)="handleOnSubmit()">
+    <div [formGroup]="myForm" class="form-wrapper">
         <div class="cate-box">
             <p class="cate-title">Phân loại</p>
             <div class="checkbtn-wrapper">
-                <!-- <div class="type-check-btn">
-                    <input type="radio" id="product" name="linkType"  [(ngModel)]="isProductType" value="product" formControlName="linkType" />
+                <div class="type-check-btn">
+                    <input type="radio" id="product" value="product" formControlName="linkType" />
                     <label for="link">Dead link sản phẩm</label>
                 </div>
                 <div class="type-check-btn">
-                    <input type="radio" id="post" name="linkType"  [(ngModel)]="isPostType" value="post" formControlName="linkType" />
+                    <input type="radio" id="post" value="post" formControlName="linkType" />
                     <label for="link">Dead link bài viết & khác</label>
-                </div> -->
+                </div>
             </div>
         </div>
         <div class="form-content-wrapper">
@@ -26,37 +26,20 @@
                     placeholder="Nhập thông tin mô tả"
                     rows="4"
                     cols="50"
-                    [(ngModel)]="descriptionValue"
                 ></textarea>
             </div>
             <div class="old-site-box">
                 <p class="box-title">Link site cũ</p>
-                <textarea
-                    
-                    type="text"
-                    placeholder="Nhập thông tin link site cũ"
-                    rows="4"
-                    cols="50"
-                ></textarea>
-                <!-- ngDefaultControl formControlName="oldSite" -->
+                <textarea type="text" name="oldSite" rows="4" formControlName="oldSite" cols="50"></textarea>
             </div>
             <div class="new-site-box">
                 <p class="box-title">Link site mới</p>
-                <textarea
-                    
-                    type="text"
-                    placeholder="Nhập thông tin link site mới"
-                    rows="4"
-                    cols="50"
-                    
-                    >{{ selectedLink && selectedLink?.new_link }}</textarea
-                >
-                <!-- ngDefaultControl formControlName="newSite" -->
+                <textarea type="text" name="newSite" rows="4" cols="50" formControlName="newSite"></textarea>
             </div>
         </div>
         <div class="action-wrapper">
             <button class="close-btn" type="button" (click)="handleClose($event)">ĐÓNG</button>
-            <button class="update-btn" type="submit">CẬP NHẬT</button>
+            <button class="update-btn" (click)="handleOnSubmit()">CẬP NHẬT</button>
         </div>
-    </form>
+    </div>
 </div>

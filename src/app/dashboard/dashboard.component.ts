@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Link } from '../link';
 import { ListlinkService } from '../assets/services/listlink.service';
 @Component({
@@ -6,7 +6,7 @@ import { ListlinkService } from '../assets/services/listlink.service';
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnChanges {
     links: Link[] = [];
     filterData: Link[] = [];
     searchQuery?: string;
@@ -18,6 +18,12 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit(): void {
         this.getLinks();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes) {
+            this.getLinks();
+        }
     }
 
     getLinks(): void {
@@ -61,15 +67,12 @@ export class DashboardComponent implements OnInit {
     onSearch = (searchValue: string) => {
         this.searchQuery = searchValue;
         this.getLinks();
-        console.log(this.searchQuery);
-        console.log(this.filterData);
     };
 
     onFilter = (filter: { post: boolean; product: boolean }) => {
         this.isShowPost = filter.post;
         this.isShowProduct = filter.product;
         this.getLinks();
-        console.log(filter);
     };
 
     onResetFilter = () => {
@@ -80,23 +83,13 @@ export class DashboardComponent implements OnInit {
 
     onShowSeeMore = () => {
         this.isShowSeeMore = !this.isShowSeeMore;
-        console.log(this.isShowSeeMore);
     };
 
     onShowAddForm = () => {
         this.isShowAddForm = !this.isShowAddForm;
-        console.log(this.isShowAddForm);
     };
 
     onCloseForm() {
         this.isShowAddForm = false;
     }
-
-    onAddLink = (updatelink: any) => {
-        this.listLink.addLink(updatelink);
-    };
-
-    onDeleteLink = (id: number) => {
-        this.listLink.deleteLink(id);
-    };
 }

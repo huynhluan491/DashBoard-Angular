@@ -12,7 +12,6 @@
                 (onShowAddForm)="onShowAddForm()"
                 [isShowAddForm]="isShowAddForm"
                 (onCloseForm)="onCloseForm()"
-                [onAddLink]="onAddLink"
             ></app-linkaction>
             <app-searchbar
                 (onResetFilter)="onResetFilter()"
@@ -23,7 +22,6 @@
                 (onShowSeeMore)="onShowSeeMore()"
                 [isShowSeeMore]="isShowSeeMore"
                 [links]="filterData && filterData.length > 0 ? filterData : links"
-                (onDeleteLink)="onDeleteLink($event)"
             ></app-listlink>
         </div>
     </div>

@@ -68,8 +68,23 @@ export const listLink: Link[] = [
     {
         id: 9,
         type: 'post',
-
         description: 'Link bai viet 5',
+        old_link:
+            '/San-pham/Hoa-my-pham/Hoa-chat-gia-dung/Bot-giat-tay-vet-ban-khong-chat-phu-gia-Bold-PG-600g-Khong-mui-moc-khi-phoi-trong-nha-39621.aspx',
+        new_link: '/6/prdetail/_/san-pham/22691',
+    },
+    {
+        id: 10,
+        type: 'post',
+        description: 'Link bai viet 6',
+        old_link:
+            '/San-pham/Hoa-my-pham/Hoa-chat-gia-dung/Bot-giat-tay-vet-ban-khong-chat-phu-gia-Bold-PG-600g-Khong-mui-moc-khi-phoi-trong-nha-39621.aspx',
+        new_link: '/6/prdetail/_/san-pham/22691',
+    },
+    {
+        id: 11,
+        type: 'post',
+        description: 'Link bai viet 7',
         old_link:
             '/San-pham/Hoa-my-pham/Hoa-chat-gia-dung/Bot-giat-tay-vet-ban-khong-chat-phu-gia-Bold-PG-600g-Khong-mui-moc-khi-phoi-trong-nha-39621.aspx',
         new_link: '/6/prdetail/_/san-pham/22691',

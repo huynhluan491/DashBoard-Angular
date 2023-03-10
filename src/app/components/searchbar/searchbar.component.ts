@@ -13,14 +13,9 @@ export class SearchbarComponent {
 
     @Output() onResetFilter: EventEmitter<void> = new EventEmitter();
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes['searchQuery']) {
-            console.log(this.searchQuery);
-            console.log(changes);
-        }
-    }
-
     handleIconSearch = (input: string) => {
+        console.log('clicked');
+
         this.onSearch.emit(input);
         console.log(input);
     };
