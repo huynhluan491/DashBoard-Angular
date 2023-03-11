@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ListlinkService } from 'src/app/assets/services/listlink.service';
 
 @Component({
@@ -6,9 +6,11 @@ import { ListlinkService } from 'src/app/assets/services/listlink.service';
     templateUrl: './linkaction.component.html',
     styleUrls: ['./linkaction.component.scss'],
 })
-export class LinkactionComponent {
-    isPost: boolean = true;
-    isProduct: boolean = true;
+export class LinkactionComponent implements OnChanges {
+    // isPost: boolean = true;
+    // isProduct: boolean = true;
+    @Input() isPost: boolean = true;
+    @Input() isProduct: boolean = true;
     isShowAddForm: boolean = false;
     @Input() onAddLink!: (link: object) => void;
 
@@ -19,6 +21,8 @@ export class LinkactionComponent {
     handleShowAddForm = () => {
         this.isShowAddForm = !this.isShowAddForm;
     };
+
+    ngOnChanges(changes: SimpleChanges): void {}
 
     handleShowPost(input: any) {
         this.isPost = input.target.checked;
@@ -47,4 +51,9 @@ export class LinkactionComponent {
             this.onAddLink(newLink);
         }
     };
+
+    updateCheckBox() {
+        this.isPost = true;
+        this.isProduct = true;
+    }
 }

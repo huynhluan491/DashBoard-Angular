@@ -21,8 +21,15 @@
         .description-header {
             padding-left: 15px;
             display: flex;
+            gap: 13px;
             align-items: center;
         }
+    }
+
+    th {
+        color: #5a6276;
+        font-size: 1.3rem;
+        font-weight: 600;
     }
 
     .table-content {
@@ -32,10 +39,26 @@
 
         .old-col {
             width: 462px;
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #26282e;
         }
 
         .description-col {
             padding-left: 15px;
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #26282e;
+
+            input {
+                padding-right: 13px;
+            }
+        }
+
+        .new-col {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #26282e;
         }
     }
 }

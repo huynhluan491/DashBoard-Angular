@@ -14,7 +14,7 @@ export class SearchbarComponent implements OnInit {
     @Input() isSearchValue?: boolean;
     @Input() searchQuery?: string;
     @Output() onCheckSearchValue: EventEmitter<string> = new EventEmitter();
-
+    @Output() handleResetType: EventEmitter<void> = new EventEmitter();
     constructor(private myService: ListlinkService) {}
 
     ngOnInit(): void {}
@@ -27,5 +27,6 @@ export class SearchbarComponent implements OnInit {
 
     handleResetFilter = () => {
         this.myService.onResetFilter();
+        this.handleResetType.emit();
     };
 }

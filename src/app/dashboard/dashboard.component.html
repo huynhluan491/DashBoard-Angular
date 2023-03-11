@@ -5,10 +5,11 @@
         </div>
         <div class="dashboard-content">
             <app-header></app-header>
-            <app-linkaction (onCloseForm)="onCloseForm()"></app-linkaction>
+            <app-linkaction (onCloseForm)="onCloseForm()" [isPost]="isPost" [isProduct]="isProduct"></app-linkaction>
             <app-searchbar
                 [isSearchValue]="isSearchValue"
                 (onCheckSearchValue)="onCheckSearchValue($event)"
+                (handleResetType)="handleResetType()"
             ></app-searchbar>
             <app-listlink [isSearchValue]="isSearchValue"></app-listlink>
         </div>
