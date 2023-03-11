@@ -23,16 +23,14 @@ export class FormupdateComponent implements OnInit {
     constructor(private myService: ListlinkService) {}
 
     ngOnInit(): void {
-        // initialize formgroup
         this.myForm = new FormGroup({
             linkType: new FormControl(this.selectedLink?.linkType, Validators.required),
             description: new FormControl(this.selectedLink?.description, Validators.required),
             oldSite: new FormControl(this.selectedLink?.oldSite, Validators.required),
             newSite: new FormControl(this.selectedLink?.newSite, Validators.required),
         });
-
+        // initialize formgroup
         // console.log('oninit', this.myForm.getRawValue());
-
         // check value condition of type radio input
         this.myForm.get('linkFormGroup.linkType')?.valueChanges.subscribe((value) => {
             this.myForm.get('linkFormGroup')?.patchValue({ linkType: value }, { emitEvent: false });
@@ -45,10 +43,6 @@ export class FormupdateComponent implements OnInit {
         this.myForm?.controls['description'].setValue(this.selectedLink?.description);
         this.myForm?.controls['oldSite'].setValue(this.selectedLink?.old_link);
         this.myForm?.controls['newSite'].setValue(this.selectedLink?.new_link);
-        // console.log(this.myForm.value.linkType);
-
-        // console.log('onchange', this.selectedLink,simpleChanges,this.myForm.getRawValue())
-        // simpleChanges['selectedLink'].currentValue
     }
 
     handleOnSubmit = () => {
@@ -64,7 +58,6 @@ export class FormupdateComponent implements OnInit {
         } else {
             this.myService.addLink(newUpdatedLink);
             this.myForm.reset();
-            console.log(newUpdatedLink);
         }
     };
 
@@ -88,7 +81,6 @@ export class FormupdateComponent implements OnInit {
         event.preventDefault();
         if (this.isShowEditForm) {
             this.handleCloseEditForm.emit();
-            console.log('click');
         } else {
             this.handleCloseForm.emit();
         }

@@ -2,16 +2,11 @@
     <div class="filter-action">
         <div class="filter-box">
             <p class="title">Dead link Sản phẩm</p>
-            <input
-                type="checkbox"
-                ngDefaultControl
-                [(ngModel)]="isShowProduct"
-                (click)="handleShowProduct(!isShowProduct)"
-            />
+            <input type="checkbox" value="product" (click)="handleShowProduct($event)" [checked]="isProduct" />
         </div>
         <div class="filter-box">
             <p class="title">Dead link bài viết & khác</p>
-            <input type="checkbox" ngDefaultControl [(ngModel)]="isShowPost" (click)="handleShowPost(!isShowPost)" />
+            <input type="checkbox" value="post" (click)="handleShowPost($event)" [checked]="isPost" />
         </div>
     </div>
     <div class="link-action">
@@ -40,7 +35,7 @@
             </svg>
             <p>Template</p>
         </button>
-        <button class="add-btn" (click)="onShowAddForm.emit()">
+        <button class="add-btn" (click)="handleShowAddForm()">
             <svg width="9" height="12" viewBox="0 0 9 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M4.5271 1V11"

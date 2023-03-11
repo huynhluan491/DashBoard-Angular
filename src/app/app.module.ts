@@ -13,7 +13,8 @@ import { LinkactionComponent } from './components/linkaction/linkaction.componen
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { ListlinkComponent } from './components/listlink/listlink.component';
 import { FormupdateComponent } from './components/formupdate/formupdate.component';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
     declarations: [
         AppComponent,
@@ -32,6 +33,9 @@ import { FormupdateComponent } from './components/formupdate/formupdate.componen
         MatPaginatorModule,
         MatTableModule,
         ReactiveFormsModule,
+        NgbModule,
+        NgbPaginationModule,
+        NgbAlertModule,
     ],
     providers: [
         {

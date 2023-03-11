@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ListlinkService } from 'src/app/assets/services/listlink.service';
 
 @Component({
     selector: 'app-linkaction',
@@ -6,30 +7,39 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     styleUrls: ['./linkaction.component.scss'],
 })
 export class LinkactionComponent {
-    @Input() isShowProduct: boolean = true;
-    @Input() isShowPost: boolean = true;
-    @Input() isShowAddForm!: boolean;
+    isPost: boolean = true;
+    isProduct: boolean = true;
+    isShowAddForm: boolean = false;
     @Input() onAddLink!: (link: object) => void;
-    @Output() onFilter: EventEmitter<{ post: boolean; product: boolean }> = new EventEmitter<{
-        post: boolean;
-        product: boolean;
-    }>();
 
-    @Output() onShowAddForm: EventEmitter<void> = new EventEmitter<void>();
     @Output() onCloseForm: EventEmitter<void> = new EventEmitter<void>();
 
-    handleShowPost(value: boolean) {
-        this.isShowPost = value;
-        this.onFilter.emit({ post: this.isShowPost, product: this.isShowProduct });
+    constructor(private myService: ListlinkService) {}
+
+    handleShowAddForm = () => {
+        this.isShowAddForm = !this.isShowAddForm;
+    };
+
+    handleShowPost(input: any) {
+        this.isPost = input.target.checked;
+        let checkObj = {
+            post: this.isPost,
+            product: this.isProduct,
+        };
+        this.myService.onFilter(checkObj);
     }
 
-    handleShowProduct(value: boolean) {
-        this.isShowProduct = value;
-        this.onFilter.emit({ post: this.isShowPost, product: this.isShowProduct });
+    handleShowProduct(input: any) {
+        this.isProduct = input.target.checked;
+        let checkObj = {
+            post: this.isPost,
+            product: this.isProduct,
+        };
+        this.myService.onFilter(checkObj);
     }
 
     handleCloseForm() {
-        this.onCloseForm.emit();
+        this.isShowAddForm = false;
     }
 
     onAddLinkHandler = (newLink: any) => {

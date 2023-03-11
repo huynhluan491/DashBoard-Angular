@@ -1,11 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'normalize.css';
+@import '~bootstrap/dist/css/bootstrap.css';
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 :root {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     overflow-y: scroll;
+    --bs-pagination-focus-box-shadow: transparent;
 }
 
 .root::-webkit-scrollbar {
@@ -70,3 +73,6 @@ a[href] {
         color: black;
     }
 }
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';

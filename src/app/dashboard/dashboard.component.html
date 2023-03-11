@@ -5,24 +5,12 @@
         </div>
         <div class="dashboard-content">
             <app-header></app-header>
-            <app-linkaction
-                [isShowProduct]="isShowProduct"
-                [isShowPost]="isShowPost"
-                (onFilter)="onFilter($event)"
-                (onShowAddForm)="onShowAddForm()"
-                [isShowAddForm]="isShowAddForm"
-                (onCloseForm)="onCloseForm()"
-            ></app-linkaction>
+            <app-linkaction (onCloseForm)="onCloseForm()"></app-linkaction>
             <app-searchbar
-                (onResetFilter)="onResetFilter()"
-                (onSearch)="onSearch($event)"
-                [searchQuery]="searchQuery"
+                [isSearchValue]="isSearchValue"
+                (onCheckSearchValue)="onCheckSearchValue($event)"
             ></app-searchbar>
-            <app-listlink
-                (onShowSeeMore)="onShowSeeMore()"
-                [isShowSeeMore]="isShowSeeMore"
-                [links]="filterData && filterData.length > 0 ? filterData : links"
-            ></app-listlink>
+            <app-listlink [isSearchValue]="isSearchValue"></app-listlink>
         </div>
     </div>
 </div>

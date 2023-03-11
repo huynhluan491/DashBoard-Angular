@@ -9,14 +9,65 @@ import { Link } from 'src/app/link';
 })
 export class ListlinkService {
     private listLink$ = new BehaviorSubject<Link[]>(listLink);
+    private searchValue$ = new BehaviorSubject<string>('');
     selectedLinkList: [] = [];
-    // constructor(private db: AngularFireDatabase) {
-    //     this.listLink$ = this.db.list('/links').valueChanges();
-    // }
+    isShowProduct: boolean = true;
+    isShowPost: boolean = true;
 
     getListLink(): Observable<Link[]> {
-        return this.listLink$;
+        if (this.searchValue$.value.length <= 0) {
+            if ((this.isShowProduct && this.isShowPost) || (!this.isShowProduct && !this.isShowPost)) {
+                this.listLink$.next(listLink);
+            }
+            if (!this.isShowProduct && this.isShowPost) {
+                const filteredList = this.listLink$.value.filter((item) => item.type != 'product');
+                this.listLink$.next(filteredList);
+            }
+            if (this.isShowProduct && !this.isShowPost) {
+                const filteredList = this.listLink$.value.filter((item) => item.type != 'post');
+                this.listLink$.next(filteredList);
+            }
+        } else if (this.searchValue$.value.length > 0) {
+            if ((this.isShowProduct && this.isShowPost) || (!this.isShowProduct && !this.isShowPost)) {
+                const filteredData = listLink.filter((item) => {
+                    console.log(item.description);
+                    console.log(this.searchValue$.value);
+                    const result = item.description
+                        .toLocaleLowerCase()
+                        .includes(this.searchValue$.value.toLocaleLowerCase());
+                    console.log(result);
+                    return result;
+                });
+
+                this.listLink$.next(filteredData);
+            }
+            if (!this.isShowProduct && this.isShowPost) {
+                let filteredTypeList = listLink.filter((item) => item.type != 'product');
+                let searchedList = filteredTypeList.filter((list) => {
+                    return list.description.toLocaleLowerCase().includes(this.searchValue$.value.toLocaleLowerCase());
+                });
+                console.log(searchedList);
+                this.listLink$.next(searchedList);
+                console.log(this.listLink$.value);
+            }
+            if (this.isShowProduct && !this.isShowPost) {
+                let filteredTypeList = listLink.filter((item) => item.type != 'post');
+                let searchedList = filteredTypeList.filter((list) => {
+                    return list.description.toLocaleLowerCase().includes(this.searchValue$.value.toLocaleLowerCase());
+                });
+                console.log(searchedList);
+                this.listLink$.next(searchedList);
+                console.log(this.listLink$.value);
+            }
+        }
+        return this.listLink$.asObservable();
     }
+
+    getSearchQuery = (input: string) => {
+        this.searchValue$.next(input);
+        console.log(this.searchValue$.value);
+        this.getListLink();
+    };
 
     getLinksByDescription(description: string) {
         const link = this.listLink$.value.filter((item) =>
@@ -54,6 +105,7 @@ export class ListlinkService {
         const updatedList = [...this.listLink$.value];
         updatedList[index] = updatedLink;
         this.listLink$.next(updatedList);
+        window.alert('EDIT SUCCESSFULLY');
     };
 
     deleteLink = (id: number) => {
@@ -63,16 +115,29 @@ export class ListlinkService {
     };
 
     deleteSelectedList(ids: number[]): Observable<Link[]> {
-        const currentLinks = this.listLink$.getValue();
-        const newLinks = currentLinks.filter((link) => !ids.includes(link.id));
-        this.listLink$.next(newLinks);
-        window.alert('DELETE SUCCESSFULLy');
-        return of(newLinks);
+        if (ids.length > 0) {
+            const currentLinks = this.listLink$.getValue();
+            const newLinks = currentLinks.filter((link) => !ids.includes(link.id));
+            this.listLink$.next(newLinks);
+            window.alert('DELETE SUCCESSFULLy');
+            return of(newLinks);
+        } else {
+            window.alert('SelectedLink Not Found');
+            return this.listLink$;
+        }
     }
 
-    // deleteSelectedList = (list: []) => {
-    //     const newUpdatedList = list.filter((id) => !this.listLink$.value.includes(id));
-    //     this.listLink$.next(newUpdatedList);
-    //     console.log(this.listLink$.value);
-    // };
+    onFilter = (filter: { post: boolean; product: boolean }) => {
+        this.isShowPost = filter.post;
+        this.isShowProduct = filter.product;
+        console.log(filter);
+        this.getListLink();
+        console.log(this.listLink$);
+    };
+
+    onResetFilter = () => {
+        this.isShowPost = true;
+        this.isShowProduct = true;
+        this.getListLink();
+    };
 }

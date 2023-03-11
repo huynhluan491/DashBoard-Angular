@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ListlinkService } from 'src/app/assets/services/listlink.service';
 import { Link } from 'src/app/link';
-
+import { NgbConfig, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
+import { listLink } from 'src/app/listLink';
 @Component({
     selector: 'app-listlink',
     templateUrl: './listlink.component.html',
@@ -15,47 +16,53 @@ export class ListlinkComponent implements OnInit, OnChanges {
     selectedLink!: any;
     selectedListLink: any = [];
     selectAllItems: boolean = false;
+    isShowSeeMore?: boolean = false;
     availableListLink: Link[] = [];
-    isShowMappingPopup: boolean = this.selectedListLink.length > 0 ? true : false;
-    pageSize = 4;
-    currentPage = 1;
-    totalPages = Math.ceil(this.availableListLink.length / this.pageSize);
+    isShowMappingPopup: boolean = false;
+    listLink: Link[] = listLink;
 
     @Input() onEditLink!: (id: number, link: object) => void;
     @Input() element!: any;
-    @Input() link!: object;
-    @Input() links: Link[] = [];
     @Input() id!: number;
-    @Input() isShowSeeMore?: boolean = false;
-
-    @Output() onShowSeeMore: EventEmitter<void> = new EventEmitter<void>();
-    constructor(private myService: ListlinkService) {}
+    @Input() isSearchValue?: boolean;
+    pageSize = 4;
+    page = 1;
+    currentPage!: number;
+    currentLinks!: Link[];
+    constructor(private myService: ListlinkService, ngbConfig: NgbConfig) {
+        ngbConfig.animation = false;
+    }
 
     ngOnInit(): void {
         this.myService.getListLink().subscribe((list) => {
-            // subscribe to the Observable<Link[]> object
             this.availableListLink = list;
-            this.totalPages = Math.ceil(this.availableListLink.length / this.pageSize); // update the total pages after the data is obtained
-            this.updateDataSource(); // update the data source based on the current page
         });
-        console.log(this.totalPages);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes['links'].previousValue !== changes['links'].currentValue) {
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['isSearchValue'].currentValue != changes['isSearchValue'].previousValue) {
             this.myService.getListLink().subscribe((list) => {
                 this.availableListLink = list;
             });
         }
+        console.log(this.availableListLink);
+        console.log(changes);
+    }
+
+    get _availableListLink(): Link[] {
+        let result: Link[] = [];
+        const start = (this.page - 1) * this.pageSize;
+        const end = start + this.pageSize;
+        result = this.availableListLink.slice(start, end);
+        console.log(result);
+        return result;
     }
 
     setActive(id: number) {
         if (id !== this.activeButton) {
             this.activeButton = id;
             this.isActive = !this.isActive;
-            console.log(this.activeButton);
-            this.selectedLink = this.links.find((l) => l.id === id);
-            console.log(this.selectedLink); // or do whatever you need with the link object
+            this.selectedLink = this.availableListLink.find((item) => item.id === id);
         } else {
             this.activeButton = -1;
         }
@@ -63,25 +70,18 @@ export class ListlinkComponent implements OnInit, OnChanges {
 
     handleDeleteLink = (id: number) => {
         this.myService.deleteLink(id);
-        this.onShowSeeMore.emit();
-        console.log(this.availableListLink);
-        console.log(this.links);
+        this.isActive = false;
     };
 
     handleOpenForm = () => {
         this.isShowEditForm = !this.isShowEditForm;
+        this.isShowSeeMore = false;
     };
 
     handleCloseEditForm = () => {
         this.isShowEditForm = false;
-        console.log(this.isShowEditForm);
         this.activeButton = -1;
     };
-
-    handleClick(id: number) {
-        const link = this.links.find((l) => l.id === id);
-        console.log(link); // or do whatever you need with the link object
-    }
 
     onEditLinkHandler = (id: number, newLink: any) => {
         if (this.onEditLink) {
@@ -98,46 +98,48 @@ export class ListlinkComponent implements OnInit, OnChanges {
         } else if (idx != -1) {
             newSelectLink = this.selectedListLink.filter((item: { id: any }) => item != id);
         }
+        if (newSelectLink.length > 0) {
+            this.isShowMappingPopup = true;
+        } else {
+            this.isShowMappingPopup = false;
+        }
         this.selectedListLink = newSelectLink;
-        console.log(this.selectedListLink);
+        console.log(this.isShowMappingPopup);
+        console.log(this.selectedListLink.length);
     };
 
-    addAllSelectedList = () => {
-        this.links.map((item) => {
-            if (!this.selectedListLink?.includes(item.id)) {
-                this.selectedListLink?.push(item.id);
-            }
-        });
-        console.log(this.selectedListLink);
+    addAllSelectedList = (checked: any) => {
+        if (checked.target.checked) {
+            this.availableListLink.map((item) => {
+                if (!this.selectedListLink?.includes(item.id)) {
+                    this.selectedListLink?.push(item.id);
+                }
+            });
+        } else {
+            this.selectedListLink = [];
+        }
+        if (this.selectedListLink.length > 0) {
+            this.isShowMappingPopup = true;
+        } else {
+            this.isShowMappingPopup = false;
+        }
     };
 
     handleDeleteMapping = () => {
         this.myService.deleteSelectedList(this.selectedListLink);
         this.selectedListLink = [];
-        console.log(this.selectedListLink);
+        this.isShowMappingPopup = false;
     };
 
-    //PAGINATION
-    // Define function to update data source based on current page
-    updateDataSource() {
-        this.availableListLink = this.links.slice(
-            (this.currentPage - 1) * this.pageSize,
-            this.currentPage * this.pageSize,
-        );
-    }
+    handleBackToFirst = () => {
+        this.page = 1;
+    };
 
-    // Define function to generate array of page numbers
-    getPageNumbers() {
-        const pageNumbers = [];
-        for (let i = 1; i <= this.totalPages; i++) {
-            pageNumbers.push(i);
-        }
-        return pageNumbers;
-    }
+    handleBackToLast = () => {
+        this.page = this.availableListLink.length;
+    };
 
-    // Define click handler for page numbers
-    goToPage(pageNumber: number) {
-        this.currentPage = pageNumber;
-        this.updateDataSource();
-    }
+    // handleLog(input: any) {
+    //     console.log(input);
+    // }
 }
