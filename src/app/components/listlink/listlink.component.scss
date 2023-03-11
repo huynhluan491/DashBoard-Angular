@@ -103,6 +103,13 @@ th {
         left: 22%;
         bottom: 31%;
         color: white;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+
+        .icon {
+            color: white;
+        }
     }
 }
 

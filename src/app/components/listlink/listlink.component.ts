@@ -1,4 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    Input,
+    Output,
+    EventEmitter,
+    SimpleChanges,
+    OnChanges,
+    ViewChild,
+    HostListener,
+    ElementRef,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { ListlinkService } from 'src/app/assets/services/listlink.service';
 import { Link } from 'src/app/link';
@@ -29,7 +40,7 @@ export class ListlinkComponent implements OnInit, OnChanges {
     page = 1;
     currentPage!: number;
     currentLinks!: Link[];
-    constructor(private myService: ListlinkService, ngbConfig: NgbConfig) {
+    constructor(private myService: ListlinkService, ngbConfig: NgbConfig, private eRef: ElementRef) {
         ngbConfig.animation = false;
     }
 
