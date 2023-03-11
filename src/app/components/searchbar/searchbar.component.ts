@@ -19,8 +19,17 @@ export class SearchbarComponent implements OnInit {
 
     ngOnInit(): void {}
 
-    handleIconSearch = (input: any) => {
+    handleEnterSearch = (input: any) => {
+        console.log(input);
+
         this.myService.getSearchQuery(input.target.value);
+        this.onCheckSearchValue.emit(input);
+        this.myService.getListLink();
+    };
+
+    handleIconSearch = (input: any) => {
+        console.log(input);
+        this.myService.getSearchQuery(input);
         this.onCheckSearchValue.emit(input);
         this.myService.getListLink();
     };

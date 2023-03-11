@@ -91,16 +91,18 @@ th {
 }
 
 .show-menu-btn {
+    cursor: pointer;
+
     &.selected {
         background-color: #bdc2d2;
         height: 24px;
         width: 24px;
-        box-shadow: 0px 5px 6px 0px #5a62764d;
         border-bottom-right-radius: 3px;
         border-top-right-radius: 3px;
         position: absolute;
         left: 22%;
         bottom: 31%;
+        color: white;
     }
 }
 
@@ -237,6 +239,12 @@ th {
     border-radius: 3px !important;
     border: unset !important;
     box-shadow: unset !important;
+
+    &:active {
+        border: unset !important;
+        background: transparent !important;
+        box-shadow: unset !important;
+    }
 }
 
 ::ng-deep a[href]:hover {
@@ -259,6 +267,7 @@ th {
 ::ng-deep .page-link.disabled,
 .disabled > .page-link {
     color: #959db3 !important;
+    opacity: 40%;
 }
 
 .paginate-controller {
@@ -273,4 +282,10 @@ th {
         font-size: 1.3rem;
         font-weight: 600;
     }
+}
+
+.show-text {
+    color: #959db3;
+    font-size: 1.3rem;
+    font-weight: 600;
 }
