@@ -13,8 +13,10 @@
             class="table-content"
         >
             <td class="description-col">
-                <input type="checkbox" (click)="addToSelectedList(item.id)" />
-                {{ item.description }}
+                <div style="display: flex">
+                    <input type="checkbox" (click)="addToSelectedList(item.id)" />
+                    <p>{{ item.description }}</p>
+                </div>
             </td>
             <td class="old-col">{{ item.old_link }}</td>
             <td class="new-col">{{ item.new_link }}</td>
