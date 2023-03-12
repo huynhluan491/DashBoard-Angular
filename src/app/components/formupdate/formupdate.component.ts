@@ -29,9 +29,7 @@ export class FormupdateComponent implements OnInit {
             oldSite: new FormControl(this.selectedLink?.oldSite, Validators.required),
             newSite: new FormControl(this.selectedLink?.newSite, Validators.required),
         });
-        // initialize formgroup
-        // console.log('oninit', this.myForm.getRawValue());
-        // check value condition of type radio input
+
         this.myForm.get('linkFormGroup.linkType')?.valueChanges.subscribe((value) => {
             this.myForm.get('linkFormGroup')?.patchValue({ linkType: value }, { emitEvent: false });
         });
