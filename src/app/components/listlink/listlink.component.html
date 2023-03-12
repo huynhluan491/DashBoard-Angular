@@ -19,7 +19,9 @@
                 </div>
             </td>
             <td class="old-col">{{ item.old_link }}</td>
-            <td class="new-col">{{ item.new_link }}</td>
+            <td class="new-col">
+                <p>{{ item.new_link }}</p>
+            </td>
             <td class="see-more">
                 <div class="show-menu-btn" (click)="setActive(item.id)" [class.selected]="item.id === activeButton">
                     <div class="icon">
