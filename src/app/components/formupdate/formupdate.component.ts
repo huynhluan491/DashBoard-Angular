@@ -46,18 +46,39 @@ export class FormupdateComponent implements OnInit {
     }
 
     handleOnSubmit = () => {
-        const newUpdatedLink = {
-            type: this.myForm.value.linkType,
-            description: this.myForm.value.description,
-            oldLink: this.myForm.value.oldSite,
-            newLink: this.myForm.value.newSite,
-        };
-        if (this.isShowEditForm) {
-            this.myService.editLink(this.selectedLink.id, newUpdatedLink);
-            this.myForm.reset();
-        } else {
-            this.myService.addLink(newUpdatedLink);
-            this.myForm.reset();
+        if (
+            this.myForm.value.description != undefined &&
+            this.myForm.value.oldSite != undefined &&
+            this.myForm.value.newSite != undefined
+        ) {
+            if (this.myForm.value.linkType) {
+                const newUpdatedLink = {
+                    type: this.myForm.value.linkType,
+                    description: this.myForm.value.description,
+                    oldLink: this.myForm.value.oldSite,
+                    newLink: this.myForm.value.newSite,
+                };
+
+                if (this.isShowEditForm) {
+                    this.myService.editLink(this.selectedLink.id, newUpdatedLink);
+                    this.myForm.reset();
+                    window.alert('EDIT SUCCESSFULLY');
+                } else {
+                    this.myService.addLink(newUpdatedLink);
+                    this.myForm.reset();
+                    window.alert('ADD SUCCESSFULLY');
+                }
+            } else {
+                window.alert('Please fill all of fields');
+            }
+        } else if (
+            this.descriptionValue == undefined &&
+            this.isPostType == undefined &&
+            this.isProductType == undefined &&
+            this.oldSiteValue == undefined &&
+            this.newSiteValue == undefined
+        ) {
+            window.alert('Please fill all of fields');
         }
     };
 
