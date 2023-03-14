@@ -7,8 +7,6 @@ import { ListlinkService } from 'src/app/assets/services/listlink.service';
     styleUrls: ['./linkaction.component.scss'],
 })
 export class LinkactionComponent implements OnChanges {
-    // isPost: boolean = true;
-    // isProduct: boolean = true;
     @Input() isPost: boolean = true;
     @Input() isProduct: boolean = true;
     isShowAddForm: boolean = false;

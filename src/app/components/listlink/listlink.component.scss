@@ -1,11 +1,13 @@
 .wrapper {
     position: relative;
+    border-top: 1px solid #bdc2d2;
 
-    padding: 20px 7px 0 25px;
+    margin: 0 7px 0 25px;
+    padding-top: 20px;
     .handle-mapping-wrapper {
         position: absolute;
-        top: 40%;
-        left: 40%;
+        top: 33%;
+        left: 21%;
     }
 }
 
@@ -38,7 +40,7 @@
         align-items: center;
 
         .old-col {
-            width: 50%;
+            width: 46.2rem;
             font-size: 1.3rem;
             font-weight: 400;
             color: #26282e;
@@ -50,11 +52,13 @@
             font-size: 1.3rem;
             font-weight: 400;
             color: #26282e;
-            width: 20%;
+            width: 20.9rem;
 
             input {
                 margin-right: 13px;
                 margin-top: 1px;
+                width: 13px;
+                height: 13px;
             }
         }
 
@@ -62,6 +66,7 @@
             font-size: 1.3rem;
             font-weight: 400;
             color: #26282e;
+            width: 20.9rem;
         }
     }
 }
@@ -75,8 +80,13 @@
 }
 
 .see-more {
-    border-left: 3px solid #edeff3;
+    border-left: 1px solid #edeff3;
     text-align: center;
+    width: 40px;
+
+    .show-menu-btn.selected:focus .icon svg {
+        color: #fff;
+    }
 }
 
 .mat-mdc-table .mdc-data-table__row {
@@ -96,6 +106,13 @@ th {
 .show-menu-btn {
     cursor: pointer;
 
+    .icon {
+        svg {
+            color: #959db3 !important;
+            fill: #959db3 !important;
+            stroke: #959db3 !important;
+        }
+    }
     &.selected {
         background-color: #bdc2d2;
         height: 24px;
@@ -111,7 +128,11 @@ th {
         justify-content: center;
 
         .icon {
-            color: white;
+            svg {
+                color: #fff !important;
+                fill: #fff !important;
+                stroke: #fff !important;
+            }
         }
     }
 }
@@ -171,6 +192,7 @@ th {
         .text {
             font-size: 13px;
             font-weight: 400;
+            margin: -6px 0 0 0;
         }
     }
 
@@ -182,6 +204,11 @@ th {
         width: 20rem;
         align-items: center;
         padding-top: 8px;
+
+        .delete-text {
+            font-size: 1.3rem;
+            margin-top: 5px;
+        }
     }
 
     .close-action {
@@ -207,6 +234,7 @@ th {
 
         .close-icon {
             display: flex;
+            cursor: pointer;
         }
     }
 }
@@ -223,17 +251,66 @@ th {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    gap: 15px;
+    padding-top: 1.7rem;
+    padding-bottom: 1.4rem;
     .total-pages {
         display: flex;
         gap: 24px;
     }
 
+    .show-text {
+        align-self: center;
+    }
+
+    .option-icon {
+        cursor: pointer;
+    }
+
     .quantity-page {
         display: flex;
+        align-content: center;
         align-items: center;
-        gap: 1rem;
+        position: relative;
+
+        svg {
+            position: absolute;
+            left: 2rem;
+            top: 7px;
+            cursor: pointer;
+        }
     }
+}
+
+.select-list {
+    position: relative;
+    font-size: 1.3rem;
+}
+
+.select-list .options {
+    position: absolute;
+    display: none;
+    bottom: 24px;
+    background-color: #ffffff;
+    border-radius: 3px;
+    box-shadow: 0px 1px 2px 0px #00000040;
+    font-size: 1.3rem;
+    min-width: 56px;
+    left: -9px;
+
+    li {
+        padding: 5px 30px 8px 10px;
+        cursor: pointer;
+        font-weight: 400;
+    }
+
+    li:hover {
+        background-color: #f5f6f8;
+    }
+}
+
+.select-list .options.show {
+    display: block !important;
 }
 
 ::ng-deep .page-link {
@@ -249,12 +326,18 @@ th {
     border-radius: 3px !important;
     border: unset !important;
     box-shadow: unset !important;
+    min-height: 29px;
 
     &:active {
         border: unset !important;
         background: transparent !important;
         box-shadow: unset !important;
     }
+}
+
+::ng-deep .pagination {
+    display: flex;
+    gap: 9px;
 }
 
 ::ng-deep a[href]:hover {
@@ -274,15 +357,41 @@ th {
     box-shadow: unset !important;
 }
 
-::ng-deep .page-link.disabled,
-.disabled > .page-link {
-    color: #959db3 !important;
+::ng-deep .page-item.disabled {
     opacity: 40%;
+}
+
+::ng-deep .page-item:first-child.disabled {
+    opacity: 40%;
+}
+
+// ::ng-deep .page-item:first-child.disabled {
+//     background-color: #f4f5f7 !important;
+// }
+
+::ng-deep .page-item:last-child {
+    background-color: #ffffff !important;
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+    text-align: center;
+}
+
+::ng-deep .page-item:first-child {
+    background-color: #ffffff !important;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    // justify-content: center;
+}
+
+::ng-deep .page-link:focus {
+    box-shadow: unset !important;
 }
 
 .paginate-controller {
     display: flex;
-
+    gap: 9px;
     .first-page,
     .last-page {
         padding: 0.375rem 0.75rem;
@@ -291,6 +400,7 @@ th {
         border-radius: 3px;
         font-size: 1.3rem;
         font-weight: 600;
+        width: 4.5rem;
     }
 }
 

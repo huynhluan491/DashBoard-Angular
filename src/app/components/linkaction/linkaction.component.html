@@ -1,6 +1,6 @@
 <div class="wrapper">
     <div class="filter-action">
-        <div class="filter-box">
+        <div class="filter-box" [class.focus]="isProduct">
             <p class="title">Dead link Sản phẩm</p>
             <input
                 class="type-checkbox"
@@ -10,7 +10,7 @@
                 [checked]="isProduct"
             />
         </div>
-        <div class="filter-box">
+        <div class="filter-box" [class.focus]="isPost">
             <p class="title">Dead link bài viết & khác</p>
             <input
                 class="type-checkbox"

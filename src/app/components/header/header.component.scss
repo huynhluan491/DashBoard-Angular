@@ -1,10 +1,11 @@
 .wrapper {
+    position: fixed;
+    z-index: 3;
     display: flex;
     background-color: #ffffff;
-    width: 100%;
+    width: -webkit-fill-available;
     justify-content: space-between;
     box-shadow: 0px 5px 6px 0px #5a62764d;
-
     .title-list {
         display: flex;
         .title-item {
@@ -13,14 +14,14 @@
             &::after {
                 content: '';
                 position: absolute;
-                height: 25px;
+                height: 3rem;
                 right: 0;
-                top: 6px;
+                top: 23%;
                 width: 2px;
                 background-color: #c4c4c4;
             }
             p {
-                padding: 12px 12px 12px 13px;
+                padding: 15px 12px 15px 13px;
                 font-size: 1.3rem;
                 color: #bbbbbb;
                 font-weight: 600;
@@ -35,10 +36,10 @@
                         position: absolute;
                         background-color: #008000;
                         height: 3px;
-                        width: 9rem;
+                        width: 10rem;
                         border-radius: 3px;
                         bottom: 0;
-                        left: 12px;
+                        left: 0.3rem;
                         right: 0;
                     }
                 }
@@ -50,32 +51,34 @@
         display: flex;
         padding-right: 3rem;
         align-items: center;
-        gap: 2rem;
 
         .noti-icon {
             position: relative;
+            margin-right: 3.7rem;
+            margin-left: 2.9rem;
             &::after {
                 content: '15';
                 position: absolute;
                 background-color: #f1802e;
-                width: 18px;
-                height: 18px;
+                width: 20px;
+                display: flex;
+                height: 20px;
                 font-size: 1.2rem;
                 border-radius: 2rem;
                 color: white;
-                bottom: 1rem;
-                text-align: center;
+                bottom: 0.75rem;
                 align-items: center;
+                justify-content: center;
                 font-weight: 400;
-                left: 0.75rem;
+                left: 0.5rem;
             }
         }
 
         .user-avt {
             position: relative;
             img {
-                width: 30px;
-                height: 30px;
+                width: 35px;
+                height: 35px;
                 border-radius: 3.5rem;
             }
 

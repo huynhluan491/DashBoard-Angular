@@ -6,12 +6,19 @@
         gap: 0.5rem;
         .side-bar {
             background-color: #5a6276;
-            width: 22rem;
+            width: 13%;
+            position: fixed;
+            z-index: 20;
+            height: 100vh;
             .title {
+                position: fixed;
+                width: 13%;
+                height: 51px;
+                display: flex;
+                align-items: center;
                 color: #ffff;
                 font-size: 1.3rem;
-                width: 100%;
-                background-color: #1a2334;
+                background-color: rgba(26, 35, 52, 0.3);
                 margin-top: 2rem;
                 padding-left: 5rem;
                 padding: 0.5rem 0 0.5rem 5rem;
@@ -21,6 +28,9 @@
 
         .dashboard-content {
             width: 100%;
+            height: 100vh;
+            overflow-y: scroll;
+            padding-left: 13vw;
         }
     }
 }

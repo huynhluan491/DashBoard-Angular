@@ -28,18 +28,22 @@ export class ListlinkComponent implements OnInit, OnChanges {
     selectedListLink: any = [];
     selectAllItems: boolean = false;
     isShowSeeMore?: boolean = false;
+    isShowPageSizeController?: boolean = false;
     availableListLink: Link[] = [];
     isShowMappingPopup: boolean = false;
     listLink: Link[] = listLink;
+    page = 1;
+    currentPage!: number;
+    currentLinks!: Link[];
 
+    pageSizeSelect: number[] = [2, 4, 6, 8];
+
+    @Input() isSelectedAll: boolean = false;
     @Input() onEditLink!: (id: number, link: object) => void;
     @Input() element!: any;
     @Input() id!: number;
     @Input() isSearchValue?: boolean;
     pageSize = 4;
-    page = 1;
-    currentPage!: number;
-    currentLinks!: Link[];
     constructor(private myService: ListlinkService, ngbConfig: NgbConfig, private eRef: ElementRef) {
         ngbConfig.animation = false;
     }
@@ -126,8 +130,10 @@ export class ListlinkComponent implements OnInit, OnChanges {
                     this.selectedListLink?.push(item.id);
                 }
             });
+            this.isSelectedAll = true;
         } else {
             this.selectedListLink = [];
+            this.isSelectedAll = false;
         }
         if (this.selectedListLink.length > 0) {
             this.isShowMappingPopup = true;
@@ -140,6 +146,7 @@ export class ListlinkComponent implements OnInit, OnChanges {
         this.myService.deleteSelectedList(this.selectedListLink);
         this.selectedListLink = [];
         this.isShowMappingPopup = false;
+        this.isSelectedAll = false;
     };
 
     handleBackToFirst = () => {
@@ -150,7 +157,18 @@ export class ListlinkComponent implements OnInit, OnChanges {
         this.page = this.availableListLink.length;
     };
 
-    // handleLog(input: any) {
-    //     console.log(input);
-    // }
+    handleCloseMapping = () => {
+        this.selectedListLink = [];
+        this.isSelectedAll = false;
+        this.isShowMappingPopup = false;
+    };
+
+    handleShowPageSizeController = () => {
+        this.isShowPageSizeController = !this.isShowPageSizeController;
+    };
+
+    handleGetValueSelect = (value: number) => {
+        this.pageSize = value;
+        console.log(this.pageSize);
+    };
 }

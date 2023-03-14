@@ -1,5 +1,4 @@
 import { Injectable, OnInit } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { listLink } from 'src/app/listLink';
 import { Link } from 'src/app/link';
@@ -8,7 +7,8 @@ import { Link } from 'src/app/link';
     providedIn: 'root',
 })
 export class ListlinkService {
-    private listLink$ = new BehaviorSubject<Link[]>(listLink);
+    data = listLink;
+    private listLink$ = new BehaviorSubject<Link[]>(this.data);
     private searchValue$ = new BehaviorSubject<string>('');
     selectedLinkList: [] = [];
     isShowProduct: boolean = true;
@@ -17,47 +17,41 @@ export class ListlinkService {
     getListLink(): Observable<Link[]> {
         if (this.searchValue$.value.length <= 0) {
             if ((this.isShowProduct && this.isShowPost) || (!this.isShowProduct && !this.isShowPost)) {
-                this.listLink$.next(listLink);
+                this.listLink$.next(this.data);
             }
             if (!this.isShowProduct && this.isShowPost) {
+                console.log(this.listLink$.value);
                 const filteredList = this.listLink$.value.filter((item) => item.type != 'product');
                 this.listLink$.next(filteredList);
             }
             if (this.isShowProduct && !this.isShowPost) {
+                console.log(this.listLink$.value);
                 const filteredList = this.listLink$.value.filter((item) => item.type != 'post');
                 this.listLink$.next(filteredList);
             }
         } else if (this.searchValue$.value.length > 0) {
             if ((this.isShowProduct && this.isShowPost) || (!this.isShowProduct && !this.isShowPost)) {
-                const filteredData = listLink.filter((item) => {
-                    console.log(item.description);
-                    console.log(this.searchValue$.value);
+                const filteredData = this.data.filter((item) => {
                     const result = item.description
                         .toLocaleLowerCase()
                         .includes(this.searchValue$.value.toLocaleLowerCase());
-                    console.log(result);
                     return result;
                 });
-
                 this.listLink$.next(filteredData);
             }
             if (!this.isShowProduct && this.isShowPost) {
-                let filteredTypeList = listLink.filter((item) => item.type != 'product');
+                let filteredTypeList = this.data.filter((item) => item.type != 'product');
                 let searchedList = filteredTypeList.filter((list) => {
                     return list.description.toLocaleLowerCase().includes(this.searchValue$.value.toLocaleLowerCase());
                 });
-                console.log(searchedList);
                 this.listLink$.next(searchedList);
-                console.log(this.listLink$.value);
             }
             if (this.isShowProduct && !this.isShowPost) {
-                let filteredTypeList = listLink.filter((item) => item.type != 'post');
+                let filteredTypeList = this.data.filter((item) => item.type != 'post');
                 let searchedList = filteredTypeList.filter((list) => {
                     return list.description.toLocaleLowerCase().includes(this.searchValue$.value.toLocaleLowerCase());
                 });
-                console.log(searchedList);
                 this.listLink$.next(searchedList);
-                console.log(this.listLink$.value);
             }
         }
         return this.listLink$.asObservable();
@@ -65,7 +59,6 @@ export class ListlinkService {
 
     getSearchQuery = (input: string) => {
         this.searchValue$.next(input);
-        console.log(this.searchValue$.value);
         this.getListLink();
     };
 
@@ -85,8 +78,7 @@ export class ListlinkService {
             old_link: newlink.oldLink,
             new_link: newlink.newLink,
         };
-
-        this.listLink$.next([...this.listLink$.value, newObjectLink]);
+        this.data.push(newObjectLink);
     };
 
     editLink = (id: number, newlink: { type: string; description: string; oldLink: string; newLink: string }) => {
@@ -101,36 +93,30 @@ export class ListlinkService {
             old_link: newlink.oldLink,
             new_link: newlink.newLink,
         };
-        const updatedList = [...this.listLink$.value];
-        updatedList[index] = updatedLink;
-        this.listLink$.next(updatedList);
+        this.data[index] = updatedLink;
         window.alert('EDIT SUCCESSFULLY');
     };
 
     deleteLink = (id: number) => {
-        const deletedLink = this.listLink$.value.filter((list) => list.id !== id);
-        this.listLink$.next(deletedLink);
+        this.data = this.data.filter((item) => item.id != id);
+        this.listLink$.next(this.data);
+        console.log(this.listLink$);
     };
 
-    deleteSelectedList(ids: number[]): Observable<Link[]> {
+    deleteSelectedList = (ids: number[]) => {
         if (ids.length > 0) {
-            const currentLinks = this.listLink$.getValue();
-            const newLinks = currentLinks.filter((link) => !ids.includes(link.id));
-            this.listLink$.next(newLinks);
+            this.data = this.data.filter((link) => !ids.includes(link.id));
+            this.listLink$.next(this.data);
             window.alert('DELETE SUCCESSFULLy');
-            return of(newLinks);
         } else {
             window.alert('SelectedLink Not Found');
-            return this.listLink$;
         }
-    }
+    };
 
     onFilter = (filter: { post: boolean; product: boolean }) => {
         this.isShowPost = filter.post;
         this.isShowProduct = filter.product;
-        console.log(filter);
         this.getListLink();
-        console.log(this.listLink$);
     };
 
     onResetFilter = () => {
