@@ -1,0 +1,111 @@
+<div class="wrapper">
+    <h1 class="title">ĐIỀU KIỆN ÁP DỤNG</h1>
+    <div class="condition-container">
+        <div class="conpany-application">
+            <p class="condition-title">Đơn vị áp dụng</p>
+            <div class="checkboxes-application">
+                <div class="checkbox">
+                    <input type="checkbox" #selectHachiWeb [checked]="isHachiWeb" kendoCheckBox />
+                    <p class="checkbox-label">Website hachihachi.com.vn</p>
+                </div>
+                <div class="checkbox" style="display: flex; flex-direction: column">
+                    <div style="display: flex; gap: 11px">
+                        <input
+                            class="selection-btn"
+                            type="checkbox"
+                            #selectAll
+                            (click)="handleIsCheckAll()"
+                            [checked]="isCheckAll"
+                            kendoCheckBox
+                        />
+                        <p class="checkbox-label">Tất cả cửa hàng</p>
+                    </div>
+                    <div class="sub-selection">
+                        <ul class="selection-list">
+                            <li class="selection-item" *ngFor="let store of hachiStore">
+                                <input
+                                    class="selection-btn"
+                                    type="checkbox"
+                                    [checked]="selectedList.includes(store.id)"
+                                    kendoCheckBox
+                                    (click)="handleChecked(store.id)"
+                                />
+                                <p class="checkbox-label">{{ store.storeName }}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="usage-limit-wrapper">
+            <p class="condition-title">Hạn mức sử dụng</p>
+            <form class="k-form usage-form" [formGroup]="usageCondition">
+                <kendo-formfield>
+                    <div class="condition-box">
+                        <p class="label">Số lượt sử dùng của coupon</p>
+                        <input class="input" formControlName="usageQuatity" kendoTextBox #usageQuatity />
+                    </div>
+                </kendo-formfield>
+                <kendo-formfield>
+                    <div class="condition-box">
+                        <p class="label">Số lượt dùng tồi đa/1 giao dịch</p>
+                        <input class="input" formControlName="maxUsage" kendoTextBox #usageQuatity />
+                    </div>
+                </kendo-formfield>
+                <p class="condition-title">Giá trị đơn hàng được áp dụng coupon</p>
+                <kendo-formfield>
+                    <div class="condition-box">
+                        <p class="label">Giá trị đơn hàng tối thiểu</p>
+                        <input class="input" formControlName="minValue" kendoTextBox #minValue />
+                    </div>
+                </kendo-formfield>
+                <p class="condition-title">Giá trị chiết khấu tối đa của coupon</p>
+                <kendo-formfield>
+                    <div class="condition-box">
+                        <p class="label">Giá trị chiết khấu tối đa</p>
+                        <input class="input" formControlName="maxDiscount" kendoTextBox #maxDiscount />
+                    </div>
+                </kendo-formfield>
+            </form>
+        </div>
+        <div class="coupon-type-wrapper">
+            <p class="condition-title">Phân loại coupon</p>
+            <div class="type-box">
+                <input
+                    class="radio-input"
+                    type="radio"
+                    (click)="handleSetIndividual(false)"
+                    name="couponCate"
+                    checked
+                    kendoRadioButton
+                />
+                <p class="type-title">công khai</p>
+            </div>
+            <div class="type-box" style="display: flex">
+                <input
+                    class="radio-input"
+                    type="radio"
+                    (click)="handleSetIndividual(true)"
+                    name="couponCate"
+                    kendoRadioButton
+                />
+                <div>
+                    <p class="type-title">cá nhân</p>
+                    <div class="sub-detail">
+                        <input class="checkbox-input" [checked]="isIndividual" type="checkbox" kendoCheckBoxButton />
+                        <p class="type-title">đích danh</p>
+                    </div>
+                </div>
+            </div>
+            <p class="condition-title">Phân loại coupon</p>
+            <div class="type-box">
+                <input class="radio-input" type="radio" name="quantityType" checked kendoRadioButton />
+                <p class="type-title">số coupon cho từng cá nhân</p>
+            </div>
+            <div class="type-box">
+                <input class="radio-input" type="radio" name="quantityType" kendoRadioButton />
+                <p class="type-title">coupon dùng chung cho tất cả</p>
+            </div>
+        </div>
+    </div>
+</div>

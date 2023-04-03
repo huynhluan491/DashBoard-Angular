@@ -11,7 +11,7 @@ import {
     ElementRef,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ListlinkService } from 'src/app/assets/services/listlink.service';
+import { ListlinkService } from 'src/services/listlink.service';
 import { Link } from 'src/app/link';
 import { NgbConfig, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { listLink } from 'src/app/listLink';
@@ -60,8 +60,6 @@ export class ListlinkComponent implements OnInit, OnChanges {
                 this.availableListLink = list;
             });
         }
-        console.log(this.availableListLink);
-        console.log(changes);
     }
 
     get _availableListLink(): Link[] {

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ListlinkService } from 'src/app/assets/services/listlink.service';
+import { ListlinkService } from 'src/services/listlink.service';
 
 @Component({
     selector: 'app-searchbar',

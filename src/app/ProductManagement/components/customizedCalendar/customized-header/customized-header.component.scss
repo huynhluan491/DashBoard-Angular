@@ -1,0 +1,77 @@
+.expire-calendar-wrapper {
+    .calendar-button {
+        position: relative;
+        display: flex;
+        gap: 8px;
+        width: 112px;
+        height: 30px;
+        background-color: #f5f6f8;
+        border-radius: 4px;
+        align-items: center;
+        justify-content: center;
+        color: #26282e;
+        font-size: 13px;
+        font-weight: 400;
+
+        .date-text {
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none;
+        }
+    }
+    .active {
+        background-color: #36c8cf;
+        color: #fff;
+    }
+
+    .isActive {
+        background-color: #36c8cf;
+        color: #fff;
+    }
+}
+
+::ng-deep .expire-calendar-wrapper .mat-calendar {
+    width: 290px;
+    height: 273px;
+    top: 30px;
+    left: 0;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0px 5px 6px 0px #5a627680;
+    z-index: 99999;
+
+    .mat-calendar-table-header {
+        display: none;
+    }
+
+    .mat-calendar-content {
+        padding: 0px 19px 0px 19px;
+    }
+
+    .mat-calendar-body-label {
+        visibility: hidden;
+    }
+
+    .mat-calendar-body-today.mat-calendar-body-selected {
+        box-shadow: unset;
+        background-color: transparent;
+        border: 1px solid #36c8cf;
+        color: #26282e;
+    }
+
+    .mat-calendar-body-selected {
+        background-color: #36c8cf;
+    }
+
+    .mat-calendar-body-cell .mat-calendar-body-cell-content:hover {
+        background-color: #f5f6f8 !important;
+        color: #26282e;
+    }
+
+    .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover
+        > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(
+            .mat-calendar-body-comparison-identical
+        ) {
+        background-color: unset;
+    }
+}

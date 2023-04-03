@@ -78,3 +78,17 @@ input[type='checkbox'].type-checkbox:checked {
 input[type='checkbox']:hover {
     accent-color: unset;
 }
+
+// ::ng-deep .k-button {
+//     background-color: #1a6634;
+//     color: white;
+//     font-size: 11px;
+//     font-weight: 600;
+//     gap: 5px;
+//     padding: 9px 19px 9px 5px;
+//     display: flex;
+
+//     &:hover {
+//         background-color: #1a6634;
+//     }
+// }

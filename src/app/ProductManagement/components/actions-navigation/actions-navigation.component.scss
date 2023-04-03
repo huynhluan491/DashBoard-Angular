@@ -1,0 +1,147 @@
+.wrapper {
+    padding-top: 7rem;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 23px;
+    border-bottom: 1px solid #bdc2d2;
+    .beadcrumb-container {
+        width: 50%;
+    }
+
+    .btn-container {
+        display: flex;
+        .coupon-list-btn {
+            display: flex;
+            background-color: #ffffff;
+            box-shadow: 0px 3px 8px 0px #0aaffe6b;
+            color: #008000;
+            font-size: 11px;
+            font-weight: 600;
+            align-items: center;
+            justify-content: center;
+            height: 32px;
+            min-width: 156px;
+            gap: 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            svg {
+                margin-left: 5px;
+            }
+
+            p {
+                padding: 5px 5px 5px 0;
+            }
+        }
+
+        .print-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            box-shadow: 0px 3px 6px 0px #959db333;
+            width: 42px;
+            height: 32px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin: 0 11px 0 10px;
+        }
+
+        .check-coupon-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            background-color: #ffffff;
+            color: #008000;
+            width: 101px;
+            height: 32px;
+            border-radius: 3px;
+            box-shadow: 0px 3px 8px 0px #0aaffe6b;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .delete-release {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #bdc2d2;
+            border-radius: 3px;
+            box-shadow: 0px 3px 8px 0px #0aaffe6b;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            height: 32px;
+            width: 131px;
+            cursor: pointer;
+            margin: 0 8px 0 10px;
+        }
+
+        .create-btn {
+            display: flex;
+            gap: 5px;
+            width: 98px;
+            height: 32px;
+            align-items: center;
+            justify-content: center;
+            background-color: #1a6634;
+            box-shadow: 0px 3px 8px 0px #0aaffe6b;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+    }
+
+    .file-action {
+        margin-left: 42px;
+        display: flex;
+        background-color: #ffffff;
+        box-shadow: 0px 3px 6px 0px #959db333;
+        border-radius: 3px;
+        width: 98px;
+        height: 32px;
+        align-items: center;
+        justify-content: space-around;
+        margin-right: 15px;
+        .icon:last-child {
+            position: relative;
+            &::before {
+                content: '';
+                position: absolute;
+                background-color: #dbdee7;
+                width: 1px;
+                height: 20px;
+                left: -8px;
+                top: -2px;
+            }
+        }
+    }
+}
+
+::ng-deep .wrapper .k-breadcrumb {
+    background-color: unset;
+
+    .k-breadcrumb-root-link {
+        color: #1a6634 !important;
+        font-size: 13px;
+        font-weight: 600;
+        &:hover {
+            background-color: unset;
+        }
+    }
+
+    .k-i-chevron-right {
+        color: #bdc2d2;
+    }
+
+    .k-cursor-pointer {
+        color: #959db3;
+    }
+
+    .k-breadcrumb-last-item {
+        color: #959db3;
+    }
+}

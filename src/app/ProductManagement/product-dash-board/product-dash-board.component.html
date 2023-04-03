@@ -1,0 +1,85 @@
+<div class="wrapper">
+    <div class="content-layout">
+        <div class="side-bar">
+            <ul class="sidebar-menu-list">
+                <li class="title" *ngFor="let item of sideBar" [class.active]="item.active">
+                    <div style="display: flex">
+                        <div class="side-bar-icon">
+                            <svg
+                                width="23"
+                                height="25"
+                                viewBox="0 0 23 25"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <g filter="url(#filter0_d_527_786)">
+                                    <path
+                                        d="M15.053 0.00044409H5.579C5.37316 -0.00449702 5.16841 0.0318371 4.97684 0.107303C4.78526 0.182769 4.61074 0.295838 4.46357 0.43984C4.3164 0.583842 4.19956 0.75586 4.11994 0.945747C4.04033 1.13563 3.99954 1.33954 4 1.54544V12.3644H5.579V1.54544H15.053V0.00044409ZM17.421 3.09144H8.737C8.53116 3.0865 8.32641 3.12284 8.13484 3.1983C7.94326 3.27377 7.76874 3.38684 7.62157 3.53084C7.4744 3.67484 7.35756 3.84686 7.27794 4.03675C7.19833 4.22663 7.15754 4.43054 7.158 4.63644V15.4554C7.15754 15.6613 7.19833 15.8653 7.27794 16.0551C7.35756 16.245 7.4744 16.417 7.62157 16.561C7.76874 16.7051 7.94326 16.8181 8.13484 16.8936C8.32641 16.9691 8.53116 17.0054 8.737 17.0004H17.421C17.6268 17.0054 17.8316 16.9691 18.0232 16.8936C18.2147 16.8181 18.3893 16.7051 18.5364 16.561C18.6836 16.417 18.8004 16.245 18.8801 16.0551C18.9597 15.8653 19.0005 15.6613 19 15.4554V4.63644C19.0005 4.43054 18.9597 4.22663 18.8801 4.03675C18.8004 3.84686 18.6836 3.67484 18.5364 3.53084C18.3893 3.38684 18.2147 3.27377 18.0232 3.1983C17.8316 3.12284 17.6268 3.0865 17.421 3.09144ZM17.421 15.4554H8.737V4.63644H17.421V15.4554Z"
+                                        fill="white"
+                                    />
+                                </g>
+                                <defs>
+                                    <filter
+                                        id="filter0_d_527_786"
+                                        x="0"
+                                        y="0"
+                                        width="23"
+                                        height="25.001"
+                                        filterUnits="userSpaceOnUse"
+                                        color-interpolation-filters="sRGB"
+                                    >
+                                        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                                        <feColorMatrix
+                                            in="SourceAlpha"
+                                            type="matrix"
+                                            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                            result="hardAlpha"
+                                        />
+                                        <feOffset dy="4" />
+                                        <feGaussianBlur stdDeviation="2" />
+                                        <feColorMatrix
+                                            type="matrix"
+                                            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                                        />
+                                        <feBlend
+                                            mode="normal"
+                                            in2="BackgroundImageFix"
+                                            result="effect1_dropShadow_527_786"
+                                        />
+                                        <feBlend
+                                            mode="normal"
+                                            in="SourceGraphic"
+                                            in2="effect1_dropShadow_527_786"
+                                            result="shape"
+                                        />
+                                    </filter>
+                                </defs>
+                            </svg>
+                        </div>
+                        <p *ngIf="!item.active; else submenuComp">{{ item.title }}</p>
+                    </div>
+                    <ng-template #submenuComp>
+                        <div class="submenu-wrapper">
+                            <p class="text">{{ item.title }}</p>
+                            <ul class="submenu-list">
+                                <li class="sub-item" *ngFor="let subitem of item.subMenu">{{ subitem }}</li>
+                            </ul>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+        </div>
+        <div class="content-container">
+            <app-dashboard-header></app-dashboard-header>
+            <app-actions-navigation></app-actions-navigation>
+            <div class="action-form-wrapper">
+                <app-coupon-form></app-coupon-form>
+                <app-condition-option></app-condition-option>
+                <app-send-notification></app-send-notification>
+                <app-program-products></app-program-products>
+                <!-- <app-customized-calender></app-customized-calender> -->
+            </div>
+        </div>
+    </div>
+    <app-add-product-form *ngIf="isOpenForm"></app-add-product-form>
+</div>

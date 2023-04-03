@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ListlinkService } from 'src/app/assets/services/listlink.service';
+import { ListlinkService } from 'src/services/listlink.service';
+import { FormService } from 'src/app/form-service.service';
 
 @Component({
     selector: 'app-linkaction',
@@ -14,11 +15,7 @@ export class LinkactionComponent implements OnChanges {
 
     @Output() onCloseForm: EventEmitter<void> = new EventEmitter<void>();
 
-    constructor(private myService: ListlinkService) {}
-
-    handleShowAddForm = () => {
-        this.isShowAddForm = !this.isShowAddForm;
-    };
+    constructor(private myService: ListlinkService, private formService: FormService) {}
 
     ngOnChanges(changes: SimpleChanges): void {}
 
@@ -53,5 +50,10 @@ export class LinkactionComponent implements OnChanges {
     updateCheckBox() {
         this.isPost = true;
         this.isProduct = true;
+    }
+
+    handleAddButton() {
+        this.formService.handleCheckisNew(true, null);
+        this.formService.handleOpenForm();
     }
 }

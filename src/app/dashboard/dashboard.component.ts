@@ -1,7 +1,8 @@
 import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Link } from '../link';
-import { ListlinkService } from '../assets/services/listlink.service';
+import { ListlinkService } from 'src/services/listlink.service';
 import { LinkactionComponent } from '../components/linkaction/linkaction.component';
+import { FormService } from '../form-service.service';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -13,7 +14,7 @@ export class DashboardComponent implements OnInit {
     isSearchValue: boolean = false;
     isPost: boolean = true;
     isProduct: boolean = true;
-    constructor(private listLink: ListlinkService) {}
+    constructor(private listLink: ListlinkService, private formSerivce: FormService) {}
 
     ngOnInit(): void {}
 
@@ -27,7 +28,6 @@ export class DashboardComponent implements OnInit {
         } else if (input.length == 0 || input == '') {
             this.isSearchValue = false;
         }
-        console.log(this.isSearchValue);
     }
 
     handleResetType = () => {
@@ -35,4 +35,12 @@ export class DashboardComponent implements OnInit {
         this.isProduct = true;
         this.child.updateCheckBox();
     };
+
+    get isOpenForm(): boolean {
+        return this.formSerivce.isOpenForm;
+    }
+
+    get isEditItem(): Link {
+        return this.formSerivce.isEditItem;
+    }
 }

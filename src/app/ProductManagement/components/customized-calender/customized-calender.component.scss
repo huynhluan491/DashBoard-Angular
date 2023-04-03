@@ -1,0 +1,140 @@
+.wrapper {
+    height: 30px;
+    .default-calendar,
+    .active-calendar {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+::ng-deep .mat-calendar {
+    display: none;
+    width: 290px;
+    height: 273px;
+    top: 30px;
+    left: 0;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0px 5px 6px 0px #5a627680;
+    z-index: 99999;
+
+    .mat-calendar-table-header {
+        display: none;
+    }
+
+    .mat-calendar-content {
+        padding: 0px 19px 0px 19px;
+    }
+
+    .mat-calendar-body-label {
+        visibility: hidden;
+    }
+
+    .mat-calendar-body-today.mat-calendar-body-selected {
+        box-shadow: unset;
+        background-color: transparent;
+        border: 1px solid #36c8cf;
+        color: #26282e;
+    }
+
+    .mat-calendar-body-selected {
+        background-color: #36c8cf;
+    }
+
+    .mat-calendar-body-cell .mat-calendar-body-cell-content:hover {
+        background-color: #f5f6f8 !important;
+        color: #26282e;
+    }
+
+    .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover
+        > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(
+            .mat-calendar-body-comparison-identical
+        ) {
+        background-color: unset;
+    }
+}
+
+::ng-deep .wrapper .mat-mdc-form-field {
+    .mat-mdc-form-field-flex {
+        display: flex;
+        flex-direction: row-reverse;
+        height: 100%;
+    }
+
+    .mdc-text-field {
+        padding: 0;
+    }
+
+    .mat-mdc-text-field-wrapper {
+        height: 100%;
+    }
+
+    .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-form-field-infix {
+        padding-bottom: 0;
+        padding-top: 0;
+        display: flex;
+        align-items: center;
+        height: 30px;
+    }
+
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+        background-color: #f5f6f8;
+    }
+
+    .mdc-line-ripple {
+        display: none;
+    }
+
+    .mat-mdc-focus-indicator {
+        display: none;
+    }
+
+    .mat-mdc-button-ripple {
+        display: none;
+    }
+
+    .mat-mdc-button-persistent-ripple {
+        display: none;
+    }
+
+    .mat-mdc-button-touch-target {
+        display: none;
+    }
+
+    .mat-mdc-icon-button {
+        width: 14px;
+        height: 14px;
+        padding: unset;
+        cursor: pointer;
+    }
+
+    .mat-mdc-form-field-flex {
+        height: 100%;
+    }
+
+    .mat-mdc-form-field-infix {
+        min-height: unset;
+        height: 100%;
+        width: unset;
+    }
+
+    .mat-datepicker-input {
+        height: 100%;
+        margin-left: 12px;
+        font-size: 13px;
+        font-weight: 400;
+    }
+
+    .mat-mdc-form-field-icon-suffix,
+    [dir='rtl'] .mat-mdc-form-field-icon-prefix {
+        padding: 8px 0 8px 8px;
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+    }
+
+    .mat-mdc-form-field-focus-overlay {
+        display: none;
+    }
+}

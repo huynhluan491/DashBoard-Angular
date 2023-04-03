@@ -1,0 +1,156 @@
+.wrapper {
+    margin-top: 19px;
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 41px 0 0;
+        margin-bottom: 15px;
+        .header-title {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            .title {
+                color: #26282e;
+                font-size: 16px;
+                font-weight: 600;
+            }
+
+            .text {
+                color: #1a6634;
+                font-size: 13px;
+                font-weight: 600;
+            }
+        }
+        .languages-box {
+            display: flex;
+            align-items: center;
+            .language {
+                color: #bbc0bb;
+                font-size: 13px;
+                font-weight: 400;
+                padding: 0 4px;
+                cursor: pointer;
+
+                &:nth-child(2) {
+                    border-left: 1px solid #bbc0bb;
+                    border-right: 1px solid #bbc0bb;
+                }
+            }
+        }
+    }
+
+    .active {
+        color: #626662 !important;
+    }
+    .coupon-form {
+        background-color: #ffffff;
+        .form-wrapper {
+            display: flex;
+            gap: 26px;
+            padding: 0 41px 22px 18px;
+            .input {
+                height: 33px;
+                border: 2px solid #dbdee7;
+                margin-top: 8px;
+                &:focus {
+                    box-shadow: unset;
+                }
+            }
+            .label {
+                color: #959db3;
+                font-size: 13px;
+                font-weight: 600;
+                margin: 10px 0 8px 0;
+            }
+            .checkbox-input {
+                border-color: #1a6634;
+                accent-color: #1a6634;
+                &:focus {
+                    box-shadow: unset !important;
+                }
+            }
+            .left-form {
+                width: 36rem;
+
+                .id-input {
+                    width: 150px;
+                }
+                .quantity-input {
+                    width: 76px;
+                }
+            }
+
+            .right-form {
+                width: 100%;
+
+                .explain-input-style {
+                    width: 100%;
+                    height: 142px;
+                    padding: 5px 0 0 7px;
+                    resize: none;
+                }
+            }
+        }
+    }
+}
+
+::ng-deep .wrapper .k-form {
+    .k-form-fieldset {
+        margin: unset;
+    }
+}
+
+::ng-deep .wrapper .k-datepicker {
+    display: flex;
+    flex-direction: row-reverse;
+    border: unset;
+    background-color: #f5f6f8;
+    height: 30px;
+    .k-input-button {
+        border: unset;
+        background-image: unset;
+        background-color: unset;
+    }
+
+    .k-input-inner {
+        color: #26282e;
+        font-size: 13px;
+        font-weight: 400;
+    }
+}
+
+.test {
+    background-image: url('/src/app/assets/images/avt.png');
+}
+
+.expire-calendar-wrapper {
+    .calendar-button {
+        position: relative;
+        display: flex;
+        gap: 8px;
+        width: 112px;
+        height: 30px;
+        background-color: #f5f6f8;
+        border-radius: 4px;
+        align-items: center;
+        justify-content: center;
+        color: #26282e;
+        font-size: 13px;
+        font-weight: 400;
+
+        .date-text {
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none;
+        }
+    }
+    .active {
+        background-color: #36c8cf;
+        color: #fff;
+    }
+
+    .isActive {
+        background-color: #36c8cf;
+        color: #fff;
+    }
+}

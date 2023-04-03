@@ -1,0 +1,69 @@
+<div class="wrapper">
+    <div class="header-container">
+        <div class="header-title">
+            <p class="title">CẤU HÌNH GỞI THÔNG BÁO</p>
+        </div>
+        <div class="languages-box">
+            <span class="language" [class.active]="isSMS" (click)="onSmsMode()">SMS </span>
+            <span class="language" [class.active]="isMobile" (click)="onMobileMode()">Mobile App</span>
+            <span class="language" [class.active]="isCart" (click)="onCartMode()">Giỏ hàng</span>
+        </div>
+    </div>
+    <div class="send-noti-form">
+        <form class="k-form setup-form" [formGroup]="isMobile ? mobileSetup : isCart ? cartSetup : smsSetup">
+            <kendo-formfield>
+                <div class="condition-box">
+                    <div style="display: flex; gap: 10px; align-items: center">
+                        <input type="checkbox" checked class="checkbox-input" kendoCheckBox />
+                        <p class="label" *ngIf="isSMS">Gởi thông báo trên sms với tiêu đề</p>
+                        <p class="label" *ngIf="isMobile">Gởi thông báo trên app mobile với tiêu đề</p>
+                        <p class="label" *ngIf="isCart">Gởi thông báo trên giỏ hàng với tiêu đề</p>
+                    </div>
+                    <textarea
+                        class="input"
+                        resizable="none"
+                        type="text"
+                        formControlName="title"
+                        kendoTextBox
+                        #title
+                        style="resize: none"
+                    ></textarea>
+                </div>
+            </kendo-formfield>
+            <kendo-formfield>
+                <div class="condition-box">
+                    <p class="label">Nội dung thông báo</p>
+                    <textarea class="textare-input" formControlName="notiContent" kendoTextBox #notiContent> </textarea>
+                </div>
+            </kendo-formfield>
+
+            <div class="condition-box">
+                <p class="label" *ngIf="isSMS">Thời điểm gởi thông báo trên sms</p>
+                <p class="label" *ngIf="isMobile">Thời điểm gởi thông báo trên App mobile</p>
+                <p class="label" *ngIf="isCart">Thời điểm gởi thông báo trên giỏ hàng</p>
+                <kendo-datetimepicker [readOnlyInput]="readOnlyInput" [value]="sendTime"></kendo-datetimepicker>
+            </div>
+
+            <div class="condition-box">
+                <p class="label" *ngIf="isSMS">Đối tượng gởi thông báo trên sms</p>
+                <p class="label" *ngIf="isMobile">Đối tượng gởi thông báo trên App mobile</p>
+                <p class="label" *ngIf="isCart">Đối tượng gởi thông báo trên giỏ hàng</p>
+                <div class="target-box">
+                    <div class="cusomter-type">
+                        <input type="radio" name="target" class="radio-input" kendoRadioButton />
+                        <p class="radio-text">Tất cả đối tượng nhận coupon tải app</p>
+                        <div class="cusomter-type"></div>
+                        <input type="radio" name="target" checked class="radio-input" kendoRadioButton />
+                        <p class="radio-text">Tất cả KHTT tải app</p>
+                    </div>
+
+                    <div class="cusomter-type">
+                        <input type="radio" name="target" class="radio-input" kendoRadioButton />
+                        <input type="radio" />
+                        <p class="radio-text">Tất cả khách hàng tải app</p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

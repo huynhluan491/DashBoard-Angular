@@ -14,4 +14,5 @@
             <app-listlink [isSearchValue]="isSearchValue"></app-listlink>
         </div>
     </div>
+    <app-formupdate *ngIf="isOpenForm" [selectedLink]="isEditItem"></app-formupdate>
 </div>

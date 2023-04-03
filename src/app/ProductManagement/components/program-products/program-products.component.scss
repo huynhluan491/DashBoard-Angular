@@ -1,0 +1,101 @@
+.wrapper {
+    margin-top: 18px;
+    .header-container {
+        display: flex;
+        padding-right: 19px;
+        margin-bottom: 15px;
+        justify-content: space-between;
+        .header-title {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            .title {
+                color: #26282e;
+                font-size: 16px;
+                font-weight: 600;
+            }
+        }
+
+        .search-bar {
+            display: flex;
+            position: relative;
+            gap: 8px;
+            .search-icon {
+                position: absolute;
+                top: 5px;
+                left: 10px;
+            }
+
+            input {
+                height: 29px;
+                width: 300px;
+                padding: 7px 7px 6px 29px;
+                border-radius: 4px;
+                font-size: 13px;
+                font-weight: 400;
+                color: #26282e;
+            }
+
+            .find-btn {
+                background-color: #008000;
+                position: relative;
+                color: #ffffff;
+                font-size: 13px;
+                font-weight: 600;
+                width: 52px;
+                border-radius: 4px;
+                height: 29px;
+                .icon {
+                    position: absolute;
+                    top: 6px;
+                    left: 6px;
+                }
+            }
+        }
+
+        .link-action {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            .action-btn {
+                display: flex;
+                height: 32px;
+                justify-content: center;
+                align-items: center;
+                background-color: white;
+                border-radius: 3px;
+                gap: 8px;
+                font-weight: 600;
+                box-shadow: 0px 3px 6px 0px #959db333;
+
+                p {
+                    font-size: 13px;
+                    color: #959db3;
+                }
+            }
+
+            .export-btn {
+                width: 35px;
+            }
+
+            .template {
+                width: 102px;
+            }
+
+            .add-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                width: 156px;
+                background-color: #1a6634;
+                color: white;
+                height: 32px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                border-radius: 3px;
+                box-shadow: 0px 3px 8px 0px #0aaffe6b;
+            }
+        }
+    }
+}

@@ -1,0 +1,104 @@
+.sub-menu {
+    position: absolute;
+    right: 80%;
+    top: -9px;
+    .edit-wrapper {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        border-top-left-radius: 3px;
+        background-color: #959db3;
+        color: white;
+        font-size: 1.3rem;
+        font-weight: 400;
+        height: 30px;
+        width: 150px;
+        padding-left: 10px;
+        cursor: pointer;
+    }
+
+    .delete-mapping {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        background-color: #bdc2d2;
+        color: white;
+        font-size: 1.3rem;
+        font-weight: 400;
+        height: 30px;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+        width: 150px;
+        padding-left: 10px;
+        cursor: pointer;
+    }
+}
+
+.handle-mapping-wrapper {
+    display: flex;
+    height: 66px;
+    box-shadow: 0px 5px 6px 0px #5a62764d;
+    .selected-quantity {
+        text-align: center;
+        background-color: #008000;
+        color: white;
+        width: 68px;
+        border-bottom-left-radius: 3px;
+        border-top-left-radius: 3px;
+        .quantity {
+            font-size: 30px;
+            font-weight: 600;
+        }
+        .text {
+            font-size: 13px;
+            font-weight: 400;
+            margin: -6px 0 0 0;
+        }
+    }
+
+    .delete-wrapper {
+        cursor: pointer;
+        text-align: center;
+        background-color: #ffffff;
+        color: #fd7676;
+        width: 20rem;
+        align-items: center;
+        padding-top: 8px;
+
+        .delete-text {
+            font-size: 1.3rem;
+            margin-top: 5px;
+        }
+    }
+
+    .close-action {
+        display: flex;
+        background-color: #ffffff;
+        color: #959db3;
+        width: 5.5rem;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        border-bottom-right-radius: 3px;
+        border-top-right-radius: 3px;
+        position: relative;
+        &::after {
+            content: '';
+            position: absolute;
+            display: flex;
+            background: #bdc2d2;
+            width: 1px;
+            height: 50px;
+            left: 0;
+        }
+
+        .close-icon {
+            display: flex;
+            cursor: pointer;
+        }
+    }
+}
+
+.handle-mapping-wrapper.hide {
+    display: flex !important;
+}

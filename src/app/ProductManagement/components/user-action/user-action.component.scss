@@ -1,0 +1,106 @@
+.wrapper {
+    padding-top: 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #bdc2d2;
+    padding-bottom: 16px;
+    .filter-side {
+        display: flex;
+        gap: 21px;
+        justify-content: flex-end;
+    }
+}
+
+::ng-deep .k-dropdown-button {
+    width: 152px;
+    height: 32px;
+    border-radius: 4px;
+    .k-button {
+        width: 100%;
+        background-image: unset;
+        border: 1px solid #dbdee7;
+        border-radius: 4px;
+        background-color: #ffffff;
+
+        &:focus {
+            box-shadow: unset;
+        }
+    }
+
+    .left-side {
+        display: flex;
+        gap: 7px;
+    }
+}
+
+::ng-deep {
+    .k-animation-container {
+        width: 152px;
+        height: 64px;
+
+        .k-menu-popup {
+            .k-menu-group {
+                box-shadow: 0px 3px 6px 0px #00000029;
+                border: 1px solid #dbdee7;
+                border-radius: 4px;
+                .k-menu-item {
+                    .k-menu-link {
+                        box-shadow: unset !important;
+                        &:hover {
+                            background-color: #008000;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.filter-box {
+    display: flex;
+    background-color: #ffffff;
+    color: #959db3;
+    font-weight: 600;
+    // border: 2px solid #008000; //
+    border-radius: 14px;
+    min-width: 196px;
+    align-items: center;
+    padding: 6px 13px 6px 11px;
+
+    gap: 6px;
+    font-size: 13px;
+
+    input[type='checkbox']:checked {
+        accent-color: #008000;
+        border: 2px solid #008000;
+    }
+
+    input[type='checkbox']:hover {
+        accent-color: unset;
+    }
+}
+
+.file-action {
+    display: flex;
+    background-color: #ffffff;
+    box-shadow: 0px 3px 6px 0px #959db333;
+    border-radius: 3px;
+    width: 98px;
+    height: 32px;
+    align-items: center;
+    justify-content: space-around;
+    margin-right: 15px;
+    .icon:last-child {
+        position: relative;
+        &::before {
+            content: '';
+            position: absolute;
+            background-color: #dbdee7;
+            width: 1px;
+            height: 20px;
+            left: -8px;
+            top: -2px;
+        }
+    }
+}

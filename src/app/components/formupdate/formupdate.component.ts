@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ListlinkService } from 'src/app/assets/services/listlink.service';
+import { ListlinkService } from 'src/services/listlink.service';
+import { FormService } from 'src/app/form-service.service';
 @Component({
     selector: 'app-formupdate',
     templateUrl: './formupdate.component.html',
@@ -17,33 +18,41 @@ export class FormupdateComponent implements OnInit {
     @Input() isShowEditForm!: boolean;
     @Input() selectedLink!: any;
 
-    @Output() handleCloseEditForm: EventEmitter<void> = new EventEmitter<void>();
-    @Output() handleCloseForm: EventEmitter<void> = new EventEmitter<void>();
-
-    constructor(private myService: ListlinkService) {}
+    constructor(private myService: ListlinkService, private formService: FormService) {}
 
     ngOnInit(): void {
         this.myForm = new FormGroup({
-            linkType: new FormControl(this.selectedLink?.linkType, Validators.required),
+            linkType: new FormControl(this.selectedLink?.type, Validators.required),
             description: new FormControl(this.selectedLink?.description, Validators.required),
-            oldSite: new FormControl(this.selectedLink?.oldSite, Validators.required),
-            newSite: new FormControl(this.selectedLink?.newSite, Validators.required),
+            oldSite: new FormControl(this.selectedLink?.old_link, Validators.required),
+            newSite: new FormControl(this.selectedLink?.new_link, Validators.required),
         });
 
         this.myForm.get('linkFormGroup.linkType')?.valueChanges.subscribe((value) => {
             this.myForm.get('linkFormGroup')?.patchValue({ linkType: value }, { emitEvent: false });
+            console.log(this.myForm);
         });
+
+        let isNew = this.formService.isEditForm;
+        if (isNew) {
+            this.myForm?.controls['linkType'].setValue(null);
+            this.myForm?.controls['description'].setValue(null);
+            this.myForm?.controls['oldSite'].setValue(null);
+            this.myForm?.controls['newSite'].setValue(null);
+            console.log('add form');
+        } else {
+            this.myForm?.controls['linkType'].setValue(this.selectedLink?.type);
+            this.myForm?.controls['description'].setValue(this.selectedLink?.description);
+            this.myForm?.controls['oldSite'].setValue(this.selectedLink?.old_link);
+            this.myForm?.controls['newSite'].setValue(this.selectedLink?.new_link);
+        }
     }
 
-    ngOnChanges(simpleChanges: SimpleChanges) {
-        // set value by onChanges when click edit button to bind value of selectedLink to form
-        this.myForm?.controls['linkType'].setValue(this.selectedLink?.type);
-        this.myForm?.controls['description'].setValue(this.selectedLink?.description);
-        this.myForm?.controls['oldSite'].setValue(this.selectedLink?.old_link);
-        this.myForm?.controls['newSite'].setValue(this.selectedLink?.new_link);
-    }
+    ngOnChanges(simpleChanges: SimpleChanges) {}
 
     handleOnSubmit = () => {
+        const isAdd = this.formService.isEditForm;
+
         if (
             this.myForm.value.description != undefined &&
             this.myForm.value.oldSite != undefined &&
@@ -57,14 +66,12 @@ export class FormupdateComponent implements OnInit {
                     newLink: this.myForm.value.newSite,
                 };
 
-                if (this.isShowEditForm) {
+                if (isAdd == false) {
                     this.myService.editLink(this.selectedLink.id, newUpdatedLink);
                     this.myForm.reset();
-                    window.alert('EDIT SUCCESSFULLY');
-                } else {
+                } else if (isAdd) {
                     this.myService.addLink(newUpdatedLink);
                     this.myForm.reset();
-                    window.alert('ADD SUCCESSFULLY');
                 }
             } else {
                 window.alert('Please fill all of fields');
@@ -80,28 +87,7 @@ export class FormupdateComponent implements OnInit {
         }
     };
 
-    handleResetForm() {
-        this.myForm.reset({
-            linkFormGroup: {
-                linkType: 'product',
-            },
-        });
-    }
-
-    findControl(controlPath: string) {
-        return this.myForm.get(controlPath);
-    }
-
-    handleRadioClick(event: MouseEvent) {
-        event.preventDefault();
-    }
-
-    handleClose(event: MouseEvent) {
-        event.preventDefault();
-        if (this.isShowEditForm) {
-            this.handleCloseEditForm.emit();
-        } else {
-            this.handleCloseForm.emit();
-        }
+    togglecloseForm(): void {
+        this.formService.handleCloseForm();
     }
 }

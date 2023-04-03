@@ -1,0 +1,35 @@
+<div class="wrapper">
+    <div class="form-header">
+        <p class="title">SẢN PHẨM</p>
+    </div>
+    <form [formGroup]="addForm" class="form-wrapper">
+        <div class="form-content-wrapper">
+            <div class="barcode-box">
+                <p class="box-title">Barcode</p>
+                <textarea
+                    type="text"
+                    name="barcode"
+                    rows="4"
+                    ngDefaultControl
+                    formControlName="barcode"
+                    cols="50"
+                ></textarea>
+            </div>
+            <div class="product-name-box">
+                <p class="box-title">Tên sản phẩm</p>
+                <textarea
+                    type="text"
+                    name="productName"
+                    rows="4"
+                    ngDefaultControl
+                    cols="50"
+                    formControlName="productName"
+                ></textarea>
+            </div>
+        </div>
+        <div class="action-wrapper">
+            <button class="close-btn" type="button" (click)="togglecloseForm()">ĐÓNG</button>
+            <button class="update-btn">THÊM</button>
+        </div>
+    </form>
+</div>

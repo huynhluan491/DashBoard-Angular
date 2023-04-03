@@ -47,7 +47,7 @@
             </svg>
             <p>Template</p>
         </button>
-        <button class="add-btn" (click)="handleShowAddForm()">
+        <button class="add-btn" (click)="handleAddButton()">
             <svg width="9" height="12" viewBox="0 0 9 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M4.5271 1V11"
@@ -67,9 +67,4 @@
             <p class="text">THÊM MỚI</p>
         </button>
     </div>
-    <app-formupdate
-        (addLink)="onAddLink($event)"
-        [hidden]="!isShowAddForm"
-        (handleCloseForm)="handleCloseForm()"
-    ></app-formupdate>
 </div>
