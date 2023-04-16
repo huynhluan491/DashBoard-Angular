@@ -1,7 +1,7 @@
 <div class="wrapper">
     <div class="content-layout">
         <div class="side-bar">
-            <ul class="sidebar-menu-list">
+            <!-- <ul class="sidebar-menu-list">
                 <li class="title" *ngFor="let item of sideBar" [class.active]="item.active">
                     <div style="display: flex">
                         <div class="side-bar-icon">
@@ -67,9 +67,10 @@
                         </div>
                     </ng-template>
                 </li>
-            </ul>
+            </ul> -->
+            <app-sidebar-drawer></app-sidebar-drawer>
         </div>
-        <div class="content-container">
+        <!-- <div class="content-container">
             <app-dashboard-header></app-dashboard-header>
             <app-actions-navigation></app-actions-navigation>
             <div class="action-form-wrapper">
@@ -77,9 +78,8 @@
                 <app-condition-option></app-condition-option>
                 <app-send-notification></app-send-notification>
                 <app-program-products></app-program-products>
-                <!-- <app-customized-calender></app-customized-calender> -->
             </div>
-        </div>
+        </div> -->
     </div>
     <app-add-product-form *ngIf="isOpenForm"></app-add-product-form>
 </div>

@@ -15,7 +15,7 @@ export class CouponFormComponent implements OnInit {
         conditionDesc: new FormControl('Áp dụng cho đơn hàng có giá trị trên 600.00 đ'),
         explain: new FormControl('KMGBL22-Voucher lịch 100k HĐ 600k-NGÀY KÍNH LÃO-HSD 30/9/22'),
         endDate: new FormControl(new Date()),
-        startDate: new FormControl(new Date()),
+        startDate: new FormControl(new Date(1 / 1 / 2022)),
     });
 
     public couponJapaneseForm: FormGroup = new FormGroup({
@@ -43,6 +43,16 @@ export class CouponFormComponent implements OnInit {
     });
 
     formLanguages = 'vietnamese';
+
+    startDatePicked(selectedDate: Date) {
+        this.couponForm.controls['startDate'].setValue(selectedDate);
+        console.log(this.couponForm.controls['startDate'].value);
+    }
+
+    endDatePicked(selectedDate: Date) {
+        this.couponForm.controls['endDate'].setValue(selectedDate);
+        console.log(this.couponForm.controls['endDate'].value);
+    }
 
     constructor() {}
 

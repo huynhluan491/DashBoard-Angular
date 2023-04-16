@@ -1,0 +1,16 @@
+<div class="wrapper">
+    <ul>
+        <!-- <li>PostId: {{ result.id }}</li>
+        <li>Title: {{ result.title }}</li>
+        <li>Body: {{ result.body }}</li> -->
+    </ul>
+
+    <form ng-submit="submit($event)">
+        <label>Title</label>
+        <input type="text" name="title" [(ngModel)]="title" />
+        <label>Body</label>
+        <input type="text" name="body" [(ngModel)]="body" />
+        <button type="submit">POST</button>
+    </form>
+</div>
+<router-outlet></router-outlet>

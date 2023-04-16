@@ -76,3 +76,54 @@ a[href] {
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+
+.time-picker-wrapper {
+    padding: 15px 29px 21px 29px;
+}
+
+.time-picker-wrapper .allday-type {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.time-picker-wrapper .allday-type label {
+    color: #26282e;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.time-picker-wrapper .selection-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 21px;
+}
+
+.time-picker-wrapper .selection-wrapper .time-selection {
+    width: 102px;
+    height: 24px;
+    outline: none;
+    border: 2px solid #36c8cf;
+}
+
+.time-picker-wrapper .selection-wrapper .time-type-wrapper {
+    display: flex;
+    gap: 13px;
+}
+
+.time-picker-wrapper .selection-wrapper .time-type-wrapper .type-selection {
+    font-size: 13px;
+    line-height: 16px;
+    color: #26282e;
+    background-color: #36c8cf;
+    padding: 13px;
+    border-radius: 100%;
+}
+
+.time-picker-wrapper .selection-wrapper .time-type-wrapper .active {
+    background-color: #36c8cf;
+    border-radius: 100%;
+    padding: 13px;
+    color: white;
+}

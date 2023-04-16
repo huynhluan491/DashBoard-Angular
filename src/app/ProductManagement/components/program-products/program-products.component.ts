@@ -10,6 +10,7 @@ export class ProgramProductsComponent {
     constructor(private addFormService: ProductManagementService) {}
 
     handleOpenForm() {
+        this.addFormService.handleCheckTypeOfForm(true, undefined);
         this.addFormService.handleOpenForm();
     }
 }

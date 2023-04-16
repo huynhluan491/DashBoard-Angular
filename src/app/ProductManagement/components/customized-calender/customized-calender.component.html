@@ -1,46 +1,25 @@
 <div class="wrapper">
     <mat-form-field appearance="fill">
-        <mat-label></mat-label>
-        <!-- Type 'string' is not assignable to type 'FormControl<any>'. -->
-        <input readonly matInput [matDatepicker]="picker" [formControl]="$any(ngControl.control)" ngDefaultControl />
-        <!-- <input readonly matInput [matDatepicker]="picker" [formControl]="dateControl | castForm ngDefaultControl /> -->
-        <!-- <mat-datepicker-toggle
-            id="icon-calendar"
-            matSuffix
-            [formControl]="$any(ngControl.control)"
-            [for]="picker"
+        <input
+            readonly
+            matInput
+            [matDatepicker]="picker"
+            [formControl]="dateValue"
             ngDefaultControl
+            required
+            (dateInput)="handleOnChange($event)"
+        />
+        <mat-icon [hidden]="isOpen" svgIcon="dfCalendar" (click)="picker.open()"></mat-icon>
+        <mat-icon [hidden]="!isOpen" matDatepickerToggleIcon svgIcon="activeCalendar"></mat-icon>
+
+        <mat-datepicker
+            #picker
+            (opened)="onOpen()"
+            (dateInput)="handleOnChange($event)"
+            (closed)="closed()"
+            [calendarHeaderComponent]="exampleHeader"
         >
-            <mat-icon
-                *ngIf="!isOpen"
-                matDatepickerToggleIcon
-                svgIcon="activeCalendar"
-                (click)="$event.stopPropagation(); handleClose()"
-            ></mat-icon>
-        </mat-datepicker-toggle> -->
-        <!-- *ngIf="!isOpen" -->
-        <mat-datepicker-toggle
-            id="icon-calendar"
-            matSuffix
-            [formControl]="$any(ngControl.control)"
-            [for]="picker"
-            ngDefaultControl
-            *ngIf="!isOpen"
-        >
-            <mat-icon
-                matDatepickerToggleIcon
-                svgIcon="dfCalendar"
-                (click)="$event.stopPropagation(); handleOpen()"
-            ></mat-icon>
-        </mat-datepicker-toggle>
-        <mat-datepicker-toggle
-            id="icon-calendar"
-            matSuffix
-            [formControl]="$any(ngControl.control)"
-            [for]="picker"
-            ngDefaultControl
-        ></mat-datepicker-toggle>
-        <mat-datepicker #picker [calendarHeaderComponent]="exampleHeader" *ngIf="!isOpen"></mat-datepicker>
+        </mat-datepicker>
     </mat-form-field>
-    <pre></pre>
 </div>
+<p>{{ dateTimeStr }}</p>

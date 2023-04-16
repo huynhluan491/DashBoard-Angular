@@ -87,18 +87,14 @@
                         <p class="label" *ngSwitchDefault>Thời gian hiệu lực</p>
                     </container-element>
                     <div style="display: flex; gap: 11px; padding-top: 12px">
-                        <!-- <app-customized-calender
-                            [dateControl]="couponForm.controls['startDate'] | castForm"
-                        ></app-customized-calender> -->
                         <app-customized-calender
-                            [formControl]="$any(couponForm.controls['startDate'])"
+                            [dateValue]="couponForm.controls['startDate'] | castForm"
+                            (onDatePicked)="startDatePicked($event)"
                         ></app-customized-calender>
                         <app-customized-calender
-                            [formControl]="$any(couponForm.controls['endDate'])"
+                            [dateValue]="couponForm.controls['endDate'] | castForm"
+                            (onDatePicked)="endDatePicked($event)"
                         ></app-customized-calender>
-                        <!-- <app-customized-calender
-                            [dateControl]="couponForm.controls['endDate'] | castForm"
-                        ></app-customized-calender> -->
                     </div>
                 </div>
 

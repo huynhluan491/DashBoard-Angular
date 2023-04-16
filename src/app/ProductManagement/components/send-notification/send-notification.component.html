@@ -41,7 +41,11 @@
                 <p class="label" *ngIf="isSMS">Thời điểm gởi thông báo trên sms</p>
                 <p class="label" *ngIf="isMobile">Thời điểm gởi thông báo trên App mobile</p>
                 <p class="label" *ngIf="isCart">Thời điểm gởi thông báo trên giỏ hàng</p>
-                <kendo-datetimepicker [readOnlyInput]="readOnlyInput" [value]="sendTime"></kendo-datetimepicker>
+                <app-customized-calender
+                    [dateValue]="smsSetup.controls['sendDate'] | castForm"
+                    (onDatePicked)="setDatePicked($event)"
+                    [isDateTimePicker]="true"
+                ></app-customized-calender>
             </div>
 
             <div class="condition-box">

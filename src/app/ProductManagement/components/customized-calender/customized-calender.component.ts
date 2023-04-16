@@ -2,35 +2,31 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ElementRef,
+    EventEmitter,
     Inject,
     Input,
+    OnChanges,
     OnDestroy,
     OnInit,
-    Optional,
-    Renderer2,
-    Self,
+    Output,
+    Provider,
+    SimpleChanges,
     ViewChild,
+    forwardRef,
 } from '@angular/core';
 import { MatCalendar, MatDatepicker } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as $ from 'jquery';
-import {
-    ControlContainer,
-    ControlValueAccessor,
-    FormControl,
-    FormControlName,
-    FormGroupDirective,
-    NgControl,
-} from '@angular/forms';
+import { ControlContainer, FormControl, FormGroupDirective, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { OverlayOutsideClickDispatcher } from '@angular/cdk/overlay';
 
-export const NOOP_VALUE_ACCESSOR: ControlValueAccessor = {
-    writeValue(): void {},
-    registerOnChange(): void {},
-    registerOnTouched(): void {},
-};
+// const provider: Provider = {
+//     provide: NG_VALUE_ACCESSOR,
+//     useExisting: forwardRef(() => CustomizedCalenderComponent),
+//     multi: true,
+// };
 
 @Component({
     selector: 'app-customized-calender',
@@ -43,77 +39,254 @@ export const NOOP_VALUE_ACCESSOR: ControlValueAccessor = {
             useExisting: FormGroupDirective,
         },
     ],
+    // providers: [provider],
 })
-export class CustomizedCalenderComponent implements OnInit {
+export class CustomizedCalenderComponent implements OnInit, OnChanges {
+    @ViewChild(MatDatepicker) datePicker: any;
+
     exampleHeader = ExampleHeader;
-    isPopupOpen = new BehaviorSubject<boolean>(false);
     isOpen = false;
-    date = new FormControl(new Date());
-    @ViewChild('picker')
     picker!: MatDatepicker<Date>;
-    @Input() dateControl = new FormControl();
-    constructor(private renderer: Renderer2, private el: ElementRef, @Self() @Optional() public ngControl: NgControl) {
-        if (this.ngControl) {
-            this.ngControl.valueAccessor = NOOP_VALUE_ACCESSOR;
+    selectedItem = '';
+    calendar: any;
+    isTimeOpen: boolean = false;
+
+    //DATETIMEPICKER APPEND
+    timePickWrapper: any;
+    alldayWrap: any;
+    selectionWrapper: any;
+    selectElement: any;
+
+    //reset closing popup matcalendar
+    private selfClose?: () => void;
+
+    @Input() isDateTimePicker?: boolean = false;
+    @Input() dateValue = new FormControl();
+    @Output() onDatePicked = new EventEmitter<Date>();
+
+    dateTimeStr: string = '';
+    timePickerValue: any[] = [];
+    selectedDate: any;
+    selectedHours: number = 12;
+    selectedMinutes: number = 0;
+
+    selectedHours$ = new BehaviorSubject<number>(12);
+    selectedMinutes$ = new BehaviorSubject<number>(0);
+
+    public listItems: Array<string> = [
+        'Baseball',
+        'Basketball',
+        'Cricket',
+        'Field Hockey',
+        'Football',
+        'Table Tennis',
+        'Tennis',
+        'Volleyball',
+    ];
+
+    constructor(
+        private changeDetectorRef: ChangeDetectorRef,
+        private cdkConnectedOverlay: OverlayOutsideClickDispatcher,
+    ) {}
+
+    ngOnInit(): void {
+        if (this.dateValue) {
+            let date = this.dateValue.value.getDate().toString();
+            let month = (this.dateValue.value.getMonth() + 1).toString();
+            let year = this.dateValue.value.getFullYear().toString();
+            let hours = this.dateValue.value.getHours().toString();
+            let minutes = this.dateValue.value.getMinutes().toString();
+
+            if (date * 1 < 10) {
+                this.dateTimeStr += `0${date}`;
+            } else {
+                this.dateTimeStr += `${date}`;
+            }
+            if (month * 1 < 10) {
+                this.dateTimeStr += `/0${month}/${year}`;
+            } else {
+                this.dateTimeStr += `/${month}/${year}`;
+            }
+            if (hours * 1 < 10) {
+                this.dateTimeStr += ` 0${hours}:`;
+            } else {
+                this.dateTimeStr += ` ${hours}:`;
+            }
+            if (minutes * 1 < 10) {
+                this.dateTimeStr += `0${minutes}`;
+            } else {
+                this.dateTimeStr += `${minutes}`;
+            }
         }
+        console.log(this.dateTimeStr);
+
+        this.selectedHours$.subscribe((value) => {
+            console.log(value);
+        });
     }
 
-    ngOnInit(): void {}
+    ngOnChanges(changes: SimpleChanges) {}
 
     ngAfterViewInit() {
+        // this.selfClose = this.containerElRef.close;
+        console.log(this.dateValue);
+
         $('#icon-calendar .mdc-icon-button .mat-datepicker-toggle-default-icon').remove();
-        // $('#icon-calendar .mdc-icon-button').off();
-        // const mdcIconButton = this.el.nativeElement.querySelector('#icon-calendar .mdc-icon-button');
-        // this.renderer.listen(mdcIconButton, 'click', this.handleOpenCalendarPopup.bind(this));
-        // this inside the handleOpenCalendarPopup() method is undefined. This can happen if the method is not bound to the correct this context.
-        //This will ensure that this inside the method refers to the component instance and not undefined.
-        // // create defaultCalendar button
-        // const calendarPopup = this.el.nativeElement.querySelector('.cdk-overlay-container');
-        // const defaultCalendar = this.renderer.createElement('img');
-        // this.renderer.setAttribute(defaultCalendar, 'src', '/assets/icon/defaultCalendar.svg');
-        // this.renderer.addClass(defaultCalendar, 'default-calendar');
-        // this.renderer.setStyle(defaultCalendar, 'display', this.isPopupOpen.value ? 'none' : 'block');
-        // this.renderer.appendChild(
-        //     this.el.nativeElement.querySelector('#icon-calendar .mdc-icon-button'),
-        //     defaultCalendar,
-        // );
-        // this.renderer.listen(defaultCalendar, 'click', () => {
-        //     this.renderer.setStyle(calendarPopup, 'display', 'block');
-        //     console.log('opened');
-        // });
-        // // create activeCalendar button
-        // const activeCalendar = this.renderer.createElement('img');
-        // this.renderer.setAttribute(activeCalendar, 'src', '/assets/icon/activeCalendar.svg');
-        // this.renderer.addClass(activeCalendar, 'active-calendar');
-        // this.renderer.setStyle(activeCalendar, 'display', this.isPopupOpen.value ? 'block' : 'none');
-        // this.renderer.appendChild(
-        //     this.el.nativeElement.querySelector('#icon-calendar .mdc-icon-button'),
-        //     activeCalendar,
-        // );
-        // this.renderer.listen(activeCalendar, 'click', () => {
-        //     this.renderer.setStyle(calendarPopup, 'display', 'none');
-        //     console.log('closed');
-        // });
-        // // active button calendar icon
-        // this.isPopupOpen?.subscribe((isOpen) => {
-        //     this.renderer.setStyle(defaultCalendar, 'display', isOpen ? 'none' : 'block');
-        //     this.renderer.setStyle(activeCalendar, 'display', isOpen ? 'block' : 'none');
-        // });
+        this.timePickWrapper = document.createElement('div');
+        this.timePickWrapper.classList.add('time-picker-wrapper');
+        this.selectionWrapper = document.createElement('div');
+        this.selectionWrapper.classList.add('selection-wrapper');
+
+        //all-day checkbox
+        this.alldayWrap = document.createElement('div');
+        this.alldayWrap.classList.add('allday-type');
+        const alldayCheck = document.createElement('input');
+        alldayCheck.setAttribute('type', 'radio');
+        alldayCheck.classList.add('allday-radio');
+
+        //label
+        const alldayLabel = document.createElement('label');
+        alldayCheck.classList.add('allday-label');
+        alldayLabel.innerText = 'Cả ngày';
+
+        this.alldayWrap.appendChild(alldayCheck);
+        this.alldayWrap.appendChild(alldayLabel);
+
+        //time selection
+        this.selectElement = document.createElement('select');
+        this.selectElement.setAttribute('placeholder', 'Select time');
+        this.selectElement.classList.add('time-selection');
+        this.cbValue.forEach((time) => {
+            const optionElement = document.createElement('option');
+            optionElement.setAttribute('value', time);
+            optionElement.textContent = time;
+            this.selectElement.appendChild(optionElement);
+        });
+        this.selectElement.addEventListener('change', this.handleGetTimeSelection);
+        this.selectionWrapper.appendChild(this.selectElement);
+
+        //AM
+        const timeTypeWrapper = document.createElement('div');
+        timeTypeWrapper.classList.add('time-type-wrapper');
+        const amCheck = document.createElement('button');
+        amCheck.classList.add('type-selection');
+        amCheck.innerText = 'AM';
+        //PM
+        const pmCheck = document.createElement('button');
+        pmCheck.classList.add('type-selection');
+        pmCheck.innerText = 'PM';
+        timeTypeWrapper.appendChild(amCheck);
+        timeTypeWrapper.appendChild(pmCheck);
+        this.selectionWrapper.appendChild(timeTypeWrapper);
+
+        this.timePickWrapper.appendChild(this.alldayWrap);
+        this.timePickWrapper.appendChild(this.selectionWrapper);
     }
 
-    handleOpenCalendarPopup() {
-        console.log('click btn');
-        this.isPopupOpen.next(!this.isPopupOpen.value);
+    cbValue = [
+        '12:00',
+        '12:30',
+        '01:00',
+        '01:30',
+        '02:00',
+        '02:30',
+        '03:00',
+        '03:30',
+        '04:00',
+        '04:30',
+        '05:00',
+        '05:30',
+        '06:00',
+        '06:30',
+        '07:00',
+        '07:30',
+        '08:00',
+        '08:30',
+        '09:00',
+        '09:30',
+        '10:00',
+        '10:30',
+        '11:00',
+        '11:30',
+    ];
+
+    // Control Access Value method
+    onChange(v: any) {}
+    writeValue(value: any) {}
+    registerOnChange(fn: any) {}
+    registerOnTouched(fn: any) {}
+    setDisabledState(isDisabled: boolean) {}
+
+    handleOnChange(event: any) {
+        this.selectedDate = event.value;
+        console.log(this.selectedDate);
+
+        this.onDatePicked.emit(event.value._d);
+        this.dateTimeStr = '';
+        let date = this.dateValue.value.getDate().toString();
+        let month = (this.dateValue.value.getMonth() + 1).toString();
+        let year = this.dateValue.value.getFullYear().toString();
+        let hours = this.dateValue.value.getHours().toString();
+        let minutes = this.dateValue.value.getMinutes().toString();
+
+        if (date * 1 < 10) {
+            this.dateTimeStr += `0${date}`;
+        } else {
+            this.dateTimeStr += `${date}`;
+        }
+        if (month * 1 < 10) {
+            this.dateTimeStr += `/0${month}/${year}`;
+        } else {
+            this.dateTimeStr += `/${month}/${year}`;
+        }
+        if (hours * 1 < 10) {
+            this.dateTimeStr += ` 0${hours}:`;
+        } else {
+            this.dateTimeStr += ` ${hours}:`;
+        }
+        if (minutes * 1 < 10) {
+            this.dateTimeStr += `0${minutes}`;
+        } else {
+            this.dateTimeStr += `${minutes}`;
+        }
+        console.log(this.dateTimeStr);
     }
 
-    handleOpen() {
-        this.isOpen = true;
-        console.log('open');
-    }
-
-    handleClose() {
+    closed() {
+        this.isTimeOpen = false;
         this.isOpen = false;
-        console.log('close');
+    }
+
+    public onOpen() {
+        this.isOpen = true;
+        if (this.isDateTimePicker) {
+            this.calendar = $('.mat-calendar')[0];
+            this.calendar.appendChild(this.timePickWrapper);
+        }
+
+        if (this.selfClose === undefined || this.selfClose === null) {
+            this.selfClose = this.datePicker.close;
+        }
+
+        // rewrite autoclose after date is chosen
+        this.datePicker.close = () => {};
+
+        this.cdkConnectedOverlay._attachedOverlays[0]._outsidePointerEvents.subscribe(() => {
+            // restore saved close method
+            this.datePicker.close = this.selfClose;
+            this.selfClose = undefined;
+            this.datePicker.close();
+        });
+    }
+
+    handleGetTimeSelection(event: any) {
+        let timeValue = event.target.value;
+        this.timePickerValue = timeValue.split(':').map(Number);
+        this.selectedHours = this.timePickerValue[0];
+        this.selectedMinutes = this.timePickerValue[1];
+        this.selectedHours$?.next(this.timePickerValue[0]);
+        console.log(this.dateValue);
+        console.log(this.selectedDate);
     }
 }
 

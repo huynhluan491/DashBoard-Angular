@@ -12,6 +12,7 @@ export class SendNotificationComponent {
         notiContent: new FormControl(
             'The channel does not make money from advertising, no popular music, no hustle and bustle, all videos on the channel are for entertainment purposes only to serve quality listeners."All issues related to copyright please contact me"',
         ),
+        sendDate: new FormControl(new Date(2023, 4, 10, 12, 50)),
     });
 
     public mobileSetup: FormGroup = new FormGroup({
@@ -32,7 +33,6 @@ export class SendNotificationComponent {
     public isMobile = false;
     public isCart = false;
     public readOnlyInput = true;
-    public sendTime: Date = new Date(2000, 2, 10);
 
     onSmsMode() {
         this.isSMS = true;
@@ -50,5 +50,10 @@ export class SendNotificationComponent {
         this.isSMS = false;
         this.isMobile = false;
         this.isCart = true;
+    }
+
+    setDatePicked(selectedDate: Date) {
+        this.smsSetup.controls['sendDate'].setValue(selectedDate);
+        console.log(this.smsSetup.controls['sendDate'].value);
     }
 }

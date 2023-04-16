@@ -1,0 +1,28 @@
+<kendo-grid
+    [kendoGridBinding]="newsData"
+    kendoGridSelectBy="id"
+    [pageSize]="20"
+    [pageable]="true"
+    [sortable]="true"
+    [groupable]="true"
+    [reorderable]="true"
+    [resizable]="true"
+    [height]="500"
+    [columnMenu]="{ filter: true }"
+>
+    <kendo-grid-column field="full_name" title="Author" [width]="220">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="customer-name" (click)="onProductClicked(dataItem)">{{ dataItem.id }}</div>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="full_name" title="Title" [width]="220">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="customer-name">{{ dataItem.title }}</div>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="full_name" title="Description" [width]="220">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="customer-name">{{ dataItem.body }}</div>
+        </ng-template>
+    </kendo-grid-column>
+</kendo-grid>

@@ -53,6 +53,15 @@ import { CustomizedHeaderComponent } from './ProductManagement/components/custom
 import { CustomizedCalenderComponent } from './ProductManagement/components/customized-calender/customized-calender.component';
 import { FormPipePipe } from './pipes/form-pipe.pipe';
 import { MatIconRegistry } from '@angular/material/icon';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { TestLisstComponent } from './test-lisst/test-lisst.component';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { MatSelectModule } from '@angular/material/select';
+import { SidebarDrawerComponent } from './ProductManagement/components/sidebar-drawer/sidebar-drawer.component';
+import { CouponPageManagementComponent } from './ProductManagement/components/coupon-page-management/coupon-page-management.component';
+import { DateTimePickerComponent } from './ProductManagement/components/date-time-picker/date-time-picker.component';
+import { DialogsModule } from '@progress/kendo-angular-dialog';
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }
@@ -82,6 +91,11 @@ export function HttpLoaderFactory(http: HttpClient) {
         CustomizedHeaderComponent,
         CustomizedCalenderComponent,
         FormPipePipe,
+        ProductDetailComponent,
+        TestLisstComponent,
+        SidebarDrawerComponent,
+        CouponPageManagementComponent,
+        DateTimePickerComponent,
     ],
     imports: [
         BrowserModule,
@@ -117,6 +131,10 @@ export function HttpLoaderFactory(http: HttpClient) {
                 deps: [HttpClient],
             },
         }),
+        HttpClientInMemoryWebApiModule,
+        DropDownsModule,
+        MatSelectModule,
+        DialogsModule,
     ],
     providers: [DatePipe, MatIconRegistry],
     bootstrap: [AppComponent],

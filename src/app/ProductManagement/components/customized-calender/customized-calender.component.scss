@@ -138,3 +138,61 @@
         display: none;
     }
 }
+
+.time-picker-wrapper {
+    padding: 15px 29px 21px 29px;
+
+    .allday-type {
+        display: flex;
+        align-items: center;
+        gap: 9px label {
+            color: #26282e;
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        .allday-radio {
+        }
+    }
+
+    .selection-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 21px;
+
+        .time-selection {
+            width: 102px;
+            height: 24px;
+            outline: none;
+            border: 2px solid #36c8cf;
+        }
+
+        .time-type-wrapper {
+            display: flex;
+            gap: 13px;
+
+            .type-selection {
+                font-size: 13px;
+                line-height: 16px;
+                color: #26282e;
+                background-color: #36c8cf;
+                padding: 13px;
+                border-radius: 100%;
+            }
+
+            .active {
+                background-color: #36c8cf;
+                border-radius: 100%;
+                padding: 13px;
+                color: white;
+            }
+        }
+    }
+}
+@import '~bootstrap/dist/css/bootstrap.css';
+@import 'bootstrap/scss/bootstrap';
+@import './timepicker.scss';
+.time-picker-wrapper {
+    padding: 15px 29px 21px 29px;
+}

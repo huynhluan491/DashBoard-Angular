@@ -1,0 +1,23 @@
+.wrapper-drawer {
+    height: 100vh;
+    overflow: scroll;
+    .custom-toolbar {
+        background-color: #5a6276;
+        .mail-box {
+            color: white;
+        }
+    }
+}
+
+::ng-deep .wrapper-drawer .k-drawer-container {
+    .k-drawer-item {
+        color: white;
+    }
+
+    .k-drawer {
+        background-color: #5a6276 !important;
+    }
+
+    .k-drawer-item:hover {
+    }
+}
