@@ -1,19 +1,8 @@
-import {
-    Component,
-    OnInit,
-    Input,
-    Output,
-    EventEmitter,
-    SimpleChanges,
-    OnChanges,
-    ViewChild,
-    HostListener,
-    ElementRef,
-} from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ListlinkService } from 'src/services/listlink.service';
 import { Link } from 'src/app/link';
-import { NgbConfig, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
+import { NgbConfig } from '@ng-bootstrap/ng-bootstrap';
 import { listLink } from 'src/app/listLink';
 @Component({
     selector: 'app-listlink',
