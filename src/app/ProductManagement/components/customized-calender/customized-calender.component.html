@@ -1,13 +1,14 @@
 <div class="wrapper">
     <mat-form-field appearance="fill">
+        <mat-label>{{ dateValueStr }} {{ timeValueStr }}</mat-label>
         <input
             readonly
             matInput
             [matDatepicker]="picker"
             [formControl]="dateValue"
             ngDefaultControl
-            required
             (dateInput)="handleOnChange($event)"
+            style="visibility: hidden"
         />
         <mat-icon [hidden]="isOpen" svgIcon="dfCalendar" (click)="picker.open()"></mat-icon>
         <mat-icon [hidden]="!isOpen" matDatepickerToggleIcon svgIcon="activeCalendar"></mat-icon>
@@ -22,4 +23,5 @@
         </mat-datepicker>
     </mat-form-field>
 </div>
-<p>{{ dateTimeStr }}</p>
+
+<div #container></div>

@@ -1,0 +1,32 @@
+.wrapper {
+    .form-wrapper {
+        .edit-inputs {
+            display: flex;
+            flex-direction: column;
+            label {
+                color: #959db3;
+                font-size: 13px;
+                font-weight: 400;
+                margin: 10px 0;
+            }
+
+            .input-field {
+                height: 33px;
+                border: 2px solid #dbdee7;
+                border-radius: 2px;
+                resize: none;
+                padding: 6px;
+                &:focus {
+                    outline: none;
+                }
+            }
+
+            .name-field {
+                height: 60px !important;
+            }
+        }
+    }
+}
+
+::ng-deep .wrapper {
+}

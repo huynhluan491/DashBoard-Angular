@@ -5,16 +5,13 @@
         padding: 10px 12px 10px 10px;
         background-color: #ffffff;
         border: 1px solid #8dc63f;
-        width: 190px;
-        gap: 15px;
-        .delete-icon {
-            position: absolute;
-            left: 5px;
-            top: 4px;
-            cursor: pointer;
-        }
-
+        width: 196px;
+        gap: 0.5rem;
+        height: 104px;
+        border-radius: 3px;
         .product-img {
+            display: flex;
+            align-items: center;
             img {
                 width: 76px;
                 height: 76px;
@@ -27,12 +24,26 @@
             flex-direction: column;
             gap: 10px;
 
+            .product-name {
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                max-width: 100px;
+            }
+
             .product-name,
             .barcode {
                 color: #353935;
                 font-size: 13px;
                 font-weight: 400;
             }
+        }
+
+        .icons-wrapper {
+            position: absolute;
+            display: flex;
+            gap: 10px;
         }
     }
 }
@@ -173,7 +184,8 @@
 ::ng-deep .product-list-wrapper .k-grid {
     background-color: unset;
     border: unset !important;
-
+    height: unset !important;
+    max-height: 500px;
     .k-grouping-header {
         display: none;
     }
@@ -201,11 +213,15 @@
 
     .k-table-tbody {
         display: grid;
-        grid-template-columns: repeat(5, 0%);
-        grid-gap: 12px 199px;
+        grid-template-columns: repeat(5, 1.5rem);
+        grid-gap: 0px 195px;
     }
 
     .k-table-tbody .k-table-row.k-selected > .k-table-td {
         background-color: unset !important;
+    }
+
+    .k-grid-aria-root {
+        flex: unset;
     }
 }

@@ -1,6 +1,6 @@
 <div class="wrapper">
     <div class="form-header">
-        <p class="title">SẢN PHẨM</p>
+        <p class="title">{{ isEditForm ? 'THÊM SẢN PHẨM MỚI' : 'CẬP NHẬT SẢN PHẨM' }}</p>
     </div>
     <form [formGroup]="addForm" class="form-wrapper">
         <div class="form-content-wrapper">
@@ -15,6 +15,17 @@
                     cols="50"
                 ></textarea>
             </div>
+            <div class="poscode-box">
+                <p class="box-title">PosCode</p>
+                <textarea
+                    type="text"
+                    name="poscode"
+                    rows="4"
+                    ngDefaultControl
+                    formControlName="poscode"
+                    cols="50"
+                ></textarea>
+            </div>
             <div class="product-name-box">
                 <p class="box-title">Tên sản phẩm</p>
                 <textarea
@@ -25,11 +36,17 @@
                     cols="50"
                     formControlName="productName"
                 ></textarea>
+                <img
+                    *ngIf="!isEditForm"
+                    width="250px"
+                    height="250px"
+                    src="https://lapson.vn{{ !isEditForm ? selectedItem.ImageThumb : '' }}"
+                />
             </div>
         </div>
         <div class="action-wrapper">
             <button class="close-btn" type="button" (click)="togglecloseForm()">ĐÓNG</button>
-            <button class="update-btn">THÊM</button>
+            <button class="update-btn" (click)="handleEditProduct()">THÊM</button>
         </div>
     </form>
 </div>

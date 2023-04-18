@@ -28,11 +28,12 @@ export class ProductListComponent implements OnInit {
     totalProducts = 0;
     selectedEditItem: any;
     isDeleteDialogOpened: boolean = false;
-    selecteDeleteItem: any;
+    selectedDeleteItem: any;
+    isShowEditDialog: boolean = false;
 
     public state: State = {
         skip: 0,
-        take: 5,
+        take: 10,
         filter: { filters: [], logic: 'or' },
         sort: [],
     };
@@ -105,7 +106,7 @@ export class ProductListComponent implements OnInit {
 
     onDeleteProduct(data: any) {
         this.serviceOfProduct.getProductByCode([data.Code]).subscribe((data) => {
-            this.selecteDeleteItem = data;
+            this.selectedDeleteItem = data;
             this.isDeleteDialogOpened = true;
         });
     }
@@ -113,6 +114,9 @@ export class ProductListComponent implements OnInit {
     closeDeleteDialog(make: string) {
         if (make === 'yes') {
             this.isDeleteDialogOpened = false;
+            this.listProduct = this.listProduct.filter((item) => item.Code !== this.selectedDeleteItem.Code);
+            this.pageData();
+            console.log(this.listProduct);
             window.alert('Deleted');
         } else {
             this.isDeleteDialogOpened = false;
@@ -126,6 +130,35 @@ export class ProductListComponent implements OnInit {
             this.addFormService.handleOpenForm();
             this.addFormService.handleCheckTypeOfForm(false, this.selectedEditItem);
         });
+    }
+
+    handlePostEditAPI(updateInfo: any) {
+        const idProduct = this.selectedEditItem.Code;
+        const Idx = this.listProduct.findIndex((item) => item.Code === idProduct);
+
+        if (Idx > -1) {
+            this.listProduct[Idx] = updateInfo;
+            this.pageData();
+            console.log(this.listProduct);
+        }
+    }
+
+    handlePostAddAPI(addValue: any) {
+        this.listProduct.unshift(addValue);
+        this.pageData();
+    }
+
+    onEditProductDialog(id: number) {
+        this.serviceOfProduct.getProductByCode([id]).subscribe((data) => {
+            this.selectedEditItem = data;
+            this.addFormService.handleCheckTypeOfForm(false, this.selectedEditItem);
+            console.log(this.selectedEditItem);
+            this.isShowEditDialog = !this.isShowEditDialog;
+        });
+    }
+
+    handleToggleEditDialog(value: boolean) {
+        this.isShowEditDialog = value;
     }
 
     dataStateChange(e: any): void {
@@ -144,5 +177,9 @@ export class ProductListComponent implements OnInit {
 
     handleTestDataSource(): void {
         this.serviceOfProduct.testDataSource();
+    }
+
+    get isOpenForm(): boolean {
+        return this.addFormService._isFormOpen;
     }
 }

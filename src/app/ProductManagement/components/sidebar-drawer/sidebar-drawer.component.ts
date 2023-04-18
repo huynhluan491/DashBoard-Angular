@@ -29,7 +29,7 @@ export class SidebarDrawerComponent {
             id: 4,
         },
         {
-            text: 'Sub1',
+            text: 'Coupon',
             icon: 'k-i-inbox',
             id: 6,
             parentId: 4,
@@ -52,7 +52,7 @@ export class SidebarDrawerComponent {
             id: 5,
         },
     ];
-    public selected = 'KHUYẾN MÃI';
+    public selected = 'Coupon';
 
     public expandedIndices = [2];
 
@@ -64,6 +64,8 @@ export class SidebarDrawerComponent {
 
     public onSelect(ev: DrawerSelectEvent): void {
         this.selected = ev.item.text;
+        console.log(this.selected);
+
         const current = ev.item.id;
 
         if (this.expandedIndices.indexOf(current) >= 0) {

@@ -1,0 +1,18 @@
+<div class="wrapper">
+    <kendo-dialog title="CẬP NHẬT SẢN PHẨM" (close)="closeDeleteDialog('no')" [minWidth]="250" [width]="450">
+        <form class="form-wrapper" [formGroup]="editDialogForm">
+            <div class="edit-inputs">
+                <label>Barcode</label>
+                <textarea class="input-field" type="text" formControlName="barcode"></textarea>
+                <label>Poscode</label>
+                <textarea class="input-field" type="text" formControlName="poscode"></textarea>
+                <label>ProductName</label>
+                <textarea class="input-field name-field" type="text" formControlName="productName"></textarea>
+            </div>
+        </form>
+        <kendo-dialog-actions>
+            <button kendoButton (click)="closeDeleteDialog('no')">HỦY CẬP NHẬT</button>
+            <button kendoButton (click)="closeDeleteDialog('yes')" themeColor="primary">CẬP NHẬT</button>
+        </kendo-dialog-actions>
+    </kendo-dialog>
+</div>

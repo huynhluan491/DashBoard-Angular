@@ -1,5 +1,7 @@
 .wrapper {
     margin-top: 19px;
+    padding-left: 19px;
+    padding-right: 14px;
     .header-container {
         display: flex;
         justify-content: space-between;
@@ -88,6 +90,10 @@
                     height: 142px;
                     padding: 5px 0 0 7px;
                     resize: none;
+
+                    &:focus {
+                        outline: none;
+                    }
                 }
             }
         }

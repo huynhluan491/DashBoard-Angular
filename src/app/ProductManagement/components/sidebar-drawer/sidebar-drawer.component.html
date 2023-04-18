@@ -1,8 +1,8 @@
 <div class="wrapper-drawer">
-    <div class="custom-toolbar">
+    <!-- <div class="custom-toolbar">
         <button kendoButton icon="menu" fillMode="flat" (click)="drawer.toggle()"></button>
         <span class="mail-box">DANH MỤC</span>
-    </div>
+    </div> -->
     <kendo-drawer-container>
         <kendo-drawer
             #drawer
@@ -16,7 +16,8 @@
         >
         </kendo-drawer>
         <kendo-drawer-content>
-            <app-coupon-page-management></app-coupon-page-management>
+            <app-coupon-page-management *ngIf="selected === 'Coupon'"></app-coupon-page-management>
+            <app-wating-page *ngIf="selected !== 'Coupon'"></app-wating-page>
         </kendo-drawer-content>
     </kendo-drawer-container>
 </div>

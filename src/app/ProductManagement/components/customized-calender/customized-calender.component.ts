@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
@@ -11,17 +12,19 @@ import {
     Output,
     Provider,
     SimpleChanges,
+    ComponentFactoryResolver,
     ViewChild,
-    forwardRef,
+    ViewContainerRef,
+    ComponentRef,
 } from '@angular/core';
 import { MatCalendar, MatDatepicker } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { skip, takeUntil } from 'rxjs/operators';
 import * as $ from 'jquery';
 import { ControlContainer, FormControl, FormGroupDirective, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { OverlayOutsideClickDispatcher } from '@angular/cdk/overlay';
-
+import { DropDownListComponent } from '@progress/kendo-angular-dropdowns';
 // const provider: Provider = {
 //     provide: NG_VALUE_ACCESSOR,
 //     useExisting: forwardRef(() => CustomizedCalenderComponent),
@@ -41,9 +44,9 @@ import { OverlayOutsideClickDispatcher } from '@angular/cdk/overlay';
     ],
     // providers: [provider],
 })
-export class CustomizedCalenderComponent implements OnInit, OnChanges {
+export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterViewInit {
     @ViewChild(MatDatepicker) datePicker: any;
-
+    @ViewChild('container', { read: ViewContainerRef, static: false }) container!: ViewContainerRef;
     exampleHeader = ExampleHeader;
     isOpen = false;
     picker!: MatDatepicker<Date>;
@@ -64,14 +67,15 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges {
     @Input() dateValue = new FormControl();
     @Output() onDatePicked = new EventEmitter<Date>();
 
-    dateTimeStr: string = '';
-    timePickerValue: any[] = [];
-    selectedDate: any;
-    selectedHours: number = 12;
-    selectedMinutes: number = 0;
+    dateValueStr: string = '';
+    timeValueStr: string = '';
+    timePickerValue: any[] = [12, 0];
+    selectedDate: string = 'vcc';
+    public selectedHours: number = 12;
+    public selectedMinutes: number = 0;
+    isPM = new BehaviorSubject<boolean>(false);
 
-    selectedHours$ = new BehaviorSubject<number>(12);
-    selectedMinutes$ = new BehaviorSubject<number>(0);
+    isTimeSelected: boolean = false;
 
     public listItems: Array<string> = [
         'Baseball',
@@ -87,53 +91,50 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges {
     constructor(
         private changeDetectorRef: ChangeDetectorRef,
         private cdkConnectedOverlay: OverlayOutsideClickDispatcher,
+        private componentFactoryResolver: ComponentFactoryResolver,
     ) {}
 
     ngOnInit(): void {
-        if (this.dateValue) {
-            let date = this.dateValue.value.getDate().toString();
-            let month = (this.dateValue.value.getMonth() + 1).toString();
-            let year = this.dateValue.value.getFullYear().toString();
-            let hours = this.dateValue.value.getHours().toString();
-            let minutes = this.dateValue.value.getMinutes().toString();
-
-            if (date * 1 < 10) {
-                this.dateTimeStr += `0${date}`;
-            } else {
-                this.dateTimeStr += `${date}`;
-            }
-            if (month * 1 < 10) {
-                this.dateTimeStr += `/0${month}/${year}`;
-            } else {
-                this.dateTimeStr += `/${month}/${year}`;
-            }
-            if (hours * 1 < 10) {
-                this.dateTimeStr += ` 0${hours}:`;
-            } else {
-                this.dateTimeStr += ` ${hours}:`;
-            }
-            if (minutes * 1 < 10) {
-                this.dateTimeStr += `0${minutes}`;
-            } else {
-                this.dateTimeStr += `${minutes}`;
-            }
+        if (this.isDateTimePicker == true) {
+            this.convertDateToString();
+            this.convertTimeToString();
+        } else if (this.isDateTimePicker == false) {
+            this.convertDateToString();
         }
-        console.log(this.dateTimeStr);
 
-        this.selectedHours$.subscribe((value) => {
+        this.isPM.pipe(skip(1)).subscribe((value) => {
             console.log(value);
+            console.log(this.selectedHours);
+            this.selectedHours = this.timePickerValue[0];
+            this.selectedMinutes = this.timePickerValue[1];
+            this.setTimeOfDate();
+            this.onDatePicked.emit(this.dateValue.value);
+            this.convertTimeToString();
         });
     }
 
     ngOnChanges(changes: SimpleChanges) {}
 
     ngAfterViewInit() {
-        // this.selfClose = this.containerElRef.close;
-        console.log(this.dateValue);
+        const factory = this.componentFactoryResolver.resolveComponentFactory(DropDownListComponent);
+        const componentRef = factory.create(this.container.injector) as ComponentRef<DropDownListComponent>;
+        componentRef.instance.data = this.cbValue;
+
+        // handle the 'close' event of the Kendo dropdown list component
+        componentRef.instance.close.subscribe((e: any) => {
+            e.preventDefault(); // prevent the dropdown list from closing
+        });
+        // handle the 'mousedown' event on the dropdown list items
+        componentRef.location.nativeElement.querySelectorAll('.k-item').forEach((item: any) => {
+            item.addEventListener('mousedown', (e: any) => {
+                e.stopPropagation(); // prevent the event from propagating to the datepicker element
+            });
+        });
 
         $('#icon-calendar .mdc-icon-button .mat-datepicker-toggle-default-icon').remove();
         this.timePickWrapper = document.createElement('div');
         this.timePickWrapper.classList.add('time-picker-wrapper');
+        this.timePickWrapper.appendChild(componentRef.location.nativeElement);
         this.selectionWrapper = document.createElement('div');
         this.selectionWrapper.classList.add('selection-wrapper');
 
@@ -155,6 +156,9 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges {
         //time selection
         this.selectElement = document.createElement('select');
         this.selectElement.setAttribute('placeholder', 'Select time');
+        // this.selectElement.setAttribute('onfocus', 'this.size=24;');
+        // this.selectElement.setAttribute('onblur', 'this.size=0;');
+        // this.selectElement.setAttribute('onchange', 'this.size=1;this.blur();');
         this.selectElement.classList.add('time-selection');
         this.cbValue.forEach((time) => {
             const optionElement = document.createElement('option');
@@ -162,7 +166,7 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges {
             optionElement.textContent = time;
             this.selectElement.appendChild(optionElement);
         });
-        this.selectElement.addEventListener('change', this.handleGetTimeSelection);
+        this.selectElement.addEventListener('change', this.handleGetTimeSelection.bind(this)); // assign scope to access variable .bind(this)
         this.selectionWrapper.appendChild(this.selectElement);
 
         //AM
@@ -170,11 +174,23 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges {
         timeTypeWrapper.classList.add('time-type-wrapper');
         const amCheck = document.createElement('button');
         amCheck.classList.add('type-selection');
+        amCheck.classList.add('active');
         amCheck.innerText = 'AM';
+        amCheck.addEventListener('click', () => {
+            this.handleSetAM();
+            amCheck.classList.add('active');
+            pmCheck.classList.remove('active');
+        });
         //PM
         const pmCheck = document.createElement('button');
         pmCheck.classList.add('type-selection');
         pmCheck.innerText = 'PM';
+        pmCheck.addEventListener('click', () => {
+            amCheck.classList.remove('active');
+            pmCheck.classList.add('active');
+            this.handleSetPM();
+        });
+
         timeTypeWrapper.appendChild(amCheck);
         timeTypeWrapper.appendChild(pmCheck);
         this.selectionWrapper.appendChild(timeTypeWrapper);
@@ -210,46 +226,11 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges {
         '11:30',
     ];
 
-    // Control Access Value method
-    onChange(v: any) {}
-    writeValue(value: any) {}
-    registerOnChange(fn: any) {}
-    registerOnTouched(fn: any) {}
-    setDisabledState(isDisabled: boolean) {}
-
     handleOnChange(event: any) {
-        this.selectedDate = event.value;
-        console.log(this.selectedDate);
-
         this.onDatePicked.emit(event.value._d);
-        this.dateTimeStr = '';
-        let date = this.dateValue.value.getDate().toString();
-        let month = (this.dateValue.value.getMonth() + 1).toString();
-        let year = this.dateValue.value.getFullYear().toString();
-        let hours = this.dateValue.value.getHours().toString();
-        let minutes = this.dateValue.value.getMinutes().toString();
-
-        if (date * 1 < 10) {
-            this.dateTimeStr += `0${date}`;
-        } else {
-            this.dateTimeStr += `${date}`;
-        }
-        if (month * 1 < 10) {
-            this.dateTimeStr += `/0${month}/${year}`;
-        } else {
-            this.dateTimeStr += `/${month}/${year}`;
-        }
-        if (hours * 1 < 10) {
-            this.dateTimeStr += ` 0${hours}:`;
-        } else {
-            this.dateTimeStr += ` ${hours}:`;
-        }
-        if (minutes * 1 < 10) {
-            this.dateTimeStr += `0${minutes}`;
-        } else {
-            this.dateTimeStr += `${minutes}`;
-        }
-        console.log(this.dateTimeStr);
+        this.dateValueStr = '';
+        this.convertDateToString();
+        console.log(this.dateValueStr);
     }
 
     closed() {
@@ -267,12 +248,17 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges {
         if (this.selfClose === undefined || this.selfClose === null) {
             this.selfClose = this.datePicker.close;
         }
-
         // rewrite autoclose after date is chosen
         this.datePicker.close = () => {};
 
         this.cdkConnectedOverlay._attachedOverlays[0]._outsidePointerEvents.subscribe(() => {
             // restore saved close method
+            if (this.isTimeSelected) {
+                this.onDatePicked.emit(this.dateValue.value);
+                this.isTimeSelected = false;
+                this.timeValueStr = '';
+                this.convertTimeToString();
+            }
             this.datePicker.close = this.selfClose;
             this.selfClose = undefined;
             this.datePicker.close();
@@ -282,11 +268,72 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges {
     handleGetTimeSelection(event: any) {
         let timeValue = event.target.value;
         this.timePickerValue = timeValue.split(':').map(Number);
+        console.log(this.timePickerValue);
+
         this.selectedHours = this.timePickerValue[0];
         this.selectedMinutes = this.timePickerValue[1];
-        this.selectedHours$?.next(this.timePickerValue[0]);
-        console.log(this.dateValue);
         console.log(this.selectedDate);
+
+        this.setTimeOfDate();
+        this.onDatePicked.emit(this.dateValue.value);
+        this.convertTimeToString();
+    }
+
+    setTimeOfDate() {
+        if (this.selectedHours !== 12 && this.isPM.value) {
+            this.selectedHours += 12;
+        } else if (this.selectedHours >= 12 && !this.isPM.value) {
+            this.selectedHours = 0;
+        }
+
+        this.dateValue.value.setHours(this.selectedHours);
+        this.dateValue.value.setMinutes(this.selectedMinutes);
+    }
+
+    convertDateToString() {
+        if (this.dateValue) {
+            let date = this.dateValue.value.getDate().toString();
+            let month = (this.dateValue.value.getMonth() + 1).toString();
+            let year = this.dateValue.value.getFullYear().toString();
+
+            if (date * 1 < 10) {
+                this.dateValueStr += `0${date}`;
+            } else {
+                this.dateValueStr += `${date}`;
+            }
+            if (month * 1 < 10) {
+                this.dateValueStr += `/0${month}/${year}`;
+            } else {
+                this.dateValueStr += `/${month}/${year}`;
+            }
+        }
+    }
+
+    convertTimeToString() {
+        this.timeValueStr = '';
+        if (this.dateValue) {
+            let hours = this.dateValue.value.getHours().toString();
+            let minutes = this.dateValue.value.getMinutes().toString();
+
+            if (hours * 1 < 10) {
+                this.timeValueStr += ` 0${hours}:`;
+            } else {
+                this.timeValueStr += ` ${hours}:`;
+            }
+            if (minutes * 1 < 10) {
+                this.timeValueStr += `0${minutes}`;
+            } else {
+                this.timeValueStr += `${minutes}`;
+            }
+        }
+    }
+
+    handleSetPM() {
+        this.isPM.next(true);
+    }
+
+    handleSetAM() {
+        this.isPM.next(false);
     }
 }
 

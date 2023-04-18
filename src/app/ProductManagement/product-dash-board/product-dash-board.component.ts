@@ -34,10 +34,4 @@ export class ProductDashBoardComponent {
             active: false,
         },
     ];
-
-    constructor(private addFormService: ProductManagementService) {}
-
-    get isOpenForm(): boolean {
-        return this.addFormService._isFormOpen;
-    }
 }

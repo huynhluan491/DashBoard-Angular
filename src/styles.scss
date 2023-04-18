@@ -11,14 +11,20 @@
     --bs-pagination-focus-box-shadow: transparent;
 }
 
-.root::-webkit-scrollbar {
-    // display: none;
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+    width: 6px;
+    background-color: #f5f6f8;
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #eaeaea;
 }
 
 html {
@@ -79,6 +85,7 @@ a[href] {
 
 .time-picker-wrapper {
     padding: 15px 29px 21px 29px;
+    border-top: 1px solid #dbdee7;
 }
 
 .time-picker-wrapper .allday-type {
@@ -116,7 +123,6 @@ a[href] {
     font-size: 13px;
     line-height: 16px;
     color: #26282e;
-    background-color: #36c8cf;
     padding: 13px;
     border-radius: 100%;
 }
@@ -126,4 +132,20 @@ a[href] {
     border-radius: 100%;
     padding: 13px;
     color: white;
+}
+
+.time-picker-wrapper option {
+    // border: none;
+    // outline: none;
+    // font-size: 18px;
+    // padding: 5px 55px 5px 5px;
+    // background-color: slategray;
+    // color: white;
+    // -webkit-appearance: none; /* for Safari */
+    // margin: 0;
+    // border-radius: 0;
+}
+
+.time-picker-wrapper option:hover {
+    background-color: yellow;
 }

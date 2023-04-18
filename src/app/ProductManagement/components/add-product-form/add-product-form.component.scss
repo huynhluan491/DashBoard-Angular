@@ -25,7 +25,8 @@
 
         .form-content-wrapper {
             .barcode-box,
-            .product-name-box {
+            .product-name-box,
+            .poscode-box {
                 color: #343a40;
                 font-size: 1.3rem;
                 font-weight: 600;
@@ -50,6 +51,7 @@
         .action-wrapper {
             display: flex;
             gap: 7px;
+            padding: 2rem;
             .close-btn,
             .update-btn {
                 width: 94px;

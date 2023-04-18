@@ -62,6 +62,8 @@ import { SidebarDrawerComponent } from './ProductManagement/components/sidebar-d
 import { CouponPageManagementComponent } from './ProductManagement/components/coupon-page-management/coupon-page-management.component';
 import { DateTimePickerComponent } from './ProductManagement/components/date-time-picker/date-time-picker.component';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
+import { EditDialogComponent } from './ProductManagement/components/edit-dialog/edit-dialog.component';
+import { WatingPageComponent } from './ProductManagement/components/wating-page/wating-page.component';
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }
@@ -96,6 +98,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         SidebarDrawerComponent,
         CouponPageManagementComponent,
         DateTimePickerComponent,
+        EditDialogComponent,
+        WatingPageComponent,
     ],
     imports: [
         BrowserModule,

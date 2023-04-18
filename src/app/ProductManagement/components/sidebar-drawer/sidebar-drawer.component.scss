@@ -10,14 +10,54 @@
 }
 
 ::ng-deep .wrapper-drawer .k-drawer-container {
-    .k-drawer-item {
-        color: white;
+    .k-drawer-content {
+        background-color: #edeff3;
     }
 
     .k-drawer {
         background-color: #5a6276 !important;
+        flex-basis: 240px;
+        position: fixed;
+        z-index: 9999999;
+        height: 100vh;
+        padding-top: 50px;
+
+        .k-drawer-wrapper {
+            position: relative;
+            &::before {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 1px;
+                background-color: white;
+                opacity: 30%;
+            }
+        }
     }
 
-    .k-drawer-item:hover {
+    .k-drawer-item:first-child {
+        padding-top: 19px;
+    }
+
+    .k-drawer-item.k-selected {
+        background-color: unset;
+
+        &:hover {
+            background-color: unset;
+        }
+    }
+
+    .k-drawer-item {
+        color: white;
+        font-size: 13px;
+        font-weight: 700;
+
+        &:hover {
+            background-color: unset;
+        }
+
+        &:focus {
+            box-shadow: unset;
+        }
     }
 }
