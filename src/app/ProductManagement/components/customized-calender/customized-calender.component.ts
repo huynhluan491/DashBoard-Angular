@@ -16,15 +16,29 @@ import {
     ViewChild,
     ViewContainerRef,
     ComponentRef,
+    ElementRef,
+    TemplateRef,
+    Injector,
+    Renderer2,
 } from '@angular/core';
 import { MatCalendar, MatDatepicker } from '@angular/material/datepicker';
-import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats, MatOption } from '@angular/material/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { skip, takeUntil } from 'rxjs/operators';
 import * as $ from 'jquery';
-import { ControlContainer, FormControl, FormGroupDirective, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+    AbstractControlDirective,
+    ControlContainer,
+    FormControl,
+    FormGroupDirective,
+    NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import { OverlayOutsideClickDispatcher } from '@angular/cdk/overlay';
 import { DropDownListComponent } from '@progress/kendo-angular-dropdowns';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
+import { MatLabel } from '@angular/material/form-field';
+
 // const provider: Provider = {
 //     provide: NG_VALUE_ACCESSOR,
 //     useExisting: forwardRef(() => CustomizedCalenderComponent),
@@ -46,10 +60,15 @@ import { DropDownListComponent } from '@progress/kendo-angular-dropdowns';
 })
 export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterViewInit {
     @ViewChild(MatDatepicker) datePicker: any;
-    @ViewChild('container', { read: ViewContainerRef, static: false }) container!: ViewContainerRef;
+    @ViewChild('time-selection', { read: ViewContainerRef, static: false }) dropdownWrapper!: ElementRef;
+    @ViewChild('picker', { read: ViewContainerRef, static: false }) picker!: ViewContainerRef;
+
+    @ViewChild('matFormFieldTemplate', { read: ViewContainerRef }) selectContainer!: ViewContainerRef;
+    @ViewChild('matFormFieldTemplate') matFormFieldTemplate!: TemplateRef<any>;
+    @ViewChild('container', { read: ViewContainerRef, static: true }) container!: ViewContainerRef;
+
     exampleHeader = ExampleHeader;
     isOpen = false;
-    picker!: MatDatepicker<Date>;
     selectedItem = '';
     calendar: any;
     isTimeOpen: boolean = false;
@@ -91,7 +110,11 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
     constructor(
         private changeDetectorRef: ChangeDetectorRef,
         private cdkConnectedOverlay: OverlayOutsideClickDispatcher,
+        private viewContainerRef: ViewContainerRef,
         private componentFactoryResolver: ComponentFactoryResolver,
+        private injector: Injector,
+        private renderer: Renderer2,
+        private el: ElementRef,
     ) {}
 
     ngOnInit(): void {
@@ -113,28 +136,16 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
         });
     }
 
+    matSelect: string =
+        '<mat-form-field #matFormFieldTemplate><mat-select placeholder="Select a value"><mat-option value="option1">Option 1</mat-option><mat-option value="option2">Option 2</mat-option><mat-option value="option3">Option 3</mat-option></mat-select></mat-form-field>';
+
     ngOnChanges(changes: SimpleChanges) {}
 
     ngAfterViewInit() {
-        const factory = this.componentFactoryResolver.resolveComponentFactory(DropDownListComponent);
-        const componentRef = factory.create(this.container.injector) as ComponentRef<DropDownListComponent>;
-        componentRef.instance.data = this.cbValue;
-
-        // handle the 'close' event of the Kendo dropdown list component
-        componentRef.instance.close.subscribe((e: any) => {
-            e.preventDefault(); // prevent the dropdown list from closing
-        });
-        // handle the 'mousedown' event on the dropdown list items
-        componentRef.location.nativeElement.querySelectorAll('.k-item').forEach((item: any) => {
-            item.addEventListener('mousedown', (e: any) => {
-                e.stopPropagation(); // prevent the event from propagating to the datepicker element
-            });
-        });
-
-        $('#icon-calendar .mdc-icon-button .mat-datepicker-toggle-default-icon').remove();
+        // append the new div to the timePickWrapper div
+        // this.timePickWrapper.appendChild(matFormFieldRef.location.nativeElement);
         this.timePickWrapper = document.createElement('div');
         this.timePickWrapper.classList.add('time-picker-wrapper');
-        this.timePickWrapper.appendChild(componentRef.location.nativeElement);
         this.selectionWrapper = document.createElement('div');
         this.selectionWrapper.classList.add('selection-wrapper');
 
@@ -154,11 +165,10 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
         this.alldayWrap.appendChild(alldayLabel);
 
         //time selection
+        const customSelectWrapper = document.createElement('div');
+        customSelectWrapper.classList.add('custom-select');
         this.selectElement = document.createElement('select');
         this.selectElement.setAttribute('placeholder', 'Select time');
-        // this.selectElement.setAttribute('onfocus', 'this.size=24;');
-        // this.selectElement.setAttribute('onblur', 'this.size=0;');
-        // this.selectElement.setAttribute('onchange', 'this.size=1;this.blur();');
         this.selectElement.classList.add('time-selection');
         this.cbValue.forEach((time) => {
             const optionElement = document.createElement('option');
@@ -167,7 +177,6 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
             this.selectElement.appendChild(optionElement);
         });
         this.selectElement.addEventListener('change', this.handleGetTimeSelection.bind(this)); // assign scope to access variable .bind(this)
-        this.selectionWrapper.appendChild(this.selectElement);
 
         //AM
         const timeTypeWrapper = document.createElement('div');
@@ -193,10 +202,49 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
 
         timeTypeWrapper.appendChild(amCheck);
         timeTypeWrapper.appendChild(pmCheck);
+        customSelectWrapper.appendChild(this.selectElement);
+        this.selectionWrapper.appendChild(customSelectWrapper);
         this.selectionWrapper.appendChild(timeTypeWrapper);
 
         this.timePickWrapper.appendChild(this.alldayWrap);
         this.timePickWrapper.appendChild(this.selectionWrapper);
+
+        // CUSTOMIZE SELECT
+        const selectDiv = document.createElement('details');
+        selectDiv.classList.add('custom-select');
+
+        const summaryDiv = document.createElement('summary');
+        summaryDiv.classList.add('radios');
+        selectDiv.appendChild(summaryDiv);
+
+        const itemList = document.createElement('ul');
+        itemList.classList.add('list');
+        selectDiv.appendChild(itemList);
+
+        this.timeList.map((item, index) => {
+            const inputElm = document.createElement('input');
+            inputElm.setAttribute('type', 'radio');
+            inputElm.setAttribute('name', 'time');
+            inputElm.setAttribute('id', index == 0 ? 'default' : item.id);
+            inputElm.setAttribute('value', item.value);
+            inputElm.setAttribute('title', item.value);
+            inputElm.addEventListener('click', () => {
+                if (inputElm.checked) {
+                    console.log('Selected item value:', inputElm.value);
+                    this.handleGetTimeSelection$(inputElm.value);
+                }
+            });
+            summaryDiv.appendChild(inputElm);
+
+            const liElm = document.createElement('li');
+            itemList.appendChild(liElm);
+            const labelElm = document.createElement('label');
+            labelElm.setAttribute('for', item.id);
+            labelElm.innerText = item.value;
+            liElm.appendChild(labelElm);
+        });
+
+        this.timePickWrapper.appendChild(selectDiv);
     }
 
     cbValue = [
@@ -226,6 +274,105 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
         '11:30',
     ];
 
+    timeList = [
+        {
+            id: 'time1',
+            value: '12:00',
+        },
+        {
+            id: 'time2',
+            value: '12:30',
+        },
+        {
+            id: 'time3',
+            value: '01:00',
+        },
+        {
+            id: 'time4',
+            value: '01:30',
+        },
+        {
+            id: 'time5',
+            value: '02:00',
+        },
+        {
+            id: 'time6',
+            value: '02:30',
+        },
+        {
+            id: 'time7',
+            value: '03:00',
+        },
+        {
+            id: 'time8',
+            value: '03:30',
+        },
+        {
+            id: 'time9',
+            value: '04:00',
+        },
+        {
+            id: 'time10',
+            value: '04:30',
+        },
+        {
+            id: 'time11',
+            value: '05:00',
+        },
+        {
+            id: 'time12',
+            value: '05:30',
+        },
+        {
+            id: 'time13',
+            value: '06:00',
+        },
+        {
+            id: 'time14',
+            value: '06:30',
+        },
+        {
+            id: 'time15',
+            value: '07:00',
+        },
+        {
+            id: 'time16',
+            value: '07:30',
+        },
+        {
+            id: 'time17',
+            value: '08:00',
+        },
+        {
+            id: 'time18',
+            value: '08:30',
+        },
+        {
+            id: 'time19',
+            value: '09:00',
+        },
+        {
+            id: 'time20',
+            value: '09:30',
+        },
+        {
+            id: 'time21',
+            value: '10:00',
+        },
+        {
+            id: 'time22',
+            value: '10:30',
+        },
+        {
+            id: 'time23',
+            value: '11:00',
+        },
+        {
+            id: 'time24',
+            value: '11:30',
+        },
+    ];
+
     handleOnChange(event: any) {
         this.onDatePicked.emit(event.value._d);
         this.dateValueStr = '';
@@ -236,6 +383,7 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
     closed() {
         this.isTimeOpen = false;
         this.isOpen = false;
+        console.log('clicked');
     }
 
     public onOpen() {
@@ -267,6 +415,20 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
 
     handleGetTimeSelection(event: any) {
         let timeValue = event.target.value;
+        this.timePickerValue = timeValue.split(':').map(Number);
+        console.log(this.timePickerValue);
+
+        this.selectedHours = this.timePickerValue[0];
+        this.selectedMinutes = this.timePickerValue[1];
+        console.log(this.selectedDate);
+
+        this.setTimeOfDate();
+        this.onDatePicked.emit(this.dateValue.value);
+        this.convertTimeToString();
+    }
+
+    handleGetTimeSelection$(value: any) {
+        let timeValue = value;
         this.timePickerValue = timeValue.split(':').map(Number);
         console.log(this.timePickerValue);
 
