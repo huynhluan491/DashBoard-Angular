@@ -1,4 +1,13 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+    Component,
+    ComponentFactoryResolver,
+    OnChanges,
+    OnInit,
+    SimpleChanges,
+    ViewChild,
+    ViewContainerRef,
+    ViewEncapsulation,
+} from '@angular/core';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { PageChangeEvent } from '@progress/kendo-angular-pager';
 import { ProductService } from 'src/app/product.service';
@@ -7,6 +16,8 @@ import { ProductsService } from 'src/services/products.service';
 import { State } from '@progress/kendo-data-query';
 import { Observable } from 'rxjs';
 import { ProductManagementService } from '../../services/product-management.service';
+import { DrawerItem, DrawerMode, DrawerPosition, DrawerSelectEvent } from '@progress/kendo-angular-layout';
+import { AddProductFormComponent } from '../add-product-form/add-product-form.component';
 
 @Component({
     selector: 'app-product-list',
@@ -38,7 +49,11 @@ export class ProductListComponent implements OnInit {
         sort: [],
     };
 
-    constructor(private serviceOfProduct: ProductService, private addFormService: ProductManagementService) {}
+    constructor(
+        private serviceOfProduct: ProductService,
+        private addFormService: ProductManagementService,
+        private componentFactoryResolver: ComponentFactoryResolver,
+    ) {}
 
     ngOnInit(): void {
         this.getListProduct();
@@ -182,4 +197,8 @@ export class ProductListComponent implements OnInit {
     get isOpenForm(): boolean {
         return this.addFormService._isFormOpen;
     }
+
+    public expandMode: DrawerMode = 'overlay';
+    public expanded = false;
+    public position: DrawerPosition = 'end';
 }
