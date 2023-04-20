@@ -13,7 +13,6 @@
     height: 273px;
     top: 30px;
     left: 0;
-    position: absolute;
     background-color: #fff;
     box-shadow: 0px 5px 6px 0px #5a627680;
     z-index: 99999;
@@ -70,15 +69,30 @@
     }
 
     .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-form-field-infix {
+        display: flex;
+        flex-direction: row-reverse;
         padding-bottom: 0;
         padding-top: 0;
-        display: flex;
         align-items: center;
+
         height: 30px;
+    }
+
+    .mat-label {
+        font-size: 18px;
+        color: yellow;
+
+        .active {
+            color: #ffffff;
+        }
     }
 
     .mdc-text-field--filled:not(.mdc-text-field--disabled) {
         background-color: #f5f6f8;
+    }
+
+    .mat-icon {
+        margin-left: 10px;
     }
 
     .mdc-line-ripple {
@@ -189,10 +203,4 @@
             }
         }
     }
-}
-@import '~bootstrap/dist/css/bootstrap.css';
-@import 'bootstrap/scss/bootstrap';
-@import './timepicker.scss';
-.time-picker-wrapper {
-    padding: 15px 29px 21px 29px;
 }

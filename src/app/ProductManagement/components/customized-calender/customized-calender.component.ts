@@ -60,12 +60,7 @@ import { MatLabel } from '@angular/material/form-field';
 })
 export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterViewInit {
     @ViewChild(MatDatepicker) datePicker: any;
-    @ViewChild('time-selection', { read: ViewContainerRef, static: false }) dropdownWrapper!: ElementRef;
     @ViewChild('picker', { read: ViewContainerRef, static: false }) picker!: ViewContainerRef;
-
-    @ViewChild('matFormFieldTemplate', { read: ViewContainerRef }) selectContainer!: ViewContainerRef;
-    @ViewChild('matFormFieldTemplate') matFormFieldTemplate!: TemplateRef<any>;
-    @ViewChild('container', { read: ViewContainerRef, static: true }) container!: ViewContainerRef;
 
     exampleHeader = ExampleHeader;
     isOpen = false;
@@ -107,15 +102,7 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
         'Volleyball',
     ];
 
-    constructor(
-        private changeDetectorRef: ChangeDetectorRef,
-        private cdkConnectedOverlay: OverlayOutsideClickDispatcher,
-        private viewContainerRef: ViewContainerRef,
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private injector: Injector,
-        private renderer: Renderer2,
-        private el: ElementRef,
-    ) {}
+    constructor(private cdkConnectedOverlay: OverlayOutsideClickDispatcher) {}
 
     ngOnInit(): void {
         if (this.isDateTimePicker == true) {
@@ -142,8 +129,7 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
     ngOnChanges(changes: SimpleChanges) {}
 
     ngAfterViewInit() {
-        // append the new div to the timePickWrapper div
-        // this.timePickWrapper.appendChild(matFormFieldRef.location.nativeElement);
+        //TIME PICKER WRAPPER
         this.timePickWrapper = document.createElement('div');
         this.timePickWrapper.classList.add('time-picker-wrapper');
         this.selectionWrapper = document.createElement('div');
@@ -160,23 +146,8 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
         const alldayLabel = document.createElement('label');
         alldayCheck.classList.add('allday-label');
         alldayLabel.innerText = 'Cả ngày';
-
         this.alldayWrap.appendChild(alldayCheck);
         this.alldayWrap.appendChild(alldayLabel);
-
-        //time selection
-        const customSelectWrapper = document.createElement('div');
-        customSelectWrapper.classList.add('custom-select');
-        this.selectElement = document.createElement('select');
-        this.selectElement.setAttribute('placeholder', 'Select time');
-        this.selectElement.classList.add('time-selection');
-        this.cbValue.forEach((time) => {
-            const optionElement = document.createElement('option');
-            optionElement.setAttribute('value', time);
-            optionElement.textContent = time;
-            this.selectElement.appendChild(optionElement);
-        });
-        this.selectElement.addEventListener('change', this.handleGetTimeSelection.bind(this)); // assign scope to access variable .bind(this)
 
         //AM
         const timeTypeWrapper = document.createElement('div');
@@ -190,6 +161,7 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
             amCheck.classList.add('active');
             pmCheck.classList.remove('active');
         });
+
         //PM
         const pmCheck = document.createElement('button');
         pmCheck.classList.add('type-selection');
@@ -199,15 +171,6 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
             pmCheck.classList.add('active');
             this.handleSetPM();
         });
-
-        timeTypeWrapper.appendChild(amCheck);
-        timeTypeWrapper.appendChild(pmCheck);
-        customSelectWrapper.appendChild(this.selectElement);
-        this.selectionWrapper.appendChild(customSelectWrapper);
-        this.selectionWrapper.appendChild(timeTypeWrapper);
-
-        this.timePickWrapper.appendChild(this.alldayWrap);
-        this.timePickWrapper.appendChild(this.selectionWrapper);
 
         // CUSTOMIZE SELECT
         const selectDiv = document.createElement('details');
@@ -221,11 +184,20 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
         itemList.classList.add('list');
         selectDiv.appendChild(itemList);
 
+        const inputElm = document.createElement('input');
+        inputElm.setAttribute('type', 'radio');
+        inputElm.setAttribute('name', 'time');
+        inputElm.setAttribute('id', 'default');
+        inputElm.setAttribute('value', '12:00');
+        inputElm.setAttribute('title', 'hh : mm');
+        inputElm.setAttribute('checked', '');
+        summaryDiv.appendChild(inputElm);
+
         this.timeList.map((item, index) => {
             const inputElm = document.createElement('input');
             inputElm.setAttribute('type', 'radio');
             inputElm.setAttribute('name', 'time');
-            inputElm.setAttribute('id', index == 0 ? 'default' : item.id);
+            inputElm.setAttribute('id', item.id);
             inputElm.setAttribute('value', item.value);
             inputElm.setAttribute('title', item.value);
             inputElm.addEventListener('click', () => {
@@ -244,132 +216,110 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
             liElm.appendChild(labelElm);
         });
 
-        this.timePickWrapper.appendChild(selectDiv);
+        this.selectionWrapper.appendChild(selectDiv);
+        this.selectionWrapper.appendChild(timeTypeWrapper);
+        timeTypeWrapper.appendChild(amCheck);
+        timeTypeWrapper.appendChild(pmCheck);
+        this.timePickWrapper.appendChild(this.alldayWrap);
+        this.timePickWrapper.appendChild(this.selectionWrapper);
     }
-
-    cbValue = [
-        '12:00',
-        '12:30',
-        '01:00',
-        '01:30',
-        '02:00',
-        '02:30',
-        '03:00',
-        '03:30',
-        '04:00',
-        '04:30',
-        '05:00',
-        '05:30',
-        '06:00',
-        '06:30',
-        '07:00',
-        '07:30',
-        '08:00',
-        '08:30',
-        '09:00',
-        '09:30',
-        '10:00',
-        '10:30',
-        '11:00',
-        '11:30',
-    ];
 
     timeList = [
         {
             id: 'time1',
-            value: '12:00',
+            value: '12 : 00',
         },
         {
             id: 'time2',
-            value: '12:30',
+            value: '12 : 30',
         },
         {
             id: 'time3',
-            value: '01:00',
+            value: '01 : 00',
         },
         {
             id: 'time4',
-            value: '01:30',
+            value: '01 : 30',
         },
         {
             id: 'time5',
-            value: '02:00',
+            value: '02 : 00',
         },
         {
             id: 'time6',
-            value: '02:30',
+            value: '02 : 30',
         },
         {
             id: 'time7',
-            value: '03:00',
+            value: '03 : 00',
         },
         {
             id: 'time8',
-            value: '03:30',
+            value: '03 : 30',
         },
         {
             id: 'time9',
-            value: '04:00',
+            value: '04 : 00',
         },
         {
             id: 'time10',
-            value: '04:30',
+            value: '04 : 30',
         },
         {
             id: 'time11',
-            value: '05:00',
+            value: '05 : 00',
         },
         {
             id: 'time12',
-            value: '05:30',
+            value: '05 : 30',
         },
         {
             id: 'time13',
-            value: '06:00',
+            value: '06 : 00',
         },
         {
             id: 'time14',
-            value: '06:30',
+            value: '06 : 30',
         },
         {
             id: 'time15',
-            value: '07:00',
+            value: '07 : 00',
         },
         {
             id: 'time16',
-            value: '07:30',
+            value: '07 : 30',
         },
         {
             id: 'time17',
-            value: '08:00',
+            value: '08 : 00',
         },
         {
             id: 'time18',
-            value: '08:30',
+            value: '08 : 30',
         },
         {
             id: 'time19',
-            value: '09:00',
+            value: '09 : 00',
         },
         {
             id: 'time20',
-            value: '09:30',
+            value: '09 : 30',
         },
         {
             id: 'time21',
-            value: '10:00',
+            value: '10 : 00',
         },
         {
             id: 'time22',
-            value: '10:30',
+            value: '10 : 30',
         },
         {
             id: 'time23',
-            value: '11:00',
+            value: '11 : 00',
         },
         {
             id: 'time24',
-            value: '11:30',
+            value: '11 : 30',
         },
     ];
 
@@ -413,23 +363,10 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
         });
     }
 
-    handleGetTimeSelection(event: any) {
-        let timeValue = event.target.value;
-        this.timePickerValue = timeValue.split(':').map(Number);
-        console.log(this.timePickerValue);
-
-        this.selectedHours = this.timePickerValue[0];
-        this.selectedMinutes = this.timePickerValue[1];
-        console.log(this.selectedDate);
-
-        this.setTimeOfDate();
-        this.onDatePicked.emit(this.dateValue.value);
-        this.convertTimeToString();
-    }
-
     handleGetTimeSelection$(value: any) {
         let timeValue = value;
         this.timePickerValue = timeValue.split(':').map(Number);
+
         console.log(this.timePickerValue);
 
         this.selectedHours = this.timePickerValue[0];
