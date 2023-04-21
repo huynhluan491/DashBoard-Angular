@@ -64,7 +64,6 @@ import { DateTimePickerComponent } from './ProductManagement/components/date-tim
 import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { EditDialogComponent } from './ProductManagement/components/edit-dialog/edit-dialog.component';
 import { WatingPageComponent } from './ProductManagement/components/wating-page/wating-page.component';
-import { FormDrawerComponent } from './ProductManagement/components/form-drawer/form-drawer.component';
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }
@@ -101,7 +100,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         DateTimePickerComponent,
         EditDialogComponent,
         WatingPageComponent,
-        FormDrawerComponent,
     ],
     imports: [
         BrowserModule,
