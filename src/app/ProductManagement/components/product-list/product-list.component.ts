@@ -1,6 +1,7 @@
 import {
     Component,
     ComponentFactoryResolver,
+    Input,
     OnChanges,
     OnInit,
     SimpleChanges,
@@ -41,6 +42,8 @@ export class ProductListComponent implements OnInit {
     isDeleteDialogOpened: boolean = false;
     selectedDeleteItem: any;
     isShowEditDialog: boolean = false;
+
+    @Input() drawerView: any;
 
     public state: State = {
         skip: 0,
@@ -144,6 +147,7 @@ export class ProductListComponent implements OnInit {
             this.selectedEditItem = data;
             this.addFormService.handleOpenForm();
             this.addFormService.handleCheckTypeOfForm(false, this.selectedEditItem);
+            this.drawerView.toggle();
         });
     }
 
@@ -197,8 +201,4 @@ export class ProductListComponent implements OnInit {
     get isOpenForm(): boolean {
         return this.addFormService._isFormOpen;
     }
-
-    public expandMode: DrawerMode = 'overlay';
-    public expanded = false;
-    public position: DrawerPosition = 'end';
 }

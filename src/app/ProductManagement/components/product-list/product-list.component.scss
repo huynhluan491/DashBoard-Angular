@@ -225,3 +225,13 @@
         flex: unset;
     }
 }
+
+::ng-deep .product-form-drawer .k-drawer-container {
+    .k-drawer {
+        background-color: white !important;
+    }
+
+    .k-drawer-wrapper {
+        width: 420px !important;
+    }
+}

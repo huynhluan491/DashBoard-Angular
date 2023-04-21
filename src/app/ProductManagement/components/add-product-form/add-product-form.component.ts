@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProductManagementService } from '../../services/product-management.service';
 
@@ -8,15 +8,11 @@ import { ProductManagementService } from '../../services/product-management.serv
     styleUrls: ['./add-product-form.component.scss'],
 })
 export class AddProductFormComponent implements OnInit {
-    // public addForm: FormGroup = new FormGroup({
-    //     barcode: new FormControl(),
-    //     postcode: new FormControl(),
-    //     productName: new FormControl(),
-    // });
     addForm!: FormGroup;
     selectedItem: any;
     isEditForm: boolean = false;
 
+    @Input() drawerView: any;
     @Output() handlePostEditAPI = new EventEmitter<any>();
     @Output() handlePostAddAPI = new EventEmitter<any>();
 
@@ -45,6 +41,7 @@ export class AddProductFormComponent implements OnInit {
 
     togglecloseForm(): void {
         this.addFormService.handleCloseForm();
+        this.drawerView.toggle();
     }
 
     handleEditProduct() {

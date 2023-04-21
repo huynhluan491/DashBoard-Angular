@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ProductManagementService } from '../../services/product-management.service';
+import { DrawerMode, DrawerPosition } from '@progress/kendo-angular-layout';
 
 @Component({
     selector: 'app-program-products',
@@ -7,10 +8,14 @@ import { ProductManagementService } from '../../services/product-management.serv
     styleUrls: ['./program-products.component.scss'],
 })
 export class ProgramProductsComponent {
+    public expandMode: DrawerMode = 'overlay';
+    public expanded = false;
+    public position: DrawerPosition = 'end';
     constructor(private addFormService: ProductManagementService) {}
 
-    handleOpenForm() {
+    handleOpenForm(drawer: any) {
         this.addFormService.handleCheckTypeOfForm(true, undefined);
         this.addFormService.handleOpenForm();
+        drawer.toggle();
     }
 }
