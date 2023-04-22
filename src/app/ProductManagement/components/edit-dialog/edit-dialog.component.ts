@@ -10,7 +10,6 @@ import { ProductManagementService } from '../../services/product-management.serv
 export class EditDialogComponent implements OnInit {
     editDialogForm: FormGroup = new FormGroup({
         barcode: new FormControl(),
-        poscode: new FormControl(),
         productName: new FormControl(),
     });
 
@@ -26,12 +25,7 @@ export class EditDialogComponent implements OnInit {
         this.selectedItem = this.formService._isEditItem;
         if (this.selectedItem) {
             this.editDialogForm?.controls['barcode'].setValue(this.selectedItem?.Barcode);
-            this.editDialogForm?.controls['poscode'].setValue(this.selectedItem?.Poscode);
             this.editDialogForm?.controls['productName'].setValue(this.selectedItem?.ProductName);
-
-            console.log(typeof this.editDialogForm.controls['barcode'].value);
-            console.log(this.editDialogForm.controls['poscode'].value);
-            console.log(this.editDialogForm.controls['productName'].value);
         }
     }
 
