@@ -4,8 +4,8 @@
     </div>
     <form [formGroup]="addForm" class="form-wrapper">
         <div class="form-content-wrapper">
-            <div class="barcode-box">
-                <p class="box-title">Barcode</p>
+            <div class="box-field barcode-box">
+                <p class="box-field">Barcode</p>
                 <textarea
                     type="text"
                     name="barcode"
@@ -15,18 +15,8 @@
                     cols="50"
                 ></textarea>
             </div>
-            <div class="poscode-box">
-                <p class="box-title">PosCode</p>
-                <textarea
-                    type="text"
-                    name="poscode"
-                    rows="4"
-                    ngDefaultControl
-                    formControlName="poscode"
-                    cols="50"
-                ></textarea>
-            </div>
-            <div class="product-name-box">
+
+            <div class="box-field">
                 <p class="box-title">Tên sản phẩm</p>
                 <textarea
                     type="text"
@@ -36,6 +26,67 @@
                     cols="50"
                     formControlName="productName"
                 ></textarea>
+            </div>
+
+            <div class="box-field">
+                <p class="box-title">Freeship image</p>
+                <textarea
+                    type="text"
+                    name="FreeShippingImage"
+                    rows="4"
+                    ngDefaultControl
+                    cols="50"
+                    formControlName="FreeShippingImage"
+                ></textarea>
+            </div>
+
+            <div class="box-field">
+                <p class="box-title">Giá sản phẩm</p>
+                <textarea
+                    type="text"
+                    name="Price"
+                    rows="4"
+                    ngDefaultControl
+                    cols="50"
+                    formControlName="Price"
+                ></textarea>
+            </div>
+
+            <div class="product-properties">
+                <div class="property-item">
+                    <kendo-label [for]="isNew" text="isNew"></kendo-label>
+                    <input type="checkbox" kendoCheckBox formControlName="isNew" #isNew />
+                </div>
+
+                <div class="property-item">
+                    <kendo-label [for]="isHachi24h" text="isHachi24h"></kendo-label>
+                    <input type="checkbox" kendoCheckBox formControlName="isHachi24h" #isHachi24h />
+                </div>
+
+                <div class="property-item">
+                    <kendo-label [for]="isBestPrice" text="isBestPrice"></kendo-label>
+                    <input type="checkbox" kendoCheckBox formControlName="isBestPrice" #isBestPrice />
+                </div>
+            </div>
+
+            <div class="product-properties">
+                <div class="property-item">
+                    <kendo-label [for]="isSpecial" text="isSpecial"></kendo-label>
+                    <input type="checkbox" kendoCheckBox formControlName="isSpecial" #isSpecial />
+                </div>
+
+                <div class="property-item">
+                    <kendo-label [for]="isGift" text="isGift"></kendo-label>
+                    <input type="checkbox" kendoCheckBox formControlName="isGift" #isGift />
+                </div>
+
+                <div class="property-item">
+                    <kendo-label [for]="isPromotion" text="isPromotion"></kendo-label>
+                    <input type="checkbox" kendoCheckBox formControlName="isPromotion" #isPromotion />
+                </div>
+            </div>
+
+            <div *ngIf="!isEditForm" class="product-img">
                 <img
                     *ngIf="!isEditForm"
                     width="250px"
@@ -49,4 +100,5 @@
             <button class="update-btn" (click)="handleEditProduct()">THÊM</button>
         </div>
     </form>
+    <p>{{ addForm.value | json }}</p>
 </div>
