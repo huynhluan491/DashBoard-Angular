@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
+import { DrawerItem, DrawerSelectEvent } from '@progress/kendo-angular-layout';
 
 @Component({
     selector: 'app-root',
