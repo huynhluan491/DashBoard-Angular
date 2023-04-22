@@ -26,19 +26,11 @@
             <fieldset class="k-form-fieldset left-form">
                 <div class="coupon-id-quantity" style="display: flex; justify-content: space-between">
                     <kendo-formfield>
-                        <container-element [ngSwitch]="formLanguages">
-                            <p class="label" *ngSwitchCase="'japanese'">クーポンスタートコード</p>
-                            <p class="label" *ngSwitchCase="'english'">Coupon start code</p>
-                            <p class="label" *ngSwitchDefault>Mã bắt đầu coupon</p>
-                        </container-element>
+                        <p class="label">Mã bắt đầu coupon</p>
                         <input class="input id-input" formControlName="couponID" kendoTextBox #couponID />
                     </kendo-formfield>
                     <kendo-formfield>
-                        <container-element [ngSwitch]="formLanguages">
-                            <p class="label" *ngSwitchCase="'japanese'">リリース量</p>
-                            <p class="label" *ngSwitchCase="'english'">release quantity</p>
-                            <p class="label" *ngSwitchDefault>SL phát hành</p>
-                        </container-element>
+                        <p class="label">SL phát hành</p>
                         <input
                             style="text-align: right"
                             class="input quantity-input"
@@ -52,40 +44,26 @@
                 <kendo-formfield>
                     <div class="random-coupon" style="display: flex; align-items: flex-end; gap: 10px">
                         <input class="checkbox-input" #isRandom type="checkbox" kendoCheckBox />
-                        <container-element [ngSwitch]="formLanguages">
-                            <p class="label" *ngSwitchCase="'japanese'">ランダムクーポンコード (x) 回</p>
-                            <p class="label" *ngSwitchCase="'english'">Random coupon code (x) times</p>
-                            <p class="label" *ngSwitchDefault>Mã coupon ngẫu nhiên gấp (x) lần</p>
-                        </container-element>
+
+                        <p class="label">Mã coupon ngẫu nhiên gấp (x) lần</p>
                     </div>
                     <input class="input" formControlName="randomCoupon" kendoTextBox #randomCoupon />
                 </kendo-formfield>
 
                 <kendo-formfield>
                     <div class="value-coupon" style="display: flex; justify-content: space-between">
-                        <container-element [ngSwitch]="formLanguages">
-                            <p class="label" *ngSwitchCase="'japanese'">クーポン値</p>
-                            <p class="label" *ngSwitchCase="'english'">Coupon value</p>
-                            <p class="label" *ngSwitchDefault>Giá trị coupon</p>
-                        </container-element>
+                        <p class="label">Giá trị coupon</p>
                         <div class="" style="display: flex; gap: 10px; align-items: flex-end">
                             <input #isPercent class="checkbox-input" type="checkbox" kendoCheckBox />
-                            <container-element [ngSwitch]="formLanguages">
-                                <p class="label" *ngSwitchCase="'japanese'">レート</p>
-                                <p class="label" *ngSwitchCase="'english'">Rate %</p>
-                                <p class="label" *ngSwitchDefault>tỷ lệ %</p>
-                            </container-element>
+
+                            <p class="label">tỷ lệ %</p>
                         </div>
                     </div>
                     <input class="input" formControlName="couponValue" kendoTextBox #couponValue />
                 </kendo-formfield>
 
                 <div>
-                    <container-element [ngSwitch]="formLanguages">
-                        <p class="label" *ngSwitchCase="'japanese'">有効時間</p>
-                        <p class="label" *ngSwitchCase="'english'">Validity period</p>
-                        <p class="label" *ngSwitchDefault>Thời gian hiệu lực</p>
-                    </container-element>
+                    <p class="label">Thời gian hiệu lực</p>
                     <div style="display: flex; gap: 11px; padding-top: 12px">
                         <app-customized-calender
                             [dateValue]="couponForm.controls['startDate'] | castForm"
@@ -98,43 +76,23 @@
                     </div>
                 </div>
 
-                <container-element [ngSwitch]="formLanguages">
-                    <p class="label" *ngSwitchCase="'japanese'">スターテス</p>
-                    <p class="label" *ngSwitchCase="'english'">Status</p>
-                    <p class="label" *ngSwitchDefault>Tình trạng</p>
-                </container-element>
-                <container-element [ngSwitch]="formLanguages">
-                    <p class="label" *ngSwitchCase="'japanese'">申請承認</p>
-                    <p class="label" *ngSwitchCase="'english'">Approved to apply</p>
-                    <p class="label" *ngSwitchDefault>Đã phê duyệt áp dụng</p>
-                </container-element>
+                <p class="label">Tình trạng</p>
+                <p class="label approve">Đã phê duyệt áp dụng</p>
             </fieldset>
 
             <fieldset class="k-form-fieldset right-form">
                 <kendo-formfield>
-                    <container-element [ngSwitch]="formLanguages">
-                        <p class="label" *ngSwitchCase="'japanese'">申請承認</p>
-                        <p class="label" *ngSwitchCase="'english'">Approved to apply</p>
-                        <p class="label" *ngSwitchDefault>Đã phê duyệt áp dụng</p>
-                    </container-element>
+                    <p class="label">Tên coupon</p>
                     <input class="input" formControlName="couponName" kendoTextBox #couponName />
                 </kendo-formfield>
 
                 <kendo-formfield>
-                    <container-element [ngSwitch]="formLanguages">
-                        <p class="label" *ngSwitchCase="'japanese'">適用条件の説明</p>
-                        <p class="label" *ngSwitchCase="'english'">Description of conditions apply</p>
-                        <p class="label" *ngSwitchDefault>Mô tả điều kiện áp dụng</p>
-                    </container-element>
+                    <p class="label">Mô tả điều kiện áp dụng</p>
                     <input class="input" formControlName="conditionDesc" kendoTextBox #conditionDesc />
                 </kendo-formfield>
 
                 <kendo-formfield>
-                    <container-element [ngSwitch]="formLanguages">
-                        <p class="label" *ngSwitchCase="'japanese'">説明</p>
-                        <p class="label" *ngSwitchCase="'english'">Explain</p>
-                        <p class="label" *ngSwitchDefault>Diễn giải</p>
-                    </container-element>
+                    <p class="label">Diễn giải</p>
                     <textarea
                         class="input explain-input-style"
                         formControlName="explain"
