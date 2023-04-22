@@ -14,7 +14,7 @@ import { PageChangeEvent } from '@progress/kendo-angular-pager';
 import { ProductService } from 'src/app/product.service';
 import { Product, productList } from 'src/services/product';
 import { ProductsService } from 'src/services/products.service';
-import { State } from '@progress/kendo-data-query';
+import { State, toDataSourceRequest } from '@progress/kendo-data-query';
 import { Observable } from 'rxjs';
 import { ProductManagementService } from '../../services/product-management.service';
 import { DrawerItem, DrawerMode, DrawerPosition, DrawerSelectEvent } from '@progress/kendo-angular-layout';
@@ -47,9 +47,9 @@ export class ProductListComponent implements OnInit {
 
     public state: State = {
         skip: 0,
-        take: 10,
+        take: this.pageSize,
         filter: { filters: [], logic: 'or' },
-        sort: [],
+        sort: [{ field: 'Code', dir: 'desc' }],
     };
 
     constructor(
@@ -63,12 +63,7 @@ export class ProductListComponent implements OnInit {
     }
 
     private getListProduct(): void {
-        let body = {
-            page: this.page,
-            pageSize: this.state.take,
-        };
-
-        this.serviceOfProduct.getListProduct(body).subscribe((data) => {
+        this.serviceOfProduct.getListProduct(this.state).subscribe((data) => {
             this.listProduct = data.Data;
             this.totalProducts = data.Total;
             this.pageData();
@@ -83,47 +78,48 @@ export class ProductListComponent implements OnInit {
     }
 
     public goToPreviousPage() {
-        if (this.skip !== 0) {
+        if (this.state.skip !== 0) {
             this.skip -= this.pageSize;
-            this.page = this.skip / this.pageSize + 1;
+            this.state.skip! -= this.pageSize;
+            console.log(this.state.skip);
+
             this.getListProduct();
         }
     }
 
     public onPageChange(e: PageChangeEvent): void {
-        this.skip = e.skip;
-        this.pageSize = e.take;
-        this.page = this.skip / e.take + 1;
+        this.state.skip = e.skip;
+        this.page = this.state.skip / e.take + 1;
         this.pageData();
     }
 
     public goToNextPage() {
-        if (this.skip >= this.totalProducts + 1 - this.pageSize) {
-            this.skip = this.totalProducts + 1 - this.pageSize;
+        if (this.state.skip! >= this.totalProducts + 1 - this.pageSize) {
+            this.state.skip = 0;
             this.getListProduct();
         } else {
-            this.skip += this.pageSize;
-            this.page = this.skip / this.pageSize + 1;
+            this.state.skip! += this.pageSize;
             this.getListProduct();
         }
     }
 
     public goToFirstPage() {
-        this.skip = 0;
+        this.state.skip = 0;
         this.page = 1;
         this.getListProduct();
     }
 
     public goToLastPage(total: any) {
-        this.skip = this.totalProducts + 1 - this.pageSize; // skip to last page
-        this.page = total;
-        console.log(this.page);
+        console.log(total);
 
+        this.state.skip = this.totalProducts + 1 - this.state.take!; // skip to last page
+        this.page = Math.round(this.state.skip / this.state.take! + 1);
+        console.log(this.page);
         this.getListProduct();
     }
 
-    onDeleteProduct(data: any) {
-        this.serviceOfProduct.getProductByCode([data.Code]).subscribe((data) => {
+    onDeleteProduct(code: number) {
+        this.serviceOfProduct.getProductByCode(code).subscribe((data) => {
             this.selectedDeleteItem = data;
             this.isDeleteDialogOpened = true;
         });
@@ -142,8 +138,8 @@ export class ProductListComponent implements OnInit {
         }
     }
 
-    onEditProduct(id: any) {
-        this.serviceOfProduct.getProductByCode([id]).subscribe((data) => {
+    onEditProduct(code: number) {
+        this.serviceOfProduct.getProductByCode(code).subscribe((data) => {
             this.selectedEditItem = data;
             this.addFormService.handleOpenForm();
             this.addFormService.handleCheckTypeOfForm(false, this.selectedEditItem);
@@ -167,8 +163,8 @@ export class ProductListComponent implements OnInit {
         this.pageData();
     }
 
-    onEditProductDialog(id: number) {
-        this.serviceOfProduct.getProductByCode([id]).subscribe((data) => {
+    onEditProductDialog(code: number) {
+        this.serviceOfProduct.getProductByCode(code).subscribe((data) => {
             this.selectedEditItem = data;
             this.addFormService.handleCheckTypeOfForm(false, this.selectedEditItem);
             console.log(this.selectedEditItem);
@@ -182,12 +178,9 @@ export class ProductListComponent implements OnInit {
 
     dataStateChange(e: any): void {
         console.log(e);
+
         this.page = e.skip / e.take + 1;
-        let order = {
-            page: this.page,
-            pageSize: e.take,
-        };
-        this.serviceOfProduct.getListProduct(order).subscribe((data) => {
+        this.serviceOfProduct.getListProduct(e).subscribe((data) => {
             this.listProduct = data.Data;
             this.totalProducts = data.Total;
             this.pageData();
