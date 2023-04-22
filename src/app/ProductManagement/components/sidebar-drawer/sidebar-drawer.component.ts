@@ -7,7 +7,7 @@ import { DrawerItem, DrawerItemExpandedFn, DrawerSelectEvent } from '@progress/k
     styleUrls: ['./sidebar-drawer.component.scss'],
 })
 export class SidebarDrawerComponent {
-    items = [
+    sideBarItems: Array<DrawerItem> = [
         {
             text: 'KHUYẾN MÃI',
             icon: 'k-i-inbox',
@@ -53,25 +53,15 @@ export class SidebarDrawerComponent {
         },
     ];
     public selected = 'Coupon';
-
-    public expandedIndices = [2];
-
-    public isItemExpanded: DrawerItemExpandedFn = (item): boolean => {
-        return this.expandedIndices.indexOf(item.id) >= 0;
-    };
-
-    public sideBarItems: Array<DrawerItem> = this.items;
+    public expanded = true;
 
     public onSelect(ev: DrawerSelectEvent): void {
+        ev.preventDefault();
         this.selected = ev.item.text;
-        console.log(this.selected);
+    }
 
-        const current = ev.item.id;
-
-        if (this.expandedIndices.indexOf(current) >= 0) {
-            this.expandedIndices = this.expandedIndices.filter((id) => id !== current);
-        } else {
-            this.expandedIndices.push(current);
-        }
+    public switchExpanded(drawer: any): void {
+        this.expanded = !this.expanded;
+        drawer.toggle();
     }
 }

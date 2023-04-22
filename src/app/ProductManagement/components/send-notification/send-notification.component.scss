@@ -169,3 +169,18 @@
         box-shadow: unset;
     }
 }
+
+::ng-deep .target-box {
+    .k-radio {
+        border: 1px solid #1a6634 !important;
+    }
+
+    .k-radio:checked {
+        background-color: white;
+        background-image: url('../../../../assets/icon/RadioBgIcon.svg');
+    }
+
+    .k-radio:checked:focus {
+        box-shadow: unset;
+    }
+}

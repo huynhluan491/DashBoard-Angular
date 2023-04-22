@@ -1,6 +1,5 @@
 .wrapper-drawer {
     height: 100vh;
-    overflow: scroll;
     .custom-toolbar {
         background-color: #5a6276;
         .mail-box {
@@ -12,15 +11,14 @@
 ::ng-deep .wrapper-drawer .k-drawer-container {
     .k-drawer-content {
         background-color: #edeff3;
+        height: 100vh;
+        overflow-y: scroll;
     }
 
     .k-drawer {
         background-color: #5a6276 !important;
-        flex-basis: 240px;
-        position: fixed;
-        z-index: 9999999;
-        height: 100vh;
-        padding-top: 50px;
+        position: relative;
+        z-index: 999999;
 
         .k-drawer-wrapper {
             position: relative;
@@ -31,6 +29,18 @@
                 height: 1px;
                 background-color: white;
                 opacity: 30%;
+            }
+
+            .drawer-header {
+                display: flex;
+                border-bottom: 1px solid white;
+                padding: 10px;
+                justify-content: space-between;
+
+                img {
+                    height: 32px;
+                    width: 185px;
+                }
             }
         }
     }

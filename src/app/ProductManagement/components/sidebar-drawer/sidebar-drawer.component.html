@@ -3,17 +3,21 @@
         <kendo-drawer
             #drawer
             [items]="sideBarItems"
-            mode="push"
+            [mode]="'push'"
+            expanded="true"
             [mini]="true"
-            [expanded]="true"
             (select)="onSelect($event)"
-            [autoCollapse]="false"
-            [isItemExpanded]="isItemExpanded"
         >
+            <ng-template kendoDrawerHeaderTemplate>
+                <div class="drawer-header">
+                    <button kendoButton icon="menu" fillMode="flat" (click)="switchExpanded(drawer)"></button>
+                    <img [hidden]="!expanded" src="../../../../assets/images/HachiLogo.png" />
+                </div>
+            </ng-template>
         </kendo-drawer>
+
         <kendo-drawer-content>
-            <app-coupon-page-management *ngIf="selected === 'Coupon'"></app-coupon-page-management>
-            <app-wating-page *ngIf="selected !== 'Coupon'"></app-wating-page>
+            <app-coupon-page-management></app-coupon-page-management>
         </kendo-drawer-content>
     </kendo-drawer-container>
 </div>
