@@ -101,3 +101,13 @@
         }
     }
 }
+
+::ng-deep .product-form-drawer .k-drawer-container {
+    .k-drawer {
+        flex-basis: 240px;
+        position: fixed;
+        z-index: 9999999;
+        height: 100vh;
+        padding-top: 50px;
+    }
+}
