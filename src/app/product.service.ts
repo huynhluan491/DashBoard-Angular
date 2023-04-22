@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
-import { State, toDataSourceRequestString, translateDataSourceResultGroups } from '@progress/kendo-data-query';
+import {
+    State,
+    toDataSourceRequest,
+    toDataSourceRequestString,
+    translateDataSourceResultGroups,
+} from '@progress/kendo-data-query';
 const httpOptions = {
     headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -30,20 +35,22 @@ export class ProductService {
     };
 
     getListProduct(body: any): Observable<any> {
-        return this.http.post<any>(listProductAPI, body, httpOptions).pipe(
+        console.log(body);
+
+        return this.http.post<any>(listProductAPI, toDataSourceRequest(body), httpOptions).pipe(
             map((res) => {
                 const data = res.ObjectReturn;
                 // const total = res.ObjectReturn.Total
                 if (res.ErrorString === null) {
                     return data;
                 } else {
-                    console.log(res.ObjectReturn.Errors);
+                    console.log(data.Errors);
                 }
             }),
         );
     }
 
-    getProductByCode(ids: any): Observable<any> {
+    getProductByIds(ids: any): Observable<any> {
         console.log(ids);
 
         return this.http.post<any>('http://test.lapson.vn/api/product/GetListProductByIDs', ids, httpOptions).pipe(
@@ -57,6 +64,28 @@ export class ProductService {
                 }
             }),
         );
+    }
+
+    getProductByCode(code: number): Observable<any> {
+        const body = {
+            Code: code,
+        };
+
+        return this.http
+            .post<any>('http://test.lapson.vn/api/product/GetProduct', JSON.stringify(body), httpOptions)
+            .pipe(
+                map((res) => {
+                    const data = res.ObjectReturn;
+
+                    if (res.ErrorString === null) {
+                        console.log(data);
+
+                        return data;
+                    } else {
+                        console.log(res.ObjectReturn.Errors);
+                    }
+                }),
+            );
     }
 
     testDataSource(): void {
