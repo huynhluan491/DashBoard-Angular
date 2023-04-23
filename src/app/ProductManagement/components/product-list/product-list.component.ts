@@ -1,24 +1,11 @@
-import {
-    Component,
-    ComponentFactoryResolver,
-    Input,
-    OnChanges,
-    OnInit,
-    SimpleChanges,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { PageChangeEvent } from '@progress/kendo-angular-pager';
 import { ProductService } from 'src/app/product.service';
 import { Product, productList } from 'src/services/product';
-import { ProductsService } from 'src/services/products.service';
-import { State, toDataSourceRequest } from '@progress/kendo-data-query';
+import { State } from '@progress/kendo-data-query';
 import { Observable } from 'rxjs';
 import { ProductManagementService } from '../../services/product-management.service';
-import { DrawerItem, DrawerMode, DrawerPosition, DrawerSelectEvent } from '@progress/kendo-angular-layout';
-import { AddProductFormComponent } from '../add-product-form/add-product-form.component';
 
 @Component({
     selector: 'app-product-list',
@@ -30,9 +17,7 @@ export class ProductListComponent implements OnInit {
     public view: Observable<any> | undefined;
     public products: Product[] = productList;
     public productPage: Product[] = [];
-    public pageSize = 10;
-    public skip = 0;
-    public sizes = [10, 50];
+    public sizes = [20, 50];
     public buttonCount = 10;
     public page = 1;
 
@@ -47,16 +32,12 @@ export class ProductListComponent implements OnInit {
 
     public state: State = {
         skip: 0,
-        take: this.pageSize,
+        take: 10,
         filter: { filters: [], logic: 'or' },
         sort: [{ field: 'Code', dir: 'desc' }],
     };
 
-    constructor(
-        private serviceOfProduct: ProductService,
-        private addFormService: ProductManagementService,
-        private componentFactoryResolver: ComponentFactoryResolver,
-    ) {}
+    constructor(private serviceOfProduct: ProductService, private addFormService: ProductManagementService) {}
 
     ngOnInit(): void {
         this.getListProduct();
@@ -79,10 +60,7 @@ export class ProductListComponent implements OnInit {
 
     public goToPreviousPage() {
         if (this.state.skip !== 0) {
-            this.skip -= this.pageSize;
-            this.state.skip! -= this.pageSize;
-            console.log(this.state.skip);
-
+            this.state.skip! -= this.state.take!;
             this.getListProduct();
         }
     }
@@ -90,15 +68,16 @@ export class ProductListComponent implements OnInit {
     public onPageChange(e: PageChangeEvent): void {
         this.state.skip = e.skip;
         this.page = this.state.skip / e.take + 1;
+        this.state.take = e.take;
         this.pageData();
     }
 
     public goToNextPage() {
-        if (this.state.skip! >= this.totalProducts + 1 - this.pageSize) {
+        if (this.state.skip! >= this.totalProducts + 1 - this.state.take!) {
             this.state.skip = 0;
             this.getListProduct();
         } else {
-            this.state.skip! += this.pageSize;
+            this.state.skip! += this.state.take!;
             this.getListProduct();
         }
     }
@@ -110,11 +89,8 @@ export class ProductListComponent implements OnInit {
     }
 
     public goToLastPage(total: any) {
-        console.log(total);
-
         this.state.skip = this.totalProducts + 1 - this.state.take!; // skip to last page
         this.page = Math.round(this.state.skip / this.state.take! + 1);
-        console.log(this.page);
         this.getListProduct();
     }
 
@@ -130,7 +106,6 @@ export class ProductListComponent implements OnInit {
             this.isDeleteDialogOpened = false;
             this.listProduct = this.listProduct.filter((item) => item.Code !== this.selectedDeleteItem.Code);
             this.pageData();
-            console.log(this.listProduct);
             window.alert('Deleted');
         } else {
             this.isDeleteDialogOpened = false;
@@ -154,7 +129,6 @@ export class ProductListComponent implements OnInit {
         if (Idx > -1) {
             this.listProduct[Idx] = updateInfo;
             this.pageData();
-            console.log(this.listProduct);
         }
     }
 
@@ -177,8 +151,6 @@ export class ProductListComponent implements OnInit {
     }
 
     dataStateChange(e: any): void {
-        console.log(e);
-
         this.page = e.skip / e.take + 1;
         this.serviceOfProduct.getListProduct(e).subscribe((data) => {
             this.listProduct = data.Data;

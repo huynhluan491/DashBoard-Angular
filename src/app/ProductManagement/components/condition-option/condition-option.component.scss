@@ -158,6 +158,9 @@
 ::ng-deep .type-box {
     .k-radio {
         border: 1px solid #1a6634 !important;
+        background-size: 8px;
+        width: 16px;
+        height: 17px;
     }
 
     .k-radio:checked {
