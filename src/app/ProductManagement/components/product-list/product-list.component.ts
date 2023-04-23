@@ -4,7 +4,7 @@ import { PageChangeEvent } from '@progress/kendo-angular-pager';
 import { ProductService } from 'src/app/product.service';
 import { Product, productList } from 'src/services/product';
 import { State } from '@progress/kendo-data-query';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ProductManagementService } from '../../services/product-management.service';
 
 @Component({
@@ -33,14 +33,50 @@ export class ProductListComponent implements OnInit {
     public state: State = {
         skip: 0,
         take: 10,
-        filter: { filters: [], logic: 'or' },
+        filter: {
+            filters: [
+                {
+                    field: 'Barcode',
+                    operator: 'contains',
+                    value: '',
+                },
+                {
+                    field: 'Poscode',
+                    operator: 'contains',
+                    value: '',
+                },
+                {
+                    field: 'ProductName',
+                    operator: 'contains',
+                    value: '',
+                },
+            ],
+            logic: 'or',
+        },
         sort: [{ field: 'Code', dir: 'desc' }],
+    };
+
+    // Box filter for 3 fields searched
+    private filters: { [key: string]: any } = {
+        Barcode: this.state.filter?.filters[0],
+        Poscode: this.state.filter?.filters[1],
+        ProductName: this.state.filter?.filters[2],
     };
 
     constructor(private serviceOfProduct: ProductService, private addFormService: ProductManagementService) {}
 
     ngOnInit(): void {
         this.getListProduct();
+
+        // update value for filter value
+        this.serviceOfProduct.getSearchValue().subscribe((value) => {
+            Object.entries(this.filters).forEach(([key, filter]) => {
+                if (filter && filter.field === key) {
+                    filter.value = value;
+                }
+            });
+            this.getListProduct();
+        });
     }
 
     private getListProduct(): void {

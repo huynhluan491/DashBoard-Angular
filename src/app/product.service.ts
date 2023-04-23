@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import {
     State,
     toDataSourceRequest,
@@ -19,6 +19,8 @@ const listProductAPI = 'http://test.lapson.vn/api/product/GetListProduct';
     providedIn: 'root',
 })
 export class ProductService {
+    searchValue: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
     constructor(private http: HttpClient) {}
 
     public state: State = {
@@ -36,6 +38,7 @@ export class ProductService {
 
     getListProduct(body: any): Observable<any> {
         console.log(body);
+        console.log(toDataSourceRequest(body));
 
         return this.http.post<any>(listProductAPI, toDataSourceRequest(body), httpOptions).pipe(
             map((res) => {
@@ -95,5 +98,13 @@ export class ProductService {
 
         const queryStr = `${toDataSourceRequestString(this.state)}`;
         console.log(queryStr);
+    }
+
+    getSearchValue() {
+        return this.searchValue.asObservable();
+    }
+
+    setSearchValue(value: string) {
+        this.searchValue.next(value);
     }
 }
