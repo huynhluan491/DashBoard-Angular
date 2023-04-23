@@ -2,10 +2,11 @@
     <kendo-drawer-container>
         <kendo-drawer
             #drawer
-            [items]="sideBarItems"
+            [items]="sidebarItems"
             [mode]="'push'"
-            expanded="true"
+            [expanded]="true"
             [mini]="true"
+            [autoCollapse]="false"
             (select)="onSelect($event)"
         >
             <ng-template kendoDrawerHeaderTemplate>
@@ -14,10 +15,38 @@
                     <img [hidden]="!expanded" src="../../../../assets/images/HachiLogo.png" />
                 </div>
             </ng-template>
+
+            <ng-template *ngIf="expanded" kendoDrawerItemTemplate let-item>
+                <div
+                    *ngIf="expanded"
+                    class="k-level-{{ item.level }}"
+                    [ngClass]="selected == item.text ? 'active' : ''"
+                    [ngClass]="item.level == 0 && item.selected ? 'selected' : ''"
+                >
+                    <span class="k-icon {{ item.icon }}"></span>
+                    <span class="text">
+                        {{ item.text }}
+                    </span>
+                </div>
+
+                <span
+                    *ngIf="item.expanded && item.children"
+                    class="k-icon k-i-arrow-chevron-down"
+                    [ngClass]="item.level == 0 && item.selected ? 'selected' : ''"
+                    style="margin-left: auto; line-height: inherit"
+                ></span>
+
+                <span
+                    *ngIf="!item.expanded && item.children"
+                    class="k-icon k-i-arrow-chevron-right"
+                    [ngClass]="item.level == 0 && item.selected ? 'selected' : ''"
+                    style="margin-left: auto; line-height: inherit"
+                ></span>
+            </ng-template>
         </kendo-drawer>
 
         <kendo-drawer-content>
-            <app-coupon-page-management></app-coupon-page-management>
+            <app-coupon-page-management *ngIf="selected === 'Coupon'"></app-coupon-page-management>
         </kendo-drawer-content>
     </kendo-drawer-container>
 </div>

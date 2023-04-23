@@ -51,6 +51,7 @@
 
     .k-drawer-item.k-selected {
         background-color: unset;
+        color: white !important;
 
         &:hover {
             background-color: unset;
@@ -58,16 +59,54 @@
     }
 
     .k-drawer-item {
+        padding-block: unset;
+        padding-inline: unset;
+        gap: unset;
         color: white;
-        font-size: 13px;
-        font-weight: 700;
-
+        justify-content: center;
         &:hover {
-            background-color: unset;
+            background-color: unset !important;
+        }
+
+        &:focus:hover {
+            background-color: unset !important;
+            box-shadow: unset !important;
         }
 
         &:focus {
-            box-shadow: unset;
+            box-shadow: unset !important;
+            background-color: unset !important;
+        }
+
+        .k-level-1 {
+            color: #959db3;
+            font-size: 13px;
+            font-weight: 700;
+            padding-left: 28px;
+            background-color: rgba(26, 35, 52, 0.4);
+            padding: 18px 0 18px 53px;
+            width: 100%;
+        }
+        .k-level-0 {
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            gap: 16px;
+            width: 100%;
+            padding-left: 16px;
+            padding-top: 17px;
+            padding-bottom: 15px;
         }
     }
+
+    .k-i-arrow-chevron-right {
+    }
+}
+.active {
+    color: white !important;
+}
+
+.selected {
+    background-color: rgba(26, 35, 52, 0.4);
 }

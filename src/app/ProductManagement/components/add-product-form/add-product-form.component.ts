@@ -73,7 +73,6 @@ export class AddProductFormComponent implements OnInit {
             const newProduct = {
                 Code: Math.random() * (10000 - 100) + 100,
                 Barcode: this.addForm.controls['barcode'].value,
-                Poscode: this.addForm.controls['poscode'].value,
                 ImageLarge: null,
                 ImageSmall: null,
                 ImageThumb: '/Uploads/_11/product1/4987332343028.jpg',
@@ -85,7 +84,6 @@ export class AddProductFormComponent implements OnInit {
             const updateInfo = {
                 Code: this.selectedItem.Code,
                 Barcode: Number(this.addForm.controls['barcode'].value),
-                Poscode: Number(this.addForm.controls['poscode'].value),
                 ImageLarge: null,
                 ImageSmall: null,
                 ImageThumb: this.selectedItem.ImageThumb,
