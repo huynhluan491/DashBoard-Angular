@@ -27,7 +27,7 @@ export class ProgramProductsComponent implements OnInit {
     }
 
     handleOpenForm(drawer: any) {
-        this.addFormService.handleCheckTypeOfForm(true, undefined);
+        this.addFormService.handleCheckTypeOfForm(false, undefined);
         this.addFormService.handleOpenForm();
         drawer.toggle();
     }

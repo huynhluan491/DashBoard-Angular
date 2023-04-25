@@ -24,10 +24,9 @@ export class ProductManagementService {
 
     handleCheckTypeOfForm(value: boolean, item: any) {
         this.isNewProduct = value;
-        if (!this.isNewProduct) {
+        if (this.isNewProduct) {
             this.isEditItem = item;
         }
-        console.log(this.isEditItem);
     }
 
     get isOpenForm(): boolean {

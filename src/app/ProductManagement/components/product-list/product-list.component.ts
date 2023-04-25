@@ -77,6 +77,10 @@ export class ProductListComponent implements OnInit {
             });
             this.getListProduct();
         });
+
+        this.serviceOfProduct._isListUpdate().subscribe((value) => {
+            this.getListProduct();
+        });
     }
 
     private getListProduct(): void {
@@ -130,18 +134,21 @@ export class ProductListComponent implements OnInit {
         this.getListProduct();
     }
 
-    onDeleteProduct(code: number) {
-        this.serviceOfProduct.getProductByCode(code).subscribe((data) => {
-            this.selectedDeleteItem = data;
-            this.isDeleteDialogOpened = true;
-        });
+    onDeleteProduct(data: any) {
+        console.log(data);
+
+        this.selectedDeleteItem = data;
+        this.isDeleteDialogOpened = true;
+        console.log(this.selectedDeleteItem);
     }
 
     closeDeleteDialog(make: string) {
         if (make === 'yes') {
+            this.serviceOfProduct.deleteProductByCode(this.selectedDeleteItem.Code).subscribe((value) => {
+                console.log(value);
+            });
             this.isDeleteDialogOpened = false;
-            this.listProduct = this.listProduct.filter((item) => item.Code !== this.selectedDeleteItem.Code);
-            this.pageData();
+            this.getListProduct();
             window.alert('Deleted');
         } else {
             this.isDeleteDialogOpened = false;
@@ -153,7 +160,7 @@ export class ProductListComponent implements OnInit {
         this.serviceOfProduct.getProductByCode(code).subscribe((data) => {
             this.selectedEditItem = data;
             this.addFormService.handleOpenForm();
-            this.addFormService.handleCheckTypeOfForm(false, this.selectedEditItem);
+            this.addFormService.handleCheckTypeOfForm(true, this.selectedEditItem);
             this.drawerView.toggle();
         });
     }

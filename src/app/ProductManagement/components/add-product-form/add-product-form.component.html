@@ -1,6 +1,6 @@
 <div class="wrapper">
     <div class="form-header">
-        <p class="title">{{ isEditForm ? 'THÊM SẢN PHẨM MỚI' : 'CẬP NHẬT SẢN PHẨM' }}</p>
+        <p class="title">{{ !isEditForm ? 'THÊM SẢN PHẨM MỚI' : 'CẬP NHẬT SẢN PHẨM' }}</p>
     </div>
     <form [formGroup]="addForm" class="form-wrapper">
         <div class="form-content-wrapper">
@@ -13,6 +13,7 @@
                     ngDefaultControl
                     formControlName="barcode"
                     cols="50"
+                    (blur)="handleGetProductByBarcode()"
                 ></textarea>
             </div>
 
@@ -25,23 +26,12 @@
                     ngDefaultControl
                     cols="50"
                     formControlName="productName"
+                    [disabled]="true"
                 ></textarea>
             </div>
 
             <div class="box-field">
-                <p class="box-title">Freeship image</p>
-                <textarea
-                    type="text"
-                    name="FreeShippingImage"
-                    rows="4"
-                    ngDefaultControl
-                    cols="50"
-                    formControlName="FreeShippingImage"
-                ></textarea>
-            </div>
-
-            <div class="box-field">
-                <p class="box-title">Giá sản phẩm</p>
+                <p class="box-title">Giá bán</p>
                 <textarea
                     type="text"
                     name="Price"
@@ -49,6 +39,54 @@
                     ngDefaultControl
                     cols="50"
                     formControlName="Price"
+                ></textarea>
+            </div>
+
+            <div class="box-field">
+                <p class="box-title">Giá gốc</p>
+                <textarea
+                    type="text"
+                    name="PriceBase"
+                    rows="4"
+                    ngDefaultControl
+                    cols="50"
+                    formControlName="PriceBase"
+                ></textarea>
+            </div>
+
+            <div class="box-field">
+                <p class="box-title">Giá VIP</p>
+                <textarea
+                    type="text"
+                    name="PriceVIP"
+                    rows="4"
+                    ngDefaultControl
+                    cols="50"
+                    formControlName="PriceVIP"
+                ></textarea>
+            </div>
+
+            <div class="box-field">
+                <p class="box-title">Tên gốc</p>
+                <textarea
+                    type="text"
+                    name="OrginalName"
+                    rows="4"
+                    ngDefaultControl
+                    cols="50"
+                    formControlName="OrginalName"
+                ></textarea>
+            </div>
+
+            <div class="box-field">
+                <p class="box-title">Discount</p>
+                <textarea
+                    type="text"
+                    name="Discount"
+                    rows="4"
+                    ngDefaultControl
+                    cols="50"
+                    formControlName="Discount"
                 ></textarea>
             </div>
 
@@ -86,19 +124,18 @@
                 </div>
             </div>
 
-            <div *ngIf="!isEditForm" class="product-img">
+            <div *ngIf="isEditForm" class="product-img">
                 <img
-                    *ngIf="!isEditForm"
+                    *ngIf="isEditForm"
                     width="250px"
                     height="250px"
-                    src="https://lapson.vn{{ !isEditForm ? selectedItem.ImageThumb : '' }}"
+                    src="https://lapson.vn{{ isEditForm ? selectedItem.ImageThumb : '' }}"
                 />
             </div>
         </div>
         <div class="action-wrapper">
             <button class="close-btn" type="button" (click)="togglecloseForm()">ĐÓNG</button>
-            <button class="update-btn" (click)="handleEditProduct()">THÊM</button>
+            <button class="update-btn" (click)="handleEditProduct()">Lưu</button>
         </div>
     </form>
-    <p>{{ addForm.value | json }}</p>
 </div>
