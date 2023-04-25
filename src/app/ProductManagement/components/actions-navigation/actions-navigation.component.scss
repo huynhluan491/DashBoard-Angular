@@ -139,6 +139,10 @@
 
     .k-cursor-pointer {
         color: #959db3;
+
+        &:hover {
+            background-color: unset;
+        }
     }
 
     .k-breadcrumb-last-item {
