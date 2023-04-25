@@ -7,52 +7,6 @@ import { DrawerItem, DrawerItemExpandedFn, DrawerSelectEvent } from '@progress/k
     styleUrls: ['./sidebar-drawer.component.scss'],
 })
 export class SidebarDrawerComponent {
-    // sideBarItems: Array<DrawerItem> = [
-    //     {
-    //         text: 'KHUYẾN MÃI',
-    //         icon: 'k-i-inbox',
-    //         id: 0,
-    //     },
-    //     {
-    //         text: 'NỘI DUNG WEBSITE',
-    //         icon: 'k-i-inbox',
-    //         id: 1,
-    //     },
-    //     {
-    //         text: 'QUẢN LÝ BANNER',
-    //         icon: 'k-i-inbox',
-    //         id: 3,
-    //     },
-    //     {
-    //         text: 'CHÍNH SÁCH',
-    //         icon: 'k-i-inbox',
-    //         id: 4,
-    //     },
-    //     {
-    //         text: 'Coupon',
-    //         icon: 'k-i-inbox',
-    //         id: 6,
-    //         parentId: 4,
-    //     },
-    //     {
-    //         text: 'Sub2',
-    //         icon: 'k-i-inbox',
-    //         id: 7,
-    //         parentId: 4,
-    //     },
-    //     {
-    //         text: 'Sub3',
-    //         icon: 'k-i-inbox',
-    //         id: 8,
-    //         parentId: 4,
-    //     },
-    //     {
-    //         text: 'BÁO CÁO EXCEL',
-    //         icon: 'k-i-inbox',
-    //         id: 5,
-    //     },
-    // ];
-
     items = {
         parents: [
             {
@@ -84,7 +38,7 @@ export class SidebarDrawerComponent {
                 icon: 'k-i-inbox',
                 expanded: false,
                 children: true,
-                selected: false,
+                selected: true,
                 level: 0,
             },
             {
@@ -101,7 +55,7 @@ export class SidebarDrawerComponent {
             {
                 text: 'Coupon',
                 children: false,
-                selected: false,
+                selected: true,
                 level: 1,
             },
             {
