@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject, map, of } from 'rxjs';
-import { State, toDataSourceRequest, toDataSourceRequestString } from '@progress/kendo-data-query';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
+import {
+    State,
+    toDataSourceRequest,
+    toDataSourceRequestString,
+    translateDataSourceResultGroups,
+} from '@progress/kendo-data-query';
 const httpOptions = {
     headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -15,7 +20,6 @@ const listProductAPI = 'http://test.lapson.vn/api/product/GetListProduct';
 })
 export class ProductService {
     searchValue: BehaviorSubject<string> = new BehaviorSubject<string>('');
-    isListUpdated: Subject<any> = new Subject<any>();
 
     constructor(private http: HttpClient) {}
 
@@ -23,26 +27,13 @@ export class ProductService {
         skip: 0,
         take: 10,
         filter: {
+            logic: 'and',
             filters: [
-                {
-                    field: 'Barcode',
-                    operator: 'contains',
-                    value: '',
-                },
-                {
-                    field: 'Poscode',
-                    operator: 'contains',
-                    value: '',
-                },
-                {
-                    field: 'ProductName',
-                    operator: 'contains',
-                    value: '',
-                },
+                { field: 'productName', operator: 'contains', value: 'kendo' },
+                { field: 'Code', operator: 'gte', value: 453 },
             ],
-            logic: 'or',
         },
-        sort: [{ field: 'Code', dir: 'desc' }],
+        sort: [{ field: 'productName', dir: 'asc' }],
     };
 
     getListProduct(body: any): Observable<any> {
@@ -100,55 +91,6 @@ export class ProductService {
             );
     }
 
-    getProductByBarcode(barcode: number): Observable<any> {
-        const body = {
-            Barcode: barcode.toString(),
-        };
-
-        return this.http
-            .post<any>('http://test.lapson.vn/api/product/GetProduct', JSON.stringify(body), httpOptions)
-            .pipe(
-                map((res) => {
-                    return res;
-                }),
-            );
-    }
-
-    deleteProductByCode(code: number): Observable<any> {
-        const id = {
-            Code: code,
-        };
-
-        console.log(typeof code);
-
-        console.log(JSON.stringify(id));
-
-        return this.http.post<any>('http://test.lapson.vn/api/product/DeleteListProduct', [id], httpOptions);
-    }
-
-    updateProductByCode(updateValue: any): Observable<any> {
-        const updateInfo = {
-            DTO: updateValue,
-            Properties: ['Price', 'PriceBase'],
-        };
-
-        console.log(JSON.stringify(updateInfo));
-
-        return this.http
-            .post<any>('http://test.lapson.vn/api/product/UpdateProduct', JSON.stringify(updateInfo), httpOptions)
-            .pipe(
-                map((res) => {
-                    console.log(res.StatusCode);
-
-                    if (res.ErrorString == null) {
-                        return res;
-                    } else {
-                        console.log(res.ErrorString);
-                    }
-                }),
-            );
-    }
-
     testDataSource(): void {
         const kendoDataSource = {
             // page: this.state.skip / this.state.take + 1
@@ -164,14 +106,5 @@ export class ProductService {
 
     setSearchValue(value: string) {
         this.searchValue.next(value);
-    }
-
-    _isListUpdate() {
-        return this.isListUpdated.asObservable();
-    }
-
-    handleTriggerGetList() {
-        let random = Math.random();
-        this.isListUpdated.next(random);
     }
 }
