@@ -10,7 +10,7 @@
             (dateInput)="handleOnChange($event)"
             style="visibility: hidden"
         />
-        <mat-icon [hidden]="isOpen" svgIcon="dfCalendar" (click)="picker.open()"></mat-icon>
+        <mat-icon #openButton [hidden]="isOpen" svgIcon="dfCalendar" (click)="handleOpenCalendar(picker)"></mat-icon>
         <mat-icon [hidden]="!isOpen" matDatepickerToggleIcon svgIcon="activeCalendar"></mat-icon>
 
         <mat-datepicker

@@ -6,20 +6,11 @@ import {
     EventEmitter,
     Inject,
     Input,
-    OnChanges,
     OnDestroy,
     OnInit,
     Output,
-    Provider,
-    SimpleChanges,
-    ComponentFactoryResolver,
     ViewChild,
     ViewContainerRef,
-    ComponentRef,
-    ElementRef,
-    TemplateRef,
-    Injector,
-    Renderer2,
 } from '@angular/core';
 import { MatCalendar, MatDatepicker } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats, MatOption } from '@angular/material/core';
@@ -34,10 +25,6 @@ import {
     NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { OverlayOutsideClickDispatcher } from '@angular/cdk/overlay';
-import { DropDownListComponent } from '@progress/kendo-angular-dropdowns';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
-import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
-import { MatLabel } from '@angular/material/form-field';
 
 // const provider: Provider = {
 //     provide: NG_VALUE_ACCESSOR,
@@ -58,7 +45,7 @@ import { MatLabel } from '@angular/material/form-field';
     ],
     // providers: [provider],
 })
-export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterViewInit {
+export class CustomizedCalenderComponent implements OnInit, AfterViewInit {
     @ViewChild(MatDatepicker) datePicker: any;
     @ViewChild('picker', { read: ViewContainerRef, static: false }) picker!: ViewContainerRef;
 
@@ -90,139 +77,6 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
     isPM = new BehaviorSubject<boolean>(false);
 
     isTimeSelected: boolean = false;
-
-    public listItems: Array<string> = [
-        'Baseball',
-        'Basketball',
-        'Cricket',
-        'Field Hockey',
-        'Football',
-        'Table Tennis',
-        'Tennis',
-        'Volleyball',
-    ];
-
-    constructor(private cdkConnectedOverlay: OverlayOutsideClickDispatcher) {}
-
-    ngOnInit(): void {
-        if (this.isDateTimePicker == true) {
-            this.convertDateToString();
-            this.convertTimeToString();
-        } else if (this.isDateTimePicker == false) {
-            this.convertDateToString();
-        }
-
-        this.isPM.pipe(skip(1)).subscribe((value) => {
-            console.log(value);
-            console.log(this.selectedHours);
-            this.selectedHours = this.timePickerValue[0];
-            this.selectedMinutes = this.timePickerValue[1];
-            this.setTimeOfDate();
-            this.onDatePicked.emit(this.dateValue.value);
-            this.convertTimeToString();
-        });
-    }
-
-    matSelect: string =
-        '<mat-form-field #matFormFieldTemplate><mat-select placeholder="Select a value"><mat-option value="option1">Option 1</mat-option><mat-option value="option2">Option 2</mat-option><mat-option value="option3">Option 3</mat-option></mat-select></mat-form-field>';
-
-    ngOnChanges(changes: SimpleChanges) {}
-
-    ngAfterViewInit() {
-        //TIME PICKER WRAPPER
-        this.timePickWrapper = document.createElement('div');
-        this.timePickWrapper.classList.add('time-picker-wrapper');
-        this.selectionWrapper = document.createElement('div');
-        this.selectionWrapper.classList.add('selection-wrapper');
-
-        //all-day checkbox
-        this.alldayWrap = document.createElement('div');
-        this.alldayWrap.classList.add('allday-type');
-        const alldayCheck = document.createElement('input');
-        alldayCheck.setAttribute('type', 'radio');
-        alldayCheck.classList.add('allday-radio');
-
-        //label
-        const alldayLabel = document.createElement('label');
-        alldayCheck.classList.add('allday-label');
-        alldayLabel.innerText = 'Cả ngày';
-        this.alldayWrap.appendChild(alldayCheck);
-        this.alldayWrap.appendChild(alldayLabel);
-
-        //AM
-        const timeTypeWrapper = document.createElement('div');
-        timeTypeWrapper.classList.add('time-type-wrapper');
-        const amCheck = document.createElement('button');
-        amCheck.classList.add('type-selection');
-        amCheck.classList.add('active');
-        amCheck.innerText = 'AM';
-        amCheck.addEventListener('click', () => {
-            this.handleSetAM();
-            amCheck.classList.add('active');
-            pmCheck.classList.remove('active');
-        });
-
-        //PM
-        const pmCheck = document.createElement('button');
-        pmCheck.classList.add('type-selection');
-        pmCheck.innerText = 'PM';
-        pmCheck.addEventListener('click', () => {
-            amCheck.classList.remove('active');
-            pmCheck.classList.add('active');
-            this.handleSetPM();
-        });
-
-        // CUSTOMIZE SELECT
-        const selectDiv = document.createElement('details');
-        selectDiv.classList.add('custom-select');
-
-        const summaryDiv = document.createElement('summary');
-        summaryDiv.classList.add('radios');
-        selectDiv.appendChild(summaryDiv);
-
-        const itemList = document.createElement('ul');
-        itemList.classList.add('list');
-        selectDiv.appendChild(itemList);
-
-        const inputElm = document.createElement('input');
-        inputElm.setAttribute('type', 'radio');
-        inputElm.setAttribute('name', 'time');
-        inputElm.setAttribute('id', 'default');
-        inputElm.setAttribute('value', '12:00');
-        inputElm.setAttribute('title', 'hh : mm');
-        inputElm.setAttribute('checked', '');
-        summaryDiv.appendChild(inputElm);
-
-        this.timeList.map((item, index) => {
-            const inputElm = document.createElement('input');
-            inputElm.setAttribute('type', 'radio');
-            inputElm.setAttribute('name', 'time');
-            inputElm.setAttribute('id', item.id);
-            inputElm.setAttribute('value', item.value);
-            inputElm.setAttribute('title', item.value);
-            inputElm.addEventListener('click', () => {
-                if (inputElm.checked) {
-                    console.log('Selected item value:', inputElm.value);
-                    this.handleGetTimeSelection$(inputElm.value);
-                }
-            });
-            summaryDiv.appendChild(inputElm);
-
-            const liElm = document.createElement('li');
-            itemList.appendChild(liElm);
-            const labelElm = document.createElement('label');
-            labelElm.setAttribute('for', item.id);
-            labelElm.innerText = item.value;
-            liElm.appendChild(labelElm);
-        });
-
-        this.selectionWrapper.appendChild(selectDiv);
-        this.selectionWrapper.appendChild(timeTypeWrapper);
-        timeTypeWrapper.appendChild(amCheck);
-        timeTypeWrapper.appendChild(pmCheck);
-        this.timePickWrapper.appendChild(this.alldayWrap);
-        this.timePickWrapper.appendChild(this.selectionWrapper);
-    }
 
     timeList = [
         {
@@ -322,6 +176,163 @@ export class CustomizedCalenderComponent implements OnInit, OnChanges, AfterView
             value: '11 : 30',
         },
     ];
+
+    public listItems: Array<string> = [
+        'Baseball',
+        'Basketball',
+        'Cricket',
+        'Field Hockey',
+        'Football',
+        'Table Tennis',
+        'Tennis',
+        'Volleyball',
+    ];
+
+    constructor(private cdkConnectedOverlay: OverlayOutsideClickDispatcher) {}
+
+    ngOnInit(): void {
+        if (this.isDateTimePicker == true) {
+            this.convertDateToString();
+            this.convertTimeToString();
+        } else if (this.isDateTimePicker == false) {
+            this.convertDateToString();
+        }
+
+        this.isPM.pipe(skip(1)).subscribe((value) => {
+            console.log(value);
+            console.log(this.selectedHours);
+            this.selectedHours = this.timePickerValue[0];
+            this.selectedMinutes = this.timePickerValue[1];
+            this.setTimeOfDate();
+            this.onDatePicked.emit(this.dateValue.value);
+            this.convertTimeToString();
+        });
+    }
+
+    ngAfterViewInit() {
+        //TIME PICKER WRAPPER
+        this.timePickWrapper = document.createElement('div');
+        this.timePickWrapper.classList.add('time-picker-wrapper');
+        this.selectionWrapper = document.createElement('div');
+        this.selectionWrapper.classList.add('selection-wrapper');
+
+        //all-day checkbox
+        this.alldayWrap = document.createElement('div');
+        this.alldayWrap.classList.add('allday-type');
+        const alldayCheck = document.createElement('input');
+        alldayCheck.setAttribute('type', 'radio');
+        alldayCheck.classList.add('allday-radio');
+
+        //label
+        const alldayLabel = document.createElement('label');
+        alldayCheck.classList.add('allday-label');
+        alldayLabel.innerText = 'Cả ngày';
+        this.alldayWrap.appendChild(alldayCheck);
+        this.alldayWrap.appendChild(alldayLabel);
+
+        //AM
+        const timeTypeWrapper = document.createElement('div');
+        timeTypeWrapper.classList.add('time-type-wrapper');
+        const amCheck = document.createElement('button');
+        amCheck.classList.add('type-selection');
+        amCheck.classList.add('active');
+        amCheck.innerText = 'AM';
+        amCheck.addEventListener('click', () => {
+            this.handleSetAM();
+            amCheck.classList.add('active');
+            pmCheck.classList.remove('active');
+        });
+
+        //PM
+        const pmCheck = document.createElement('button');
+        pmCheck.classList.add('type-selection');
+        pmCheck.innerText = 'PM';
+        pmCheck.addEventListener('click', () => {
+            amCheck.classList.remove('active');
+            pmCheck.classList.add('active');
+            this.handleSetPM();
+        });
+
+        // CUSTOMIZE SELECT
+        const selectDiv = document.createElement('details');
+        selectDiv.classList.add('custom-select');
+
+        const summaryDiv = document.createElement('summary');
+        summaryDiv.classList.add('radios');
+        selectDiv.appendChild(summaryDiv);
+
+        const itemList = document.createElement('ul');
+        itemList.classList.add('list');
+        selectDiv.appendChild(itemList);
+
+        const inputElm = document.createElement('input');
+        inputElm.setAttribute('type', 'radio');
+        inputElm.setAttribute('name', 'time');
+        inputElm.setAttribute('id', 'default');
+        inputElm.setAttribute('value', '12:00');
+        inputElm.setAttribute('title', 'hh : mm');
+        inputElm.setAttribute('checked', '');
+        summaryDiv.appendChild(inputElm);
+
+        this.timeList.map((item, index) => {
+            const inputElm = document.createElement('input');
+            inputElm.setAttribute('type', 'radio');
+            inputElm.setAttribute('name', 'time');
+            inputElm.setAttribute('id', item.id);
+            inputElm.setAttribute('value', item.value);
+            inputElm.setAttribute('title', item.value);
+            inputElm.addEventListener('click', () => {
+                if (inputElm.checked) {
+                    console.log('Selected item value:', inputElm.value);
+                    this.handleGetTimeSelection$(inputElm.value);
+                }
+            });
+            summaryDiv.appendChild(inputElm);
+
+            const liElm = document.createElement('li');
+            itemList.appendChild(liElm);
+            const labelElm = document.createElement('label');
+            labelElm.setAttribute('for', item.id);
+            labelElm.innerText = item.value;
+            liElm.appendChild(labelElm);
+        });
+
+        this.selectionWrapper.appendChild(selectDiv);
+        this.selectionWrapper.appendChild(timeTypeWrapper);
+        timeTypeWrapper.appendChild(amCheck);
+        timeTypeWrapper.appendChild(pmCheck);
+        this.timePickWrapper.appendChild(this.alldayWrap);
+        this.timePickWrapper.appendChild(this.selectionWrapper);
+
+        // set postion to display of time selection
+        selectDiv.addEventListener('click', () => {
+            // Calculate the position of the button relative to the viewport
+            const rect = summaryDiv.getBoundingClientRect();
+            const selectionButton = rect.bottom;
+
+            // Calculate the position of the div based on the viewport height
+            const windowHeight = window.innerHeight;
+            const timeListHeight = itemList.offsetHeight;
+            let divTop = selectionButton + 10; // Add a 10px buffer
+
+            if (divTop + timeListHeight > windowHeight) {
+                // If the div would go off the bottom of the viewport, position it above the button
+                divTop = summaryDiv.offsetTop - timeListHeight - 10; // Subtract a 10px buffer
+            }
+
+            // Position the div
+            itemList.style.top = `${divTop}px`;
+        });
+    }
+
+    handleOpenCalendar(picker: any) {
+        picker.open();
+        const calenderWrapper = document.getElementsByClassName('mat-mdc-text-field-wrapper');
+        if (calenderWrapper) {
+            console.log(calenderWrapper);
+        }
+        console.log(calenderWrapper);
+    }
 
     handleOnChange(event: any) {
         this.onDatePicked.emit(event.value._d);

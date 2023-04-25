@@ -168,6 +168,10 @@ a[href] {
     background-color: #ffffff;
     border: 2px solid #36c8cf;
     list-style: none;
+    display: flex;
+    align-items: center;
+    height: 24px;
+    justify-content: space-around;
 }
 
 .radios::-webkit-details-marker {
