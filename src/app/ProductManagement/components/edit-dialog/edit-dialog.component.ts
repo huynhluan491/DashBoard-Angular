@@ -11,6 +11,8 @@ export class EditDialogComponent implements OnInit {
     editDialogForm: FormGroup = new FormGroup({
         barcode: new FormControl(),
         productName: new FormControl(),
+        Price: new FormControl(),
+        PriceBase: new FormControl(),
     });
 
     selectedItem: any;
@@ -23,25 +25,22 @@ export class EditDialogComponent implements OnInit {
 
     ngOnInit(): void {
         this.selectedItem = this.formService._isEditItem;
+        console.log(this.selectedItem);
+
         if (this.selectedItem) {
             this.editDialogForm?.controls['barcode'].setValue(this.selectedItem?.Barcode);
             this.editDialogForm?.controls['productName'].setValue(this.selectedItem?.ProductName);
+            this.editDialogForm?.controls['Price'].setValue(this.selectedItem?.Price);
+            this.editDialogForm?.controls['PriceBase'].setValue(this.selectedItem?.PriceBase);
         }
     }
 
     closeDeleteDialog(make: string) {
         if (make === 'yes') {
-            const updateInfo = {
-                Code: this.selectedItem.Code,
-                Barcode: Number(this.editDialogForm.controls['barcode'].value),
-                Poscode: Number(this.editDialogForm.controls['poscode'].value),
-                ImageLarge: null,
-                ImageSmall: null,
-                ImageThumb: this.selectedItem.ImageThumb,
-                ProductName: this.editDialogForm.controls['productName'].value,
-            };
+            this.selectedItem.Price = this.editDialogForm.controls['Price'].value;
+            this.selectedItem.PriceBase = this.editDialogForm.controls['PriceBase'].value;
             this.handleToggleEditDialog.emit(false);
-            this.handlePostEditAPI.emit(updateInfo);
+            this.handlePostEditAPI.emit(this.selectedItem);
             window.alert('Updated');
         } else {
             window.alert('Canceled');

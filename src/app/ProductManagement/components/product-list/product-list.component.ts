@@ -166,13 +166,10 @@ export class ProductListComponent implements OnInit {
     }
 
     handlePostEditAPI(updateInfo: any) {
-        const idProduct = this.selectedEditItem.Code;
-        const Idx = this.listProduct.findIndex((item) => item.Code === idProduct);
-
-        if (Idx > -1) {
-            this.listProduct[Idx] = updateInfo;
-            this.pageData();
-        }
+        this.serviceOfProduct.updateProductByCode(updateInfo).subscribe((data) => {
+            console.log(data);
+        });
+        this.serviceOfProduct.handleTriggerGetList();
     }
 
     handlePostAddAPI(addValue: any) {
@@ -183,7 +180,7 @@ export class ProductListComponent implements OnInit {
     onEditProductDialog(code: number) {
         this.serviceOfProduct.getProductByCode(code).subscribe((data) => {
             this.selectedEditItem = data;
-            this.addFormService.handleCheckTypeOfForm(false, this.selectedEditItem);
+            this.addFormService.handleCheckTypeOfForm(true, this.selectedEditItem);
             console.log(this.selectedEditItem);
             this.isShowEditDialog = !this.isShowEditDialog;
         });
