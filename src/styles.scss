@@ -134,18 +134,6 @@ a[href] {
     color: white;
 }
 
-.time-picker-wrapper option {
-    // border: none;
-    // outline: none;
-    // font-size: 18px;
-    // padding: 5px 55px 5px 5px;
-    // background-color: slategray;
-    // color: white;
-    // -webkit-appearance: none; /* for Safari */
-    // margin: 0;
-    // border-radius: 0;
-}
-
 .time-picker-wrapper option:hover {
     background-color: yellow;
 }
@@ -190,17 +178,12 @@ a[href] {
 }
 
 .radios:after {
-    content: '';
-    display: inline-block;
-    float: right;
-    width: 0.5rem;
-    height: 0.5rem;
-    border-bottom: 1px solid currentColor;
-    border-left: 1px solid currentColor;
-    border-bottom-left-radius: 2px;
-    transform: rotate(134deg) translate(-38%, 0%);
-    transform-origin: center center;
-    transition: transform ease-in-out 100ms;
+    content: url('assets/icon/UpArrow.svg');
+    height: 12px;
+    width: 12px;
+    position: relative;
+    left: 8px;
+    top: -2px;
 }
 
 .radios:focus {
@@ -208,7 +191,7 @@ a[href] {
 }
 
 .custom-select[open] .radios:after {
-    transform: rotate(-45deg) translate(68%, 0%);
+    transform: rotate(-180deg) translate(7%, -34%);
 }
 
 .list {

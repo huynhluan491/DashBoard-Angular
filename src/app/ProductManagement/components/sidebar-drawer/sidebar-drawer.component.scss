@@ -9,6 +9,8 @@
 }
 
 ::ng-deep .wrapper-drawer .k-drawer-container {
+    flex: 1 1 auto;
+    overflow-y: auto;
     .k-drawer-content {
         background-color: #edeff3;
         height: 100vh;
@@ -45,68 +47,83 @@
         }
     }
 
-    .k-drawer-item:first-child {
+    .k-drawer-items {
         padding-top: 19px;
     }
 
     .k-drawer-item.k-selected {
-        background-color: unset;
         color: white !important;
+        background-color: rgba(26, 35, 52, 1) !important;
 
         &:hover {
-            background-color: unset;
+            background-color: rgba(26, 35, 52, 1) !important;
         }
     }
 
     .k-drawer-item {
-        padding-block: unset;
-        padding-inline: unset;
         gap: unset;
         color: white;
-        justify-content: center;
+        padding-block: unset;
+        padding-inline: unset;
         &:hover {
+            // background-color: rgba(26, 35, 52, 1) !important;
             background-color: unset !important;
         }
 
         &:focus:hover {
-            background-color: unset !important;
             box-shadow: unset !important;
+            background-color: rgba(26, 35, 52, 1) !important;
         }
 
         &:focus {
             box-shadow: unset !important;
-            background-color: unset !important;
-        }
-
-        .k-level-1 {
-            color: #959db3;
-            font-size: 13px;
-            font-weight: 700;
-            padding-left: 28px;
-            background-color: rgba(26, 35, 52, 0.4);
-            padding: 18px 0 18px 53px;
-            width: 100%;
-        }
-        .k-level-0 {
-            color: white;
-            font-size: 13px;
-            font-weight: 600;
-            display: flex;
-            gap: 16px;
-            width: 100%;
-            padding-left: 16px;
-            padding-top: 17px;
-            padding-bottom: 15px;
+            background-color: rgba(26, 35, 52, 1) !important;
         }
     }
+    .k-level-1 {
+        color: #959db3;
+        font-size: 13px;
+        font-weight: 700;
+        padding-left: 46px;
+        background-color: rgba(26, 35, 52, 1);
+        width: 100%;
 
-    .k-i-arrow-chevron-right {
+        &:hover {
+            background-color: rgba(26, 35, 52, 1) !important;
+        }
+    }
+    .k-level-0 {
+        color: white;
+        font-size: 13px;
+        font-weight: 600;
+        display: flex;
+        gap: 16px;
+    }
+
+    .side-item {
+        padding: 15px 0 17px 9px;
+    }
+
+    .item-level-0 {
+        border-left: 5px solid #5a6276;
+    }
+
+    .text {
+        display: flex;
+        align-items: center;
     }
 }
 .active {
     color: white !important;
 }
 
-.selected {
-    background-color: rgba(26, 35, 52, 0.4);
+.selected-level0 {
+    background-color: rgba(26, 35, 52, 1);
+    width: 100%;
+    border-left: 5px solid white !important;
+}
+.selected-level1 {
+    // background-color: rgba(26, 35, 52, 1);
+    background-color: yellow;
+    width: 100%;
 }
