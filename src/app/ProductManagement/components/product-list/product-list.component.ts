@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { PageChangeEvent } from '@progress/kendo-angular-pager';
 import { ProductService } from 'src/app/product.service';
 import { Product, productList } from 'src/services/product';
 import { State } from '@progress/kendo-data-query';
 import { Observable, Subject } from 'rxjs';
+import * as $ from 'jquery';
 import { ProductManagementService } from '../../services/product-management.service';
 
 @Component({
@@ -12,7 +13,7 @@ import { ProductManagementService } from '../../services/product-management.serv
     templateUrl: './product-list.component.html',
     styleUrls: ['./product-list.component.scss'],
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, AfterViewInit {
     public gridView!: GridDataResult;
     public view: Observable<any> | undefined;
     public products: Product[] = productList;
@@ -81,6 +82,10 @@ export class ProductListComponent implements OnInit {
         this.serviceOfProduct._isListUpdate().subscribe((value) => {
             this.getListProduct();
         });
+    }
+
+    ngAfterViewInit(): void {
+        $('.paging-wrapper .k-input-button .k-i-caret-alt-down').remove();
     }
 
     private getListProduct(): void {

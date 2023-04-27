@@ -72,6 +72,15 @@
                 box-shadow: unset;
             }
 
+            &::after {
+                content: url('../../../../assets/icon/DownArrow.svg');
+                height: 12px;
+                width: 12px;
+                position: relative;
+                right: 8px;
+                top: 3px;
+            }
+
             .k-input-inner {
             }
 
@@ -212,7 +221,7 @@
 
     .k-table-tbody {
         display: grid;
-        grid-template-columns: repeat(5, 1.5rem);
+        grid-template-columns: repeat(5, 2.5rem);
         grid-gap: 0px 195px;
     }
 
