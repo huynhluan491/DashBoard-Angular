@@ -5,7 +5,7 @@
         <kendo-appbar-section class="title-list">
             <ul>
                 <li *ngFor="let item of headerTitles">
-                    <p>{{ item.title }}</p>
+                    <p [ngClass]="item.selected ? 'selected' : ''">{{ item.title }}</p>
                 </li>
             </ul>
         </kendo-appbar-section>
