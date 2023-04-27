@@ -87,6 +87,9 @@
         padding-left: 46px;
         background-color: rgba(26, 35, 52, 1);
         width: 100%;
+        padding: 8px 0 8px 28px !important;
+        display: flex;
+        align-items: center;
 
         &:hover {
             background-color: rgba(26, 35, 52, 1) !important;
@@ -101,7 +104,7 @@
     }
 
     .side-item {
-        padding: 15px 0 17px 9px;
+        padding: 15px 0 17px 13px;
     }
 
     .item-level-0 {
