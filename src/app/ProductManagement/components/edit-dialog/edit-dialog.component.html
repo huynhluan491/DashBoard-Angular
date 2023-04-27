@@ -3,16 +3,16 @@
         <form class="form-wrapper" [formGroup]="editDialogForm">
             <div class="edit-inputs">
                 <label>Barcode</label>
-                <textarea class="input-field" type="text" formControlName="barcode"></textarea>
+                <input class="input-field" type="text" formControlName="barcode" />
 
                 <label>ProductName</label>
-                <textarea class="input-field name-field" type="text" formControlName="productName"></textarea>
+                <input class="input-field name-field" type="text" formControlName="productName" />
 
                 <label>Price</label>
-                <textarea class="input-field name-field" type="text" formControlName="Price"></textarea>
+                <input class="input-field name-field" type="number" formControlName="Price" />
 
                 <label>PriceBase</label>
-                <textarea class="input-field name-field" type="text" formControlName="PriceBase"></textarea>
+                <input class="input-field name-field" type="number" formControlName="PriceBase" />
             </div>
         </form>
         <kendo-dialog-actions>

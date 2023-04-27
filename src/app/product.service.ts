@@ -46,9 +46,6 @@ export class ProductService {
     };
 
     getListProduct(body: any): Observable<any> {
-        console.log(body);
-        console.log(toDataSourceRequest(body));
-
         return this.http.post<any>(listProductAPI, toDataSourceRequest(body), httpOptions).pipe(
             map((res) => {
                 const data = res.ObjectReturn;

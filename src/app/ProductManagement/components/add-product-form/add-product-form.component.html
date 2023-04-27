@@ -32,26 +32,30 @@
 
             <div class="box-field">
                 <p class="box-title">Giá bán</p>
-                <textarea
-                    type="text"
+                <input
+                    class="price-field"
+                    type="number"
+                    min="0"
                     name="Price"
                     rows="4"
                     ngDefaultControl
                     cols="50"
                     formControlName="Price"
-                ></textarea>
+                />
             </div>
 
             <div class="box-field">
                 <p class="box-title">Giá gốc</p>
-                <textarea
-                    type="text"
+                <input
+                    type="number"
+                    min="0"
                     name="PriceBase"
                     rows="4"
                     ngDefaultControl
                     cols="50"
                     formControlName="PriceBase"
-                ></textarea>
+                    class="price-field"
+                />
             </div>
 
             <div class="box-field">
@@ -67,7 +71,7 @@
             </div>
 
             <div class="box-field">
-                <p class="box-title">Tên gốc</p>
+                <p class="box-title">Xuất xứ</p>
                 <textarea
                     type="text"
                     name="OrginalName"
@@ -135,7 +139,7 @@
         </div>
         <div class="action-wrapper">
             <button class="close-btn" type="button" (click)="togglecloseForm()">ĐÓNG</button>
-            <button class="update-btn" (click)="handleEditProduct()">Lưu</button>
+            <button class="update-btn" (click)="handleEditProduct()">{{ isEditForm ? 'CẬP NHẬT' : 'THÊM MỚI' }}</button>
         </div>
     </form>
 </div>

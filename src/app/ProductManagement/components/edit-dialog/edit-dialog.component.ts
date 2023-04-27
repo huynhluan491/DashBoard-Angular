@@ -9,8 +9,8 @@ import { ProductManagementService } from '../../services/product-management.serv
 })
 export class EditDialogComponent implements OnInit {
     editDialogForm: FormGroup = new FormGroup({
-        barcode: new FormControl(),
-        productName: new FormControl(),
+        barcode: new FormControl({ value: '', disabled: true }),
+        productName: new FormControl({ value: '', disabled: true }),
         Price: new FormControl(),
         PriceBase: new FormControl(),
     });
