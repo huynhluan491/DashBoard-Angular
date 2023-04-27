@@ -77,6 +77,7 @@ export class CustomizedCalenderComponent implements OnInit, AfterViewInit {
     isPM = new BehaviorSubject<boolean>(false);
 
     isTimeSelected: boolean = false;
+    isAllDay: boolean = false;
 
     timeList = [
         {
@@ -220,8 +221,9 @@ export class CustomizedCalenderComponent implements OnInit, AfterViewInit {
         this.alldayWrap = document.createElement('div');
         this.alldayWrap.classList.add('allday-type');
         const alldayCheck = document.createElement('input');
-        alldayCheck.setAttribute('type', 'radio');
+        alldayCheck.setAttribute('type', 'checkbox');
         alldayCheck.classList.add('allday-radio');
+        alldayCheck.style.border = '1px solid rgba(153, 153, 153, 1)';
 
         //label
         const alldayLabel = document.createElement('label');
@@ -248,9 +250,9 @@ export class CustomizedCalenderComponent implements OnInit, AfterViewInit {
         pmCheck.classList.add('type-selection');
         pmCheck.innerText = 'PM';
         pmCheck.addEventListener('click', () => {
+            this.handleSetPM();
             amCheck.classList.remove('active');
             pmCheck.classList.add('active');
-            this.handleSetPM();
         });
 
         // CUSTOMIZE SELECT
@@ -322,6 +324,31 @@ export class CustomizedCalenderComponent implements OnInit, AfterViewInit {
 
             // Position the div
             itemList.style.top = `${divTop}px`;
+        });
+        alldayCheck.style.accentColor = 'rgba(92, 184, 0, 1)';
+        alldayCheck.style.color = 'white';
+
+        alldayCheck.addEventListener('click', () => {
+            this.isAllDay = !this.isAllDay;
+            if (this.isAllDay) {
+                summaryDiv.style.pointerEvents = 'none';
+                amCheck.style.pointerEvents = 'none';
+                pmCheck.style.pointerEvents = 'none';
+                summaryDiv.style.opacity = '20%';
+                amCheck.style.opacity = '20%';
+                amCheck.style.backgroundColor = 'unset';
+                pmCheck.style.opacity = '20%';
+                alldayLabel.style.color = 'rgba(92, 184, 0, 1)';
+            } else {
+                summaryDiv.style.pointerEvents = 'unset';
+                amCheck.style.pointerEvents = 'unset';
+                pmCheck.style.pointerEvents = 'unset';
+                summaryDiv.style.opacity = '1';
+                amCheck.style.opacity = '1';
+                amCheck.style.backgroundColor = 'rgba(54, 200, 207, 1)';
+                pmCheck.style.opacity = '1';
+                alldayLabel.style.color = 'rgba(38, 40, 46, 1)';
+            }
         });
     }
 

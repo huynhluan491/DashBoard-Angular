@@ -54,6 +54,8 @@
 }
 
 ::ng-deep .wrapper .mat-mdc-form-field {
+    background-color: #f5f6f8;
+    border-radius: 3px;
     .mat-mdc-form-field-flex {
         display: flex;
         flex-direction: row-reverse;
@@ -81,14 +83,10 @@
     .mat-label {
         font-size: 18px;
         color: yellow;
-
-        .active {
-            color: #ffffff;
-        }
     }
 
     .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-        background-color: #f5f6f8;
+        background-color: transparent;
     }
 
     .mat-icon {
@@ -203,4 +201,11 @@
             }
         }
     }
+}
+
+.open {
+    background-color: #36c8cf;
+}
+.active {
+    color: white;
 }

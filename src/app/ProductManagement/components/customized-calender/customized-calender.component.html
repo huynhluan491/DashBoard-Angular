@@ -1,6 +1,6 @@
 <div class="wrapper">
-    <mat-form-field appearance="fill">
-        <mat-label>{{ dateValueStr }} {{ timeValueStr }}</mat-label>
+    <mat-form-field [ngClass]="isOpen ? 'open' : ''" appearance="fill">
+        <mat-label [ngClass]="isOpen ? 'active' : ''">{{ dateValueStr }} {{ timeValueStr }}</mat-label>
         <input
             readonly
             matInput
