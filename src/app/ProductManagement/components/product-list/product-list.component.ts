@@ -4,7 +4,7 @@ import { PageChangeEvent } from '@progress/kendo-angular-pager';
 import { ProductService } from 'src/app/product.service';
 import { Product, productList } from 'src/services/product';
 import { State } from '@progress/kendo-data-query';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, switchMap } from 'rxjs';
 import * as $ from 'jquery';
 import { ProductManagementService } from '../../services/product-management.service';
 
@@ -171,9 +171,13 @@ export class ProductListComponent implements OnInit, AfterViewInit {
     }
 
     handlePostEditAPI(updateInfo: any) {
-        this.serviceOfProduct.updateProductByCode(updateInfo).subscribe((data) => {
-            console.log(data);
-        });
+        this.serviceOfProduct
+            .updateProductByCode(updateInfo)
+            .pipe(switchMap((res) => this.serviceOfProduct.getProductByCode(this.selectedEditItem.Code)))
+            .subscribe((data) => {
+                console.log(data);
+                this.selectedEditItem = data;
+            });
         this.serviceOfProduct.handleTriggerGetList();
     }
 

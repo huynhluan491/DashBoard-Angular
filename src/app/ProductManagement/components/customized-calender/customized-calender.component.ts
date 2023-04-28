@@ -336,16 +336,14 @@ export class CustomizedCalenderComponent implements OnInit, AfterViewInit {
                 pmCheck.style.pointerEvents = 'none';
                 summaryDiv.style.opacity = '20%';
                 amCheck.style.opacity = '20%';
-                amCheck.style.backgroundColor = 'unset';
                 pmCheck.style.opacity = '20%';
                 alldayLabel.style.color = 'rgba(92, 184, 0, 1)';
             } else {
-                summaryDiv.style.pointerEvents = 'unset';
-                amCheck.style.pointerEvents = 'unset';
-                pmCheck.style.pointerEvents = 'unset';
+                summaryDiv.style.pointerEvents = 'visible';
+                amCheck.style.pointerEvents = 'visible';
+                pmCheck.style.pointerEvents = 'visible';
                 summaryDiv.style.opacity = '1';
                 amCheck.style.opacity = '1';
-                amCheck.style.backgroundColor = 'rgba(54, 200, 207, 1)';
                 pmCheck.style.opacity = '1';
                 alldayLabel.style.color = 'rgba(38, 40, 46, 1)';
             }

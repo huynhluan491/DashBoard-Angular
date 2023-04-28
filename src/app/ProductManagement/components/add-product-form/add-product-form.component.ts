@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProductManagementService } from '../../services/product-management.service';
 import { ProductService } from 'src/app/product.service';
-import { Subject, debounceTime, switchMap, take, takeUntil } from 'rxjs';
+import { Subject, catchError, debounceTime, map, of, switchMap, take, takeUntil } from 'rxjs';
 
 @Component({
     selector: 'app-add-product-form',
@@ -82,9 +82,20 @@ export class AddProductFormComponent implements OnInit {
                 Price: this.addForm.controls['Price'].value,
                 PriceBase: this.addForm.controls['PriceBase'].value,
             };
-            this.serviceOfProduct.updateProductByCode(updateValue).subscribe((value) => {
-                console.log(value);
-            });
+            // Call api sequentially
+            this.serviceOfProduct
+                .updateProductByCode(updateValue)
+                .pipe(
+                    switchMap((resultFromUpdate) =>
+                        this.serviceOfProduct.getProductByCode(this.selectedItem.Code).pipe(
+                            catchError((err) => {
+                                console.log('Error for second API', err);
+                                return of();
+                            }),
+                        ),
+                    ),
+                )
+                .subscribe((res) => (this.selectedItem = res));
             window.alert('EDIT SUCCESSFULLY');
         } else {
             this.selectedItem.Price = this.addForm.controls['Price'].value;
