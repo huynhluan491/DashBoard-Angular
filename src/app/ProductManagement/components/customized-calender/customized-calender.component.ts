@@ -9,6 +9,7 @@ import {
     OnDestroy,
     OnInit,
     Output,
+    Renderer2,
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
@@ -17,6 +18,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats, MatOption } from '@angul
 import { BehaviorSubject, Subject } from 'rxjs';
 import { skip, takeUntil } from 'rxjs/operators';
 import * as $ from 'jquery';
+import { CheckBoxModule } from '@progress/kendo-angular-inputs';
 import {
     AbstractControlDirective,
     ControlContainer,
@@ -189,7 +191,7 @@ export class CustomizedCalenderComponent implements OnInit, AfterViewInit {
         'Volleyball',
     ];
 
-    constructor(private cdkConnectedOverlay: OverlayOutsideClickDispatcher) {}
+    constructor(private cdkConnectedOverlay: OverlayOutsideClickDispatcher, private renderer: Renderer2) {}
 
     ngOnInit(): void {
         if (this.isDateTimePicker == true) {
@@ -220,16 +222,26 @@ export class CustomizedCalenderComponent implements OnInit, AfterViewInit {
         //all-day checkbox
         this.alldayWrap = document.createElement('div');
         this.alldayWrap.classList.add('allday-type');
+        const labelContainer = document.createElement('label');
+        labelContainer.classList.add('container');
         const alldayCheck = document.createElement('input');
         alldayCheck.setAttribute('type', 'checkbox');
         alldayCheck.classList.add('allday-radio');
-        alldayCheck.style.border = '1px solid rgba(153, 153, 153, 1)';
+
+        const alldayMark = document.createElement('span');
+        alldayMark.classList.add('checkmark');
+
+        labelContainer.appendChild(alldayCheck);
+        labelContainer.appendChild(alldayMark);
+        this.alldayWrap.appendChild(labelContainer);
+
+        // alldayCheck.style.border = '1px solid rgba(153, 153, 153, 1)';
 
         //label
         const alldayLabel = document.createElement('label');
-        alldayCheck.classList.add('allday-label');
+        alldayLabel.classList.add('allday-label');
         alldayLabel.innerText = 'Cả ngày';
-        this.alldayWrap.appendChild(alldayCheck);
+        // this.alldayWrap.appendChild(alldayCheck);
         this.alldayWrap.appendChild(alldayLabel);
 
         //AM
@@ -325,8 +337,8 @@ export class CustomizedCalenderComponent implements OnInit, AfterViewInit {
             // Position the div
             itemList.style.top = `${divTop}px`;
         });
-        alldayCheck.style.accentColor = 'rgba(92, 184, 0, 1)';
-        alldayCheck.style.color = 'white';
+        // alldayCheck.style.accentColor = 'rgba(92, 184, 0, 1)';
+        // alldayCheck.style.color = 'white';
 
         alldayCheck.addEventListener('click', () => {
             this.isAllDay = !this.isAllDay;

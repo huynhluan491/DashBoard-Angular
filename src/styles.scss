@@ -89,15 +89,19 @@ a[href] {
 }
 
 .time-picker-wrapper .allday-type {
-    display: flex;
-    align-items: center;
-    gap: 9px;
+    // display: flex;
+    // align-items: center;
+    // gap: 9px;
+    position: relative;
+    padding-bottom: 1rem;
 }
 
-.time-picker-wrapper .allday-type label {
+.time-picker-wrapper .allday-type .allday-label {
     color: #26282e;
     font-size: 13px;
     font-weight: 400;
+    position: absolute;
+    padding-left: 3rem;
 }
 
 .time-picker-wrapper .selection-wrapper {
@@ -281,4 +285,75 @@ ul.list {
     height: 1rem;
     border: 1px solid #727272;
     border-radius: 3px;
+}
+
+// .allday-type .allday-radio {
+//     border: 1px solid rgba(153, 153, 153, 1);
+//     accent-color: rgba(92, 184, 0, 1);
+// }
+
+.container {
+    display: inline-block;
+    position: absolute;
+    z-index: 2;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: white;
+    border: 1px solid #999999;
+    border-radius: 100%;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container .allday-radio:checked ~ .checkmark {
+    background-color: rgba(92, 184, 0, 1);
+    border: 1px solid transparent;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: '';
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container .allday-radio:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
