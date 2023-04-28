@@ -5,7 +5,7 @@
         padding: 10px 12px 10px 10px;
         background-color: #ffffff;
         border: 1px solid #8dc63f;
-        width: 196px;
+        width: 220px;
         gap: 0.5rem;
         height: 104px;
         border-radius: 3px;
@@ -221,8 +221,8 @@
 
     .k-table-tbody {
         display: grid;
-        grid-template-columns: repeat(5, 2.5rem);
-        grid-gap: 0px 195px;
+        grid-template-columns: repeat(5, 1fr);
+        grid-gap: 0px 10px;
     }
 
     .k-table-tbody .k-table-row.k-selected > .k-table-td {

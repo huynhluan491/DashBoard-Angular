@@ -22,6 +22,9 @@ export class ProductListComponent implements OnInit, AfterViewInit {
     public buttonCount = 10;
     public page = 1;
 
+    public rowHeight = 104;
+    public colWidth = 220;
+
     listProduct: any[] = [];
     totalProducts = 0;
     selectedEditItem: any;
