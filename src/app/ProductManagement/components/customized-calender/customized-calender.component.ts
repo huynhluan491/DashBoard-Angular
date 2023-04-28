@@ -337,8 +337,6 @@ export class CustomizedCalenderComponent implements OnInit, AfterViewInit {
             // Position the div
             itemList.style.top = `${divTop}px`;
         });
-        // alldayCheck.style.accentColor = 'rgba(92, 184, 0, 1)';
-        // alldayCheck.style.color = 'white';
 
         alldayCheck.addEventListener('click', () => {
             this.isAllDay = !this.isAllDay;
@@ -350,6 +348,11 @@ export class CustomizedCalenderComponent implements OnInit, AfterViewInit {
                 amCheck.style.opacity = '20%';
                 pmCheck.style.opacity = '20%';
                 alldayLabel.style.color = 'rgba(92, 184, 0, 1)';
+                if (this.isPM.value) {
+                    pmCheck.classList.remove('active');
+                } else {
+                    amCheck.classList.remove('active');
+                }
             } else {
                 summaryDiv.style.pointerEvents = 'visible';
                 amCheck.style.pointerEvents = 'visible';
@@ -358,6 +361,11 @@ export class CustomizedCalenderComponent implements OnInit, AfterViewInit {
                 amCheck.style.opacity = '1';
                 pmCheck.style.opacity = '1';
                 alldayLabel.style.color = 'rgba(38, 40, 46, 1)';
+                if (this.isPM.value) {
+                    pmCheck.classList.add('active');
+                } else {
+                    amCheck.classList.add('active');
+                }
             }
         });
     }
