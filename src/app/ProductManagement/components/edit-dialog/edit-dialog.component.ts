@@ -39,7 +39,7 @@ export class EditDialogComponent implements OnInit {
         if (make === 'yes') {
             this.selectedItem.Price = this.editDialogForm.controls['Price'].value;
             this.selectedItem.PriceBase = this.editDialogForm.controls['PriceBase'].value;
-            this.handleToggleEditDialog.emit(false);
+            // this.handleToggleEditDialog.emit(false);
             this.handlePostEditAPI.emit(this.selectedItem);
             window.alert('Updated');
         } else {
