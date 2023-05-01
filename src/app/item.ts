@@ -9,10 +9,10 @@ export const items = [
         id: 1,
     },
     {
-        text: 'NỘI DUNG WEBSITE',
+        text: 'CƠ CẤU TỔ CHỨC',
         icon: 'k-i-inbox',
         expanded: false,
-        children: false,
+        children: true,
         selected: false,
         level: 0,
         id: 2,
@@ -72,5 +72,19 @@ export const items = [
         selected: false,
         level: 1,
         parentId: 4,
+    },
+    {
+        text: 'Cơ cấu tổ chức',
+        children: false,
+        selected: false,
+        level: 1,
+        parentId: 2,
+    },
+    {
+        text: 'Điểm làm việc',
+        children: false,
+        selected: false,
+        level: 1,
+        parentId: 2,
     },
 ];

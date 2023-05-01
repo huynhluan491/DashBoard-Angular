@@ -64,6 +64,13 @@ import { DateTimePickerComponent } from './ProductManagement/components/date-tim
 import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { EditDialogComponent } from './ProductManagement/components/edit-dialog/edit-dialog.component';
 import { WatingPageComponent } from './ProductManagement/components/wating-page/wating-page.component';
+import { TreeViewModule } from '@progress/kendo-angular-treeview';
+import { DepartmentComponent } from './HumanResource/components/department/department.component';
+import { SearchButtonComponent } from './HumanResource/shared/search-button/search-button.component';
+import { FilterBarComponent } from './HumanResource/components/filter-bar/filter-bar.component';
+import { DepartmentPositionAddButtonComponent } from './HumanResource/shared/department-position-add-button/department-position-add-button.component';
+import { TreeListModule } from '@progress/kendo-angular-treelist';
+import { LocationFormComponent } from './HumanResource/location-form/location-form.component';
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }
@@ -100,6 +107,11 @@ export function HttpLoaderFactory(http: HttpClient) {
         DateTimePickerComponent,
         EditDialogComponent,
         WatingPageComponent,
+        DepartmentComponent,
+        SearchButtonComponent,
+        FilterBarComponent,
+        DepartmentPositionAddButtonComponent,
+        LocationFormComponent,
     ],
     imports: [
         BrowserModule,
@@ -139,6 +151,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         DropDownsModule,
         MatSelectModule,
         DialogsModule,
+        TreeViewModule,
+        TreeListModule,
     ],
     providers: [DatePipe, MatIconRegistry],
     bootstrap: [AppComponent],
