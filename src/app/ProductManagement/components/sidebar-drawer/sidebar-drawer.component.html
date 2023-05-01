@@ -18,13 +18,6 @@
             </ng-template>
 
             <ng-template kendoDrawerItemTemplate let-item>
-                <!-- [ngClass]="
-                    item.selected && item.level == 0
-                        ? 'selected-level0 '
-                        : item.selected && item.level == 1
-                        ? 'selected-level1'
-                        : ''
-                " -->
                 <div
                     class="k-level-{{ item.level }} side-item"
                     [ngClass]="{
@@ -53,7 +46,9 @@
         </kendo-drawer>
 
         <kendo-drawer-content>
-            <app-coupon-page-management></app-coupon-page-management>
+            <app-dashboard-header></app-dashboard-header>
+            <app-coupon-page-management *ngIf="selected == 'Coupon'"></app-coupon-page-management>
+            <app-department *ngIf="selected == 'Điểm làm việc'"></app-department>
         </kendo-drawer-content>
     </kendo-drawer-container>
 </div>

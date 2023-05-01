@@ -1,28 +1,22 @@
-<kendo-grid
-    [kendoGridBinding]="newsData"
-    kendoGridSelectBy="id"
-    [pageSize]="20"
-    [pageable]="true"
-    [sortable]="true"
-    [groupable]="true"
-    [reorderable]="true"
-    [resizable]="true"
-    [height]="500"
-    [columnMenu]="{ filter: true }"
->
-    <kendo-grid-column field="full_name" title="Author" [width]="220">
-        <ng-template kendoGridCellTemplate let-dataItem>
-            <div class="customer-name" (click)="onProductClicked(dataItem)">{{ dataItem.id }}</div>
-        </ng-template>
-    </kendo-grid-column>
-    <kendo-grid-column field="full_name" title="Title" [width]="220">
-        <ng-template kendoGridCellTemplate let-dataItem>
-            <div class="customer-name">{{ dataItem.title }}</div>
-        </ng-template>
-    </kendo-grid-column>
-    <kendo-grid-column field="full_name" title="Description" [width]="220">
-        <ng-template kendoGridCellTemplate let-dataItem>
-            <div class="customer-name">{{ dataItem.body }}</div>
-        </ng-template>
-    </kendo-grid-column>
-</kendo-grid>
+<div class="location-list-wrapper">
+    <kendo-treelist
+        [data]="treeNodes"
+        [fetchChildren]="fetchChildren"
+        [hasChildren]="hasChildren"
+        kendoTreeListExpandable
+        [hideHeader]="true"
+    >
+        <kendo-treelist-column [expandable]="true" field="LocationName" title="LocationName" [width]="270">
+            <ng-template kendoTreeListCellTemplate let-dataItem>
+                <img class="location-icon" src="../../assets/icon/Location.svg" />
+                {{ dataItem.LocationName }}
+            </ng-template>
+        </kendo-treelist-column>
+        <kendo-treelist-column field="LocationID" title="LocationID"> </kendo-treelist-column>
+        <kendo-treelist-column title="Size" [width]="40">
+            <ng-template kendoTreeListCellTemplate let-dataItem>
+                <img (click)="test(dataItem)" class="box-icon" src="../../assets/icon/EtcIcon.svg" />
+            </ng-template>
+        </kendo-treelist-column>
+    </kendo-treelist>
+</div>

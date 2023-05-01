@@ -1,0 +1,56 @@
+::ng-deep .location-list-wrapper {
+    .k-grid {
+        background-color: #edeff3;
+        border-width: unset;
+        border-style: unset;
+    }
+
+    .k-grid-content {
+        overflow-y: unset;
+    }
+
+    .k-table-row {
+        background-color: white !important;
+    }
+
+    .k-grid .k-table-tbody > .k-table-row:not(.k-detail-row):hover,
+    .k-grid .k-table-tbody > .k-table-row:not(.k-detail-row).k-hover {
+        background-color: unset;
+    }
+
+    .k-table {
+        border-collapse: collapse;
+    }
+
+    .k-table-td {
+        border-color: unset !important;
+        border-block-end-width: unset !important;
+        border-inline-start-width: unset !important;
+        border-style: unset !important;
+        padding-inline: unset;
+        padding-block: unset;
+        padding-top: 20px;
+        padding-bottom: 24px;
+        &:last-child {
+            border-left: 1px solid #edeff3 !important;
+            text-align: center;
+
+            img {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .k-table-row {
+        border-bottom: 4px solid #edeff3;
+    }
+
+    .k-icon {
+        padding-left: 17px;
+    }
+
+    .location-icon {
+        padding-left: 17px;
+        padding-right: 9px;
+    }
+}
