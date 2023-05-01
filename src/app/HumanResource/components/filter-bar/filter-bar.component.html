@@ -1,0 +1,51 @@
+<div class="wrapper">
+    <div class="filter-box-wrapper">
+        <div class="reset-filter-wrapper">
+            <div>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M7.22807 16C7.09856 16 6.97025 15.9752 6.85007 15.927C6.6514 15.8457 6.48132 15.7073 6.36134 15.5293C6.24137 15.3513 6.17689 15.1417 6.17607 14.927V10.857L1.34207 6.265C1.18406 6.11369 1.07409 5.9192 1.0259 5.7058C0.977707 5.4924 0.993417 5.26953 1.07107 5.065C1.14215 4.86299 1.27342 4.6876 1.44721 4.56245C1.62099 4.4373 1.82894 4.36839 2.04307 4.365H3.35907V1.092C3.35425 0.807656 3.4624 0.533009 3.6598 0.328296C3.8572 0.123584 4.12774 0.00551974 4.41207 0L10.3761 0C10.6602 0.00578099 10.9305 0.123959 11.1277 0.328643C11.3249 0.533327 11.4329 0.807826 11.4281 1.092V1.82H12.8281C13.1124 1.82552 13.3829 1.94358 13.5803 2.1483C13.7777 2.35301 13.8859 2.62766 13.8811 2.912V4.369H14.9441C15.16 4.37159 15.37 4.43999 15.546 4.56507C15.722 4.69015 15.8556 4.86595 15.9291 5.069C16.0048 5.27554 16.0183 5.49973 15.968 5.71387C15.9177 5.92802 15.8058 6.12275 15.6461 6.274L10.7371 11.031V12.2C10.7336 12.469 10.6327 12.7277 10.4531 12.928L8.00007 15.654C7.90286 15.7626 7.78388 15.8495 7.65088 15.9091C7.51788 15.9687 7.37382 15.9997 7.22807 16ZM2.04007 5.461L7.21807 10.376V14.927L9.67407 12.2V10.557L14.9331 5.457L2.04007 5.461ZM4.41207 1.092V4.369H12.8321V2.912H10.3761V1.092H4.41207Z"
+                        fill="#959DB3"
+                    />
+                </svg>
+            </div>
+            <div class="reset-filter-box">
+                <p class="reset-title">LỌC DỮ LIỆU</p>
+                <p class="reset-btn" (click)="handleResetFilter()">Xóa bộ lọc</p>
+            </div>
+            <p></p>
+        </div>
+        <div class="search-bar-wrapper">
+            <p class="title">Tìm kiếm</p>
+            <diV class="search-bar">
+                <input
+                    type="text"
+                    #searchInput
+                    placeholder="Tìm theo mã, họ và tên nhân viên, chức danh"
+                    (keyup.enter)="handleEnterSearch($event)"
+                />
+                <app-search-button></app-search-button>
+            </diV>
+        </div>
+    </div>
+    <div class="add-button-group">
+        <div>
+            <app-department-position-add-button
+                [addTypeName]="'THÊM MỚI ĐƠN VỊ'"
+                [iconUrl]="'DepartmentIcon.svg'"
+            ></app-department-position-add-button>
+        </div>
+        <div style="margin-left: 7px; margin-right: 12px">
+            <app-department-position-add-button
+                [addTypeName]="'THÊM MỚI ĐƠN VỊ CON'"
+                [iconUrl]="'DepartmentIcon.svg'"
+            ></app-department-position-add-button>
+        </div>
+        <div>
+            <app-department-position-add-button
+                [addTypeName]="'THÊM MỚI CHỨC DANH'"
+                [iconUrl]="'UserIcon.svg'"
+            ></app-department-position-add-button>
+        </div>
+    </div>
+</div>
