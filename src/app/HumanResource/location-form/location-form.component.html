@@ -1,0 +1,111 @@
+<div class="wrapper">
+    <div class="form-header">
+        <p class="title">THÔNG TIN ĐIỂM LÀM VIỆC</p>
+    </div>
+    <form [formGroup]="locationForm" class="form-wrapper">
+        <div class="form-content-wrapper">
+            <div class="box-field">
+                <p class="box-field">Tên điểm làm việc</p>
+                <textarea
+                    type="text"
+                    name="LocationName"
+                    rows="4"
+                    ngDefaultControl
+                    formControlName="LocationName"
+                    cols="50"
+                ></textarea>
+            </div>
+
+            <div class="two-box-in-line">
+                <div class="box-field">
+                    <p class="box-title small-input">Mã điểm làm việc</p>
+                    <textarea
+                        type="text"
+                        name="LocationID"
+                        rows="4"
+                        ngDefaultControl
+                        cols="50"
+                        formControlName="LocationID"
+                    ></textarea>
+                </div>
+
+                <div class="box-field">
+                    <p class="box-title">Tên viết tắt</p>
+                    <textarea
+                        type="text"
+                        name="Brieft"
+                        rows="4"
+                        ngDefaultControl
+                        cols="50"
+                        formControlName="Brieft"
+                    ></textarea>
+                </div>
+            </div>
+
+            <div class="box-field">
+                <p class="box-title">Trực thuộc</p>
+                <kendo-dropdownlist [data]="Under" textField="name" [valuePrimitive]="true">
+                    <ng-template kendoDropDownListItemTemplate let-dataItem>
+                        <span class="template">{{ dataItem.name }}</span>
+                    </ng-template>
+                </kendo-dropdownlist>
+            </div>
+
+            <div class="box-field">
+                <p class="box-title">Địa chỉ liên hệ</p>
+                <textarea
+                    type="text"
+                    name="Address"
+                    rows="4"
+                    ngDefaultControl
+                    cols="50"
+                    formControlName="Address"
+                ></textarea>
+            </div>
+
+            <div class="box-field">
+                <p class="box-title">Tình thành</p>
+                <kendo-dropdownlist [data]="Provinces" textField="name" [valuePrimitive]="true">
+                    <ng-template kendoDropDownListItemTemplate let-dataItem>
+                        <span class="template">{{ dataItem.name }}</span>
+                    </ng-template>
+                </kendo-dropdownlist>
+            </div>
+
+            <div class="box-field">
+                <p class="box-title">Quận huyện</p>
+                <kendo-dropdownlist [data]="Districts" textField="name" [valuePrimitive]="true">
+                    <ng-template kendoDropDownListItemTemplate let-dataItem>
+                        <span class="template">{{ dataItem.name }}</span>
+                    </ng-template>
+                </kendo-dropdownlist>
+            </div>
+
+            <div class="box-field">
+                <p class="box-title">Phường/xã</p>
+                <kendo-dropdownlist [data]="Wards" textField="name" [valuePrimitive]="true">
+                    <ng-template kendoDropDownListItemTemplate let-dataItem>
+                        <span class="template">{{ dataItem.name }}</span>
+                    </ng-template>
+                </kendo-dropdownlist>
+            </div>
+
+            <div class="box-field">
+                <p class="box-title">Mô tả</p>
+                <textarea
+                    type="text"
+                    name="Remark"
+                    rows="4"
+                    ngDefaultControl
+                    cols="50"
+                    formControlName="Remark"
+                    class="large-description"
+                ></textarea>
+            </div>
+        </div>
+        <div class="action-wrapper">
+            <button class="close-btn" type="button">ĐÓNG</button>
+            <button class="update-btn">CẬP NHẬT</button>
+        </div>
+    </form>
+</div>
