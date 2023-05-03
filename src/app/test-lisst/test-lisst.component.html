@@ -5,17 +5,41 @@
         [hasChildren]="hasChildren"
         kendoTreeListExpandable
         [hideHeader]="true"
+        [isExpanded]="isExpanded"
+        (expand)="onExpand($event)"
+        (collapse)="onCollapse($event)"
     >
         <kendo-treelist-column [expandable]="true" field="LocationName" title="LocationName" [width]="270">
             <ng-template kendoTreeListCellTemplate let-dataItem>
-                <img class="location-icon" src="../../assets/icon/Location.svg" />
-                {{ dataItem.LocationName }}
+                    <div style="display: flex;">
+                        <img class="location-icon" src="../../assets/icon/Location.svg" />
+                        <p style="width: 164px;">
+                            {{ dataItem.LocationName }}
+                        </p>
+                        <p [ngClass]="{'child-text': dataItem.ParentID != null}">
+                            {{dataItem.LocationID}}
+                        </p>
+                    </div>
             </ng-template>
         </kendo-treelist-column>
-        <kendo-treelist-column field="LocationID" title="LocationID"> </kendo-treelist-column>
-        <kendo-treelist-column title="Size" [width]="40">
+        <kendo-treelist-column title="Size" [width]="10">
             <ng-template kendoTreeListCellTemplate let-dataItem>
-                <img (click)="test(dataItem)" class="box-icon" src="../../assets/icon/EtcIcon.svg" />
+                <div class="see-more">
+                    <div #boxIcon class="box-icon" [ngClass]="{'active-popup': selectedPopupMenu.includes(dataItem.Code)}" (click)="toggleMenuPopup(dataItem.Code)">
+                        <img *ngIf="!selectedPopupMenu.includes(dataItem.Code)" src="../../assets/icon/EtcIcon.svg" />
+                        <img *ngIf="selectedPopupMenu.includes(dataItem.Code)" src="../../assets/icon/EtcIconWhite.svg" />
+                    </div>
+                </div>
+                <div class="menu-wrapper" *ngIf="selectedPopupMenu.includes(dataItem.Code)">
+                    <div class="wrapper">
+                        <ul class="item-list" *ngFor="let item of menuItemList">
+                            <li class="item-wrapper" (click)="onOpenForm(item.fnName)">
+                                <img class="icon" src="../../assets/icon/{{item.iconName}}.svg">
+                                <p class="text">{{item.textName}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </ng-template>
         </kendo-treelist-column>
     </kendo-treelist>
