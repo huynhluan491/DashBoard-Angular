@@ -4,9 +4,9 @@
 
     <div class="location-form-drawer">
         <kendo-drawer-container>
-            <kendo-drawer #drawer expandMode="expandMode" [(expanded)]="expanded" [position]="position">
+            <kendo-drawer #drawer expandMode="expandMode" [expanded]="expanded" [position]="position">
                 <ng-template #drawerContent kendoDrawerTemplate>
-                    <app-location-form></app-location-form>
+                    <app-location-form [drawerView]="drawer"></app-location-form>
                 </ng-template>
             </kendo-drawer>
         </kendo-drawer-container>
