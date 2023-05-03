@@ -13,9 +13,6 @@ export class SidebarDrawerComponent {
     public expandedIndices = [2];
 
     public isItemExpanded: DrawerItemExpandedFn = (item): boolean => {
-        console.log(item);
-        console.log(this.expandedIndices);
-
         return this.expandedIndices.indexOf(item.id) >= 0;
     };
 
@@ -24,13 +21,11 @@ export class SidebarDrawerComponent {
     public onSelect(ev: DrawerSelectEvent): void {
         this.selected = ev.item.text;
         const current = ev.item.id;
-        console.log(this.selected);
 
         if (ev.item.parentId) {
             this.items.map((item) => {
                 if (item.id == ev.item.parentId) {
                     item.selected = true;
-                    console.log(item);
                 } else {
                     item.selected = false;
                 }

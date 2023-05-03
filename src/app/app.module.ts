@@ -71,6 +71,7 @@ import { FilterBarComponent } from './HumanResource/components/filter-bar/filter
 import { DepartmentPositionAddButtonComponent } from './HumanResource/shared/department-position-add-button/department-position-add-button.component';
 import { TreeListModule } from '@progress/kendo-angular-treelist';
 import { LocationFormComponent } from './HumanResource/location-form/location-form.component';
+import { SelectedLocationMenuComponent } from './HumanResource/components/selected-location-menu/selected-location-menu.component';
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }
@@ -112,6 +113,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         FilterBarComponent,
         DepartmentPositionAddButtonComponent,
         LocationFormComponent,
+        SelectedLocationMenuComponent,
     ],
     imports: [
         BrowserModule,
