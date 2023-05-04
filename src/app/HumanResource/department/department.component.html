@@ -1,0 +1,70 @@
+<app-filter-bar [filterBoxItems]="filterBoxItems"></app-filter-bar>
+<div class="location-list-wrapper">
+    <kendo-treelist
+        [data]="departmentList"
+        [fetchChildren]="fetchChildren"
+        [hasChildren]="hasChildren"
+        kendoTreeListExpandable
+        [hideHeader]="true"
+        [isExpanded]="isExpanded"
+        (expand)="onExpand($event)"
+        (collapse)="onCollapse($event)"
+    >
+        <kendo-treelist-column [expandable]="true" field="Department" title="Department" [width]="270">
+            <ng-template kendoTreeListCellTemplate let-dataItem>
+                <div style="display: flex">
+                    <img class="location-icon" src="../../assets/icon/Location.svg" />
+                    <p style="width: 310px">
+                        {{ dataItem.Department || dataItem.Position }}
+                    </p>
+                    <p [ngClass]="{ 'child-text': dataItem.ParentID != null || dataItem.DepartmentCode == null }">
+                        {{ dataItem.PositionID || dataItem.DepartmentID }}
+                    </p>
+                </div>
+            </ng-template>
+        </kendo-treelist-column>
+        <kendo-treelist-column title="Size" [width]="10">
+            <ng-template kendoTreeListCellTemplate let-dataItem>
+                <div class="see-more">
+                    <div
+                        #boxIcon
+                        class="box-icon"
+                        [ngClass]="{
+                            'active-popup': selectedPopupMenu.includes(dataItem.Department || dataItem.Position)
+                        }"
+                        (click)="toggleMenuPopup(dataItem.Department || dataItem.Position)"
+                    >
+                        <img
+                            *ngIf="!selectedPopupMenu.includes(dataItem.Department || dataItem.Position)"
+                            src="../../../assets/icon/EtcIcon.svg"
+                        />
+                        <img
+                            *ngIf="selectedPopupMenu.includes(dataItem.Department || dataItem.Position)"
+                            src="../../../assets/icon/EtcIconWhite.svg"
+                        />
+                    </div>
+                </div>
+                <div class="menu-wrapper" *ngIf="selectedPopupMenu.includes(dataItem.Department || dataItem.Position)">
+                    <div class="wrapper">
+                        <ul class="item-list" *ngFor="let item of menuItemList">
+                            <li class="item-wrapper" (click)="onOpenForm(item.fnName)">
+                                <img class="icon" src="../../assets/icon/{{ item.iconName }}.svg" />
+                                <p class="text">{{ item.textName }}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </ng-template>
+        </kendo-treelist-column>
+    </kendo-treelist>
+</div>
+
+<div class="location-form-drawer">
+    <kendo-drawer-container>
+        <kendo-drawer #drawer expandMode="expandMode" [expanded]="expanded" [position]="position">
+            <ng-template #drawerContent kendoDrawerTemplate>
+                <app-location-form [drawerView]="drawer"></app-location-form>
+            </ng-template>
+        </kendo-drawer>
+    </kendo-drawer-container>
+</div>
