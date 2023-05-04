@@ -22,52 +22,56 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
         StatusID: new FormControl(''),
     });
 
+    @Input() typeOfForm: string = '';
+
     //state of dropdownlist
-    public isDropDownOpen: boolean = false
+    public isDropDownOpen: boolean = false;
     //up and down arrow of dropdown select
-    public upArrow: any
-    public downArrow: any
-    
+    public upArrow: any;
+    public downArrow: any;
+
     // Declaring variables of selection value
-    public selectedUnder = 1
-    public selectedProvince = 1
-    public selectedDistrict = 1
-    public selectedWard = 1
+    public selectedUnder = 1;
+    public selectedProvince = 1;
+    public selectedDistrict = 1;
+    public selectedWard = 1;
 
     //Type of form
-    public formType: string = ''
+    public formType: string = '';
 
-    listDropDownButton: any = []
+    listDropDownButton: any = [];
 
+    @Input() drawerView: any;
 
-    @Input() drawerView: any
-
-    Under: any[] = [{ name: 'Văn phòng', value: 1 }, { name: 'Kho', value: 1 }];
+    Under: any[] = [
+        { name: 'Văn phòng', value: 1 },
+        { name: 'Kho', value: 1 },
+    ];
 
     Provinces: any[] = [
         {
             name: 'Tp.Hồ Chí Minh',
-            value: 1
+            value: 1,
         },
         {
             name: 'Hà Nội',
-            value: 1
+            value: 1,
         },
         {
             name: 'Quảng Ninh',
-            value: 1
+            value: 1,
         },
         {
             name: 'Đà Nẵng',
-            value: 1
+            value: 1,
         },
         {
             name: 'Lào Cai',
-            value: 1
+            value: 1,
         },
         {
             name: 'Tây Ninh',
-            value: 1
+            value: 1,
         },
     ];
 
@@ -100,34 +104,31 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
         { name: 'Phường 11', value: 1 },
     ];
 
-    constructor(private locationFormService: LocationFormService) {
-        
-    }
+    constructor(private locationFormService: LocationFormService) {}
 
     ngOnInit(): void {
-        this.locationFormService.typeOfForm.subscribe(value => {
-            this.formType = value
-        })
+        this.locationFormService.typeOfForm.subscribe((value) => {
+            this.formType = value;
+        });
     }
 
     ngAfterViewInit(): void {
-        this.listDropDownButton = Array.from(document.getElementsByClassName('k-input-button'))
+        this.listDropDownButton = Array.from(document.getElementsByClassName('k-input-button'));
         this.listDropDownButton.forEach((button: any) => {
-            button.remove()
-        })
+            button.remove();
+        });
     }
-    
 
     handeCloseForm() {
-        this.formType = ''
-        this.drawerView.toggle()
+        this.formType = '';
+        this.drawerView.toggle();
     }
 
-    onOpen(ev: any) {        
-        this.isDropDownOpen = true
+    onOpen(ev: any) {
+        this.isDropDownOpen = true;
     }
 
     onClose(ev: any) {
-        this.isDropDownOpen = false
+        this.isDropDownOpen = false;
     }
 }

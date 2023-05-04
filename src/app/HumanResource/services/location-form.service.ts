@@ -2,33 +2,32 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class LocationFormService {
-  public isOpenForm: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
-  public typeOfForm: BehaviorSubject<string> = new BehaviorSubject<string>('')
+    public isOpenForm: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    public typeOfForm: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
-  constructor() { }
+    constructor() {}
 
-  _isOpenForm() {
-    return this.isOpenForm.asObservable()
-  }
+    _isOpenForm() {
+        return this.isOpenForm.asObservable();
+    }
 
-  openLocationForm () {
-    this.isOpenForm.next(true)
-  }
+    openLocationForm() {
+        this.isOpenForm.next(true);
+    }
 
-  get _typeOfForm(): string {
-    return this._typeOfForm
-  }
+    get _typeOfForm(): string {
+        return this._typeOfForm;
+    }
 
-  setTypeOfForm(type: string) {
-    this.typeOfForm.next(type)
-    console.log(this.typeOfForm);
-    
-  }
+    setTypeOfForm(type: string) {
+        this.typeOfForm.next(type);
+        console.log(this.typeOfForm);
+    }
 
-  closeLocationForm() {
-    this.isOpenForm.next(false)
-  }
+    closeLocationForm() {
+        this.isOpenForm.next(false);
+    }
 }
