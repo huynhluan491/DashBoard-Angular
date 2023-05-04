@@ -8,7 +8,7 @@ import { items } from 'src/app/item';
     styleUrls: ['./sidebar-drawer.component.scss'],
 })
 export class SidebarDrawerComponent {
-    public selected = 'Điểm làm việc';
+    public selected = 'Cơ cấu tổ chức';
     public expanded = true;
     public expandedIndices = [2];
 
