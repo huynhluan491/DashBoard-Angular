@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ExpandEvent } from '@progress/kendo-angular-treelist';
 import { LocationFormService } from '../HumanResource/services/location-form.service';
 
@@ -197,25 +197,6 @@ const treeListData = [
     },
 ];
 
-const menuItems = [
-    {
-        iconName: 'WhitePencil',
-        textName: 'Chỉnh sửa',
-        fnName: 'editLocation'
-    },
-    {
-        iconName: 'DepartmentIcon',
-        textName: 'Thêm điểm làm việc',
-        fnName: 'addLocation'
-    },
-    {
-        iconName: 'DepartmentIcon',
-        textName: 'Thêm điểm làm việc con',
-        fnName: 'editChildLocation'
-    },
-
-]
-
 @Component({
     selector: 'app-test-lisst',
     templateUrl: './test-lisst.component.html',
@@ -225,15 +206,14 @@ export class TestLisstComponent {
     @ViewChild('boxIcon') boxIcon?: ElementRef;
     @ViewChildren('boxIcon') boxIcons?: QueryList<ElementRef>;
     public treeNodes: any[] = treeListData;
-    public selectedPopupMenu: any[] = []
-    public menuItemList: any[] = menuItems
+    public selectedPopupMenu: any[] = [];
+    private expandedIds: number[] = [];
 
+    @Input() menuItemList: any;
     @Input() drawerView: any;
 
     constructor(private locationFormService: LocationFormService) {}
-    ngOnInit(): void {
-    }
-
+    ngOnInit(): void {}
 
     // Use an arrow function to capture the 'this' execution context of the class.
     public fetchChildren = (item: any): any[] => {
@@ -245,51 +225,49 @@ export class TestLisstComponent {
     };
 
     toggleMenuPopup(code: any) {
-        let newArr = []
+        let newArr = [];
         if (this.selectedPopupMenu.length == 0) {
-            this.selectedPopupMenu.push(code)
+            this.selectedPopupMenu.push(code);
         } else {
             if (!this.selectedPopupMenu.includes(code)) {
-                newArr.push(code)
-                this.selectedPopupMenu = [...newArr]
+                newArr.push(code);
+                this.selectedPopupMenu = [...newArr];
             } else if (this.selectedPopupMenu.includes(code)) {
-                this.selectedPopupMenu.shift()
+                this.selectedPopupMenu.shift();
             }
         }
     }
 
-        /**
+    /**
      * The field that holds the keys of the expanded items.
      */
-        private expandedIds: number[] = [  ];
 
-        /**
-         * A function that determines whether a given item is expanded.
-         */
-        public isExpanded = (dataItem: any): boolean => {
-            return this.expandedIds.indexOf(dataItem.Code) > -1;
-        };
-    
-        /**
-         * A `collapse` event handler that will collapse the item.
-         */
-        public onCollapse(args: ExpandEvent): void {
-            this.expandedIds = this.expandedIds.filter(id => id !== args.dataItem.Code);
-            console.log(this.expandedIds);
-            
-        }
-    
-        /**
-         * A `expand` event handler that will expand the item.
-         */
-        public onExpand(args: ExpandEvent): void {
-            this.expandedIds.push(args.dataItem.Code);
-            console.log(this.expandedIds)
-        }
+    /**
+     * A function that determines whether a given item is expanded.
+     */
+    public isExpanded = (dataItem: any): boolean => {
+        return this.expandedIds.indexOf(dataItem.Code) > -1;
+    };
+
+    /**
+     * A `collapse` event handler that will collapse the item.
+     */
+    public onCollapse(args: ExpandEvent): void {
+        this.expandedIds = this.expandedIds.filter((id) => id !== args.dataItem.Code);
+        console.log(this.expandedIds);
+    }
+
+    /**
+     * A `expand` event handler that will expand the item.
+     */
+    public onExpand(args: ExpandEvent): void {
+        this.expandedIds.push(args.dataItem.Code);
+        console.log(this.expandedIds);
+    }
 
     onOpenForm(type: string) {
-        this.drawerView.toggle()
-        this.locationFormService.setTypeOfForm(type)
-        this.selectedPopupMenu = []
+        this.drawerView.expanded = true;
+        this.locationFormService.setTypeOfForm(type);
+        this.selectedPopupMenu = [];
     }
 }
