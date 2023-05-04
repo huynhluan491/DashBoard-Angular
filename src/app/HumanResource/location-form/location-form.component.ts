@@ -104,21 +104,22 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
         
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.locationFormService.typeOfForm.subscribe(value => {
+            this.formType = value
+        })
+    }
 
     ngAfterViewInit(): void {
         this.listDropDownButton = Array.from(document.getElementsByClassName('k-input-button'))
         this.listDropDownButton.forEach((button: any) => {
             button.remove()
         })
-
-        this.locationFormService.typeOfForm.subscribe(value => {
-            this.formType = value
-        })
     }
     
 
     handeCloseForm() {
+        this.formType = ''
         this.drawerView.toggle()
     }
 

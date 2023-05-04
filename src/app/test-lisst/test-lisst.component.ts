@@ -234,15 +234,6 @@ export class TestLisstComponent {
     ngOnInit(): void {
     }
 
-    // @HostListener('document:click', ['$event'])
-    // onClickEvent(ev: MouseEvent) {
-    //     if (!this.boxIcon?.nativeElement.contains(ev.target)) {
-    //         this.selectedPopupMenu = []
-    //     } else {
-    //         console.log(ev);
-            
-    //     }
-    // }
 
     // Use an arrow function to capture the 'this' execution context of the class.
     public fetchChildren = (item: any): any[] => {
