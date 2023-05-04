@@ -3,9 +3,9 @@ import { DrawerMode, DrawerPosition } from '@progress/kendo-angular-layout';
 import { LocationFormService } from '../../services/location-form.service';
 
 @Component({
-    selector: 'app-department',
-    templateUrl: './department.component.html',
-    styleUrls: ['./department.component.scss'],
+    selector: 'app-location',
+    templateUrl: './location.component.html',
+    styleUrls: ['./location.component.scss'],
 })
 export class DepartmentComponent implements OnInit {
     public expandMode: DrawerMode = 'overlay';

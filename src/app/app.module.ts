@@ -65,7 +65,7 @@ import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { EditDialogComponent } from './ProductManagement/components/edit-dialog/edit-dialog.component';
 import { WatingPageComponent } from './ProductManagement/components/wating-page/wating-page.component';
 import { TreeViewModule } from '@progress/kendo-angular-treeview';
-import { DepartmentComponent } from './HumanResource/components/department/department.component';
+import { DepartmentComponent } from './HumanResource/components/location/location.component';
 import { SearchButtonComponent } from './HumanResource/shared/search-button/search-button.component';
 import { FilterBarComponent } from './HumanResource/components/filter-bar/filter-bar.component';
 import { DepartmentPositionAddButtonComponent } from './HumanResource/shared/department-position-add-button/department-position-add-button.component';
