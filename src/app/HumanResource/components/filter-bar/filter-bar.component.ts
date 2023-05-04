@@ -9,6 +9,7 @@ import { ListlinkService } from 'src/app/assets/services/listlink.service';
 export class FilterBarComponent {
     searchInput: string = '';
 
+    @Input() filterBoxItems: any
     @Input() SearchValue!: string;
     @Input() isSearchValue?: boolean;
     @Input() searchQuery?: string;

@@ -18,7 +18,7 @@
         <div class="search-bar-wrapper">
             <p class="title">Tìm kiếm</p>
             <diV class="search-bar">
-                <img class="search-icon" src="../../../../assets/icon/FindSearchBar.svg" >
+                <img class="search-icon" src="../../../../assets/icon/FindSearchBar.svg" />
                 <input
                     type="text"
                     #searchInput
@@ -30,16 +30,10 @@
         </div>
     </div>
     <div class="add-button-group">
-        <div>
+        <div style="margin-left: 7px" *ngFor="let item of filterBoxItems">
             <app-department-position-add-button
-                [addTypeName]="'THÊM ĐIỂM LÀM VIỆC'"
-                [iconUrl]="'DepartmentIcon.svg'"
-            ></app-department-position-add-button>
-        </div>
-        <div style="margin-left: 7px;">
-            <app-department-position-add-button
-                [addTypeName]="'THÊM ĐIỂM LÀM VIỆC CON'"
-                [iconUrl]="'DepartmentIcon.svg'"
+                [addTypeName]="item.addTypeName"
+                [iconUrl]="item.iconUrl"
             ></app-department-position-add-button>
         </div>
     </div>
