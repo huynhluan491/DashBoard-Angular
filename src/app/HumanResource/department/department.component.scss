@@ -1,5 +1,6 @@
 .location-list-wrapper {
     margin-top: 12px;
+    padding-right: 27px;
 }
 
 ::ng-deep .location-list-wrapper {
@@ -124,5 +125,20 @@
         &:hover {
             background-color: #959db3;
         }
+    }
+}
+
+::ng-deep .location-form-drawer .k-drawer-container {
+    .k-drawer {
+        flex-basis: 417px;
+        position: fixed;
+        z-index: 9999999;
+        height: 100vh;
+        padding-top: 50px;
+        background-color: white !important;
+    }
+
+    .k-drawer-wrapper {
+        width: 420px !important;
     }
 }

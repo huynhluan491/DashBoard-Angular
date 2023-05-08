@@ -1,0 +1,35 @@
+<div class="wrapper">
+    <div class="form-header">
+        <img src="../../../assets/icon/ColoredDepartmentIcon.svg" />
+        <p class="title">
+            <!-- {{
+                formType == 'editChildLocation'
+                    ? 'THÔNG TIN ĐIỂM LÀM VIỆC CON'
+                    : formType == 'addLocation'
+                    ? 'THÊM ĐIỂM LÀM VIỆC'
+                    : 'CHỈNH SỬA ĐIỂM LÀM VIỆC'
+            }} -->
+            THÔNG TIN ĐƠN VỊ
+        </p>
+    </div>
+    <form [formGroup]="departmentForm" class="form-wrapper">
+        <div class="form-content-wrapper">
+            <div class="box-field">
+                <p class="box-title">Tên điểm làm việc</p>
+                <textarea
+                    type="text"
+                    name="LocationName"
+                    rows="4"
+                    ngDefaultControl
+                    formControlName="LocationName"
+                    cols="50"
+                ></textarea>
+            </div>
+        </div>
+
+        <div class="action-wrapper">
+            <button class="close-btn" type="button">ĐÓNG</button>
+            <button class="update-btn">CẬP NHẬT</button>
+        </div>
+    </form>
+</div>

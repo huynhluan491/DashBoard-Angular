@@ -29,7 +29,7 @@ export class DepartmentComponent {
         {
             iconName: 'WhitePencil',
             textName: 'Chỉnh sửa',
-            fnName: 'editLocation',
+            fnName: 'editDepartment',
         },
         {
             iconName: 'DepartmentIcon',
@@ -116,7 +116,6 @@ export class DepartmentComponent {
 
     onOpenForm(type: string) {
         console.log(this.drawer);
-
         this.drawer?.toggle();
         this.structureFormService.setTypeOfForm(type);
         this.selectedPopupMenu = [];
