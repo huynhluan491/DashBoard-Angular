@@ -38,7 +38,6 @@
         &:last-child {
             border-left: 1px solid #edeff3 !important;
             text-align: center;
-
         }
 
         .box-icon {
@@ -68,7 +67,7 @@
         content: url('../../assets/icon/DownArrow.svg');
         cursor: pointer;
     }
-    
+
     .k-i-caret-alt-right::before {
         cursor: pointer;
         content: url('../../assets/icon/UpArrow.svg');
@@ -87,8 +86,8 @@
 }
 
 .active-popup {
-    background-color: #BDC2D2;
-    box-shadow: 0px 5px 6px 0px #5A62764D;
+    background-color: #bdc2d2;
+    box-shadow: 0px 5px 6px 0px #5a62764d;
     width: 27px;
     height: 24px;
     border-radius: 0 3px 3px 0;
@@ -96,9 +95,9 @@
 }
 
 .wrapper {
-    background-color: #BDC2D2;
+    background-color: #bdc2d2;
     width: 195px;
-    box-shadow: 0px 5px 6px 0px #5A62764D;
+    box-shadow: 0px 5px 6px 0px #5a62764d;
     border-top-left-radius: 5px;
 
     .item-wrapper {
@@ -112,12 +111,10 @@
             font-size: 13px;
             color: white;
             font-weight: 400;
-
         }
 
         &:hover {
-            background-color: #959DB3;
+            background-color: #959db3;
         }
     }
-
 }

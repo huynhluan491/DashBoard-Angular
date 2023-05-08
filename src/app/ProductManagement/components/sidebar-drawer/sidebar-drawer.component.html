@@ -46,10 +46,12 @@
         </kendo-drawer>
 
         <kendo-drawer-content>
-            <app-dashboard-header></app-dashboard-header>
-            <app-coupon-page-management *ngIf="selected == 'Coupon'"></app-coupon-page-management>
-            <app-location *ngIf="selected == 'Điểm làm việc'"></app-location>
-            <app-department *ngIf="selected == 'Cơ cấu tổ chức'"></app-department>
+            <div class="my-content">
+                <app-dashboard-header></app-dashboard-header>
+                <app-coupon-page-management *ngIf="selected == 'Coupon'"></app-coupon-page-management>
+                <app-location *ngIf="selected == 'Điểm làm việc'"></app-location>
+                <app-department *ngIf="selected == 'Cơ cấu tổ chức'"></app-department>
+            </div>
         </kendo-drawer-content>
     </kendo-drawer-container>
 </div>

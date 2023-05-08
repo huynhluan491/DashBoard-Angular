@@ -266,7 +266,7 @@ export class TestLisstComponent {
     }
 
     onOpenForm(type: string) {
-        this.drawerView.expanded = true;
+        this.drawerView.toggle();
         this.locationFormService.setTypeOfForm(type);
         this.selectedPopupMenu = [];
     }
