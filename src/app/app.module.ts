@@ -73,6 +73,7 @@ import { TreeListModule } from '@progress/kendo-angular-treelist';
 import { LocationFormComponent } from './HumanResource/location-form/location-form.component';
 import { SelectedLocationMenuComponent } from './HumanResource/components/selected-location-menu/selected-location-menu.component';
 import { DepartmentComponent } from './HumanResource/department/department.component';
+import { DepartmentFormComponent } from './HumanResource/components/department-form/department-form.component';
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }
@@ -116,6 +117,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         LocationFormComponent,
         DepartmentComponent,
         SelectedLocationMenuComponent,
+        DepartmentFormComponent,
     ],
     imports: [
         BrowserModule,

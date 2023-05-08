@@ -1,7 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { DropDownListComponent } from '@progress/kendo-angular-dropdowns';
-import { event } from 'jquery';
 import { LocationFormService } from '../services/location-form.service';
 
 @Component({
@@ -22,7 +20,28 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
         StatusID: new FormControl(''),
     });
 
-    @Input() typeOfForm: string = '';
+    departmentForm: FormGroup = new FormGroup({
+        DepartmentName: new FormControl(''),
+        DepartmentID: new FormControl(''),
+        Brieft: new FormControl(''),
+        UnderDepartment: new FormControl(''),
+        LocationName: new FormControl(''),
+        Phone: new FormControl(''),
+        Fax: new FormControl(''),
+        Feature: new FormControl(''),
+        StatusID: new FormControl(''),
+    });
+
+    positionForm: FormGroup = new FormGroup({
+        positionName: new FormControl(''),
+        positionID: new FormControl(''),
+        isLeader: new FormControl(false),
+        departmentID: new FormControl(''),
+        adminFeature: new FormControl(''),
+        group: new FormControl(''),
+        role: new FormControl(''),
+        StatusID: new FormControl(''),
+    });
 
     //state of dropdownlist
     public isDropDownOpen: boolean = false;
@@ -103,6 +122,18 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
         { name: 'Phường 10', value: 1 },
         { name: 'Phường 11', value: 1 },
     ];
+
+    public listItems: Array<string> = [
+        'Baseball',
+        'Basketball',
+        'Cricket',
+        'Field Hockey',
+        'Football',
+        'Table Tennis',
+        'Tennis',
+        'Volleyball',
+    ];
+    public value: any = ['Baseball'];
 
     constructor(private locationFormService: LocationFormService) {}
 

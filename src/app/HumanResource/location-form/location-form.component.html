@@ -1,11 +1,499 @@
 <div class="wrapper">
     <div class="form-header">
-        <img src="../../../assets/icon/ColoredDepartmentIcon.svg">
-        <p class="title">{{formType == 'editChildLocation' ? 'THÔNG TIN ĐIỂM LÀM VIỆC CON' : formType == 'addLocation' ? 'THÊM ĐIỂM LÀM VIỆC' : 'CHỈNH SỬA ĐIỂM LÀM VIỆC'}}</p>
+        <img src="../../../assets/icon/ColoredDepartmentIcon.svg" />
+        <p class="title">
+            {{
+                formType == 'editChildLocation'
+                    ? 'CHỈNH SỬA ĐIỂM LÀM VIỆC CON'
+                    : formType == 'addLocation'
+                    ? 'THÊM ĐIỂM LÀM VIỆC'
+                    : formType == 'editLocation'
+                    ? 'CHỈNH SỬA ĐIỂM LÀM VIỆC'
+                    : formType == 'editDepartment'
+                    ? 'CHỈNH SỬA ĐƠN VỊ'
+                    : formType == 'addNewDepartment'
+                    ? 'THÊM MỚI ĐƠN VỊ'
+                    : formType == 'addNewSubDepartment'
+                    ? 'THÊM MỚI ĐƠN VỊ CON'
+                    : 'THÊM MỚI CHỨC DANH'
+            }}
+        </p>
     </div>
-    <form [formGroup]="locationForm" class="form-wrapper">
+    <form
+        [formGroup]="
+            formType == 'editChildLocation' || formType == 'addLocation' || formType == 'editLocation'
+                ? locationForm
+                : formType == 'editDepartment' || formType == 'addNewSubDepartment' || formType == 'addNewDepartment'
+                ? departmentForm
+                : positionForm
+        "
+        class="form-wrapper"
+    >
         <div class="form-content-wrapper">
-            <div class="box-field">
+            <container-element [ngSwitch]="true">
+                <ng-container *ngSwitchDefault>
+                    <div class="box-field">
+                        <p class="box-title">Tên điểm làm việc</p>
+                        <textarea
+                            type="text"
+                            name="LocationName"
+                            rows="4"
+                            ngDefaultControl
+                            formControlName="LocationName"
+                            cols="50"
+                        ></textarea>
+                    </div>
+
+                    <div class="two-box-in-line">
+                        <div class="box-field">
+                            <p class="box-title">Mã điểm làm việc</p>
+                            <textarea
+                                type="text"
+                                name="LocationID"
+                                rows="4"
+                                ngDefaultControl
+                                cols="50"
+                                formControlName="LocationID"
+                                class="small-textarea"
+                            ></textarea>
+                        </div>
+
+                        <div class="box-field">
+                            <p class="box-title">Tên viết tắt</p>
+                            <textarea
+                                type="text"
+                                name="Brieft"
+                                rows="4"
+                                ngDefaultControl
+                                cols="50"
+                                formControlName="Brieft"
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="box-field">
+                        <p class="box-title">Trực thuộc</p>
+                        <kendo-dropdownlist
+                            #under_dropdown
+                            [data]="Under"
+                            textField="name"
+                            valueField="value"
+                            [value]="selectedUnder"
+                            (closed)="onClose($event)"
+                            (opened)="onOpen($event)"
+                            [valuePrimitive]="true"
+                        >
+                            <ng-template kendoDropDownListValueTemplate let-dataItem>
+                                <span class="template">{{ dataItem?.name }}</span>
+                                <img
+                                    class="icon"
+                                    *ngIf="!under_dropdown._open"
+                                    src="../../../assets/icon/DownArrow.svg"
+                                />
+                                <img class="icon" *ngIf="under_dropdown._open" src="../../../assets/icon/UpArrow.svg" />
+                            </ng-template>
+                            <ng-template kendoDropDownListItemTemplate let-dataItem>
+                                <span class="template">{{ dataItem.name }}</span>
+                            </ng-template>
+                        </kendo-dropdownlist>
+                    </div>
+
+                    <div class="box-field">
+                        <p class="box-title">Địa chỉ liên hệ</p>
+                        <textarea
+                            type="text"
+                            name="Address"
+                            rows="4"
+                            ngDefaultControl
+                            cols="50"
+                            formControlName="Address"
+                            class="small-textarea"
+                        ></textarea>
+                    </div>
+
+                    <div class="box-field">
+                        <p class="box-title">Tỉnh thành</p>
+                        <kendo-dropdownlist
+                            #province_dropdown
+                            [data]="Provinces"
+                            textField="name"
+                            [valuePrimitive]="true"
+                            (closed)="onClose($event)"
+                            (opened)="onOpen($event)"
+                            valueField="value"
+                            [value]="selectedProvince"
+                        >
+                            <ng-template kendoDropDownListValueTemplate let-dataItem>
+                                <span class="template">{{ dataItem?.name }}</span>
+                                <img
+                                    class="icon"
+                                    *ngIf="!province_dropdown._open"
+                                    src="../../../assets/icon/DownArrow.svg"
+                                />
+                                <img
+                                    class="icon"
+                                    *ngIf="province_dropdown._open"
+                                    src="../../../assets/icon/UpArrow.svg"
+                                />
+                            </ng-template>
+                            <ng-template kendoDropDownListItemTemplate let-dataItem>
+                                <span class="template">{{ dataItem.name }}</span>
+                            </ng-template>
+                        </kendo-dropdownlist>
+                    </div>
+
+                    <div class="box-field">
+                        <p class="box-title">Quận huyện</p>
+                        <kendo-dropdownlist
+                            #district_dropdown
+                            [data]="Districts"
+                            textField="name"
+                            valueField="value"
+                            [value]="selectedDistrict"
+                            (closed)="onClose($event)"
+                            (opened)="onOpen($event)"
+                            [valuePrimitive]="true"
+                        >
+                            <ng-template kendoDropDownListValueTemplate let-dataItem>
+                                <span class="template">{{ dataItem?.name }}</span>
+                                <img
+                                    class="icon"
+                                    *ngIf="!district_dropdown._open"
+                                    src="../../../assets/icon/DownArrow.svg"
+                                />
+                                <img
+                                    class="icon"
+                                    *ngIf="district_dropdown._open"
+                                    src="../../../assets/icon/UpArrow.svg"
+                                />
+                            </ng-template>
+                            <ng-template kendoDropDownListItemTemplate let-dataItem>
+                                <span class="template">{{ dataItem.name }}</span>
+                            </ng-template>
+                        </kendo-dropdownlist>
+                    </div>
+
+                    <div class="box-field">
+                        <p class="box-title">Phường/xã</p>
+                        <kendo-dropdownlist
+                            #ward_dropdown
+                            [data]="Wards"
+                            textField="name"
+                            valueField="value"
+                            [value]="selectedWard"
+                            (closed)="onClose($event)"
+                            (opened)="onOpen($event)"
+                            [valuePrimitive]="true"
+                        >
+                            <ng-template kendoDropDownListValueTemplate let-dataItem>
+                                <span class="template">{{ dataItem?.name }}</span>
+                                <img
+                                    class="icon"
+                                    *ngIf="!ward_dropdown._open"
+                                    src="../../../assets/icon/DownArrow.svg"
+                                />
+                                <img class="icon" *ngIf="ward_dropdown._open" src="../../../assets/icon/UpArrow.svg" />
+                            </ng-template>
+                            <ng-template kendoDropDownListItemTemplate let-dataItem>
+                                <span class="template">{{ dataItem.name }}</span>
+                            </ng-template>
+                        </kendo-dropdownlist>
+                    </div>
+
+                    <div class="box-field">
+                        <p class="box-title">Mô tả</p>
+                        <textarea
+                            type="text"
+                            name="Remark"
+                            rows="4"
+                            ngDefaultControl
+                            cols="50"
+                            formControlName="Remark"
+                            class="large-description"
+                        ></textarea>
+                    </div>
+                    <div class="action-wrapper">
+                        <button class="close-btn" type="button" (click)="handeCloseForm()">ĐÓNG</button>
+                        <button class="update-btn">CẬP NHẬT</button>
+                    </div>
+                </ng-container>
+                <!-- Render form based on Edit department and add new department as well as subdepartment -->
+                <ng-container
+                    *ngSwitchCase="
+                        formType === 'editDepartment' ||
+                        formType === 'addNewDepartment' ||
+                        formType === 'addNewSubDepartment'
+                    "
+                >
+                    <div class="box-field">
+                        <p class="box-title">Tên đơn vị</p>
+                        <textarea
+                            type="text"
+                            name="DepartmentName"
+                            rows="4"
+                            ngDefaultControl
+                            formControlName="DepartmentName"
+                            cols="50"
+                        ></textarea>
+                    </div>
+
+                    <div class="two-box-in-line">
+                        <div class="box-field">
+                            <p class="box-title">Mã đơn vị</p>
+                            <textarea
+                                type="text"
+                                name="DepartmentID"
+                                rows="4"
+                                ngDefaultControl
+                                cols="50"
+                                formControlName="DepartmentID"
+                                class="small-textarea"
+                            ></textarea>
+                        </div>
+
+                        <div class="box-field">
+                            <p class="box-title">Tên viết tắt</p>
+                            <textarea
+                                type="text"
+                                name="Brieft"
+                                rows="4"
+                                ngDefaultControl
+                                cols="50"
+                                formControlName="Brieft"
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="box-field">
+                        <p class="box-title">Trực thuộc</p>
+                        <kendo-dropdownlist
+                            #under_dropdown
+                            [data]="Under"
+                            textField="name"
+                            valueField="value"
+                            [value]="selectedUnder"
+                            (closed)="onClose($event)"
+                            (opened)="onOpen($event)"
+                            [valuePrimitive]="true"
+                        >
+                            <ng-template kendoDropDownListValueTemplate let-dataItem>
+                                <span class="template">{{ dataItem?.name }}</span>
+                                <img
+                                    class="icon"
+                                    *ngIf="!under_dropdown._open"
+                                    src="../../../assets/icon/DownArrow.svg"
+                                />
+                                <img class="icon" *ngIf="under_dropdown._open" src="../../../assets/icon/UpArrow.svg" />
+                            </ng-template>
+                            <ng-template kendoDropDownListItemTemplate let-dataItem>
+                                <span class="template">{{ dataItem.name }}</span>
+                            </ng-template>
+                        </kendo-dropdownlist>
+                    </div>
+
+                    <div class="box-field">
+                        <p class="box-title">Điểm làm việc</p>
+                        <kendo-multiselect
+                            [allowCustom]="false"
+                            [data]="listItems"
+                            [(ngModel)]="value"
+                        ></kendo-multiselect>
+                    </div>
+
+                    <div class="box-field">
+                        <p class="box-title">Điện thoại</p>
+                        <textarea
+                            type="text"
+                            name="Phone"
+                            rows="4"
+                            ngDefaultControl
+                            cols="50"
+                            formControlName="Phone"
+                            style="width: 228px"
+                        ></textarea>
+                    </div>
+
+                    <div class="box-field">
+                        <p class="box-title">Fax</p>
+                        <textarea
+                            type="text"
+                            name="Fax"
+                            rows="4"
+                            ngDefaultControl
+                            cols="50"
+                            formControlName="Fax"
+                            style="width: 228px"
+                        ></textarea>
+                    </div>
+
+                    <div class="box-field">
+                        <p class="box-title">Chức năng, nhiệm vụ</p>
+                        <textarea
+                            type="text"
+                            name="Feature"
+                            rows="4"
+                            ngDefaultControl
+                            cols="50"
+                            formControlName="Feature"
+                            class="large-description"
+                        ></textarea>
+                    </div>
+
+                    <div class="action-wrapper">
+                        <button class="close-btn" type="button" (click)="handeCloseForm()">ĐÓNG</button>
+                        <button class="update-btn">CẬP NHẬT</button>
+                    </div>
+                </ng-container>
+
+                <!-- Render form for Position handle form -->
+                <ng-container *ngSwitchCase="formType == 'addNewPosition'">
+                    <div class="box-field">
+                        <p class="box-title">Tên chức danh</p>
+                        <textarea
+                            type="text"
+                            name="positionName"
+                            rows="4"
+                            ngDefaultControl
+                            formControlName="positionName"
+                            cols="50"
+                        ></textarea>
+                    </div>
+
+                    <div class="two-box-in-line">
+                        <div class="box-field">
+                            <p class="box-title">Mã chức danh</p>
+                            <textarea
+                                type="text"
+                                name="positionID"
+                                rows="4"
+                                ngDefaultControl
+                                cols="50"
+                                formControlName="positionID"
+                                class="small-textarea"
+                            ></textarea>
+                        </div>
+
+                        <div class="isleader-wrap">
+                            <input type="checkbox" kendoCheckBox formControlName="isLeader" #isLeader />
+                            <kendo-label [for]="isLeader" text="Là trưởng đơn vị"></kendo-label>
+                        </div>
+                    </div>
+                    <div class="box-field">
+                        <p class="box-title">Đơn vị trực thuộc</p>
+                        <kendo-dropdownlist
+                            #under_dropdown
+                            [data]="Under"
+                            textField="name"
+                            valueField="value"
+                            [value]="selectedUnder"
+                            (closed)="onClose($event)"
+                            (opened)="onOpen($event)"
+                            [valuePrimitive]="true"
+                        >
+                            <ng-template kendoDropDownListValueTemplate let-dataItem>
+                                <span class="template">{{ dataItem?.name }}</span>
+                                <img
+                                    class="icon"
+                                    *ngIf="!under_dropdown._open"
+                                    src="../../../assets/icon/DownArrow.svg"
+                                />
+                                <img class="icon" *ngIf="under_dropdown._open" src="../../../assets/icon/UpArrow.svg" />
+                            </ng-template>
+                            <ng-template kendoDropDownListItemTemplate let-dataItem>
+                                <span class="template">{{ dataItem.name }}</span>
+                            </ng-template>
+                        </kendo-dropdownlist>
+                    </div>
+
+                    <div class="box-field">
+                        <p class="box-title">Chức danh quản lý hành chính</p>
+                        <kendo-dropdownlist
+                            #admin_dropdown
+                            class="admin-cbbx"
+                            (closed)="onClose($event)"
+                            (opened)="onOpen($event)"
+                        >
+                            <ng-template kendoDropDownListValueTemplate let-dataItem>
+                                <!-- <span class="template">{{ dataItem?.name }}</span> -->
+                                <img
+                                    class="icon"
+                                    *ngIf="!admin_dropdown._open"
+                                    src="../../../assets/icon/DownArrow.svg"
+                                />
+                                <img class="icon" *ngIf="admin_dropdown._open" src="../../../assets/icon/UpArrow.svg" />
+                            </ng-template>
+                        </kendo-dropdownlist>
+                    </div>
+
+                    <div class="box-field">
+                        <p class="box-title">Phân nhóm</p>
+                        <kendo-dropdownlist
+                            #group_devided
+                            [data]="Under"
+                            textField="name"
+                            valueField="value"
+                            [value]="selectedUnder"
+                            (closed)="onClose($event)"
+                            (opened)="onOpen($event)"
+                            [valuePrimitive]="true"
+                        >
+                            <ng-template kendoDropDownListValueTemplate let-dataItem>
+                                <span class="template">Quản lý cấp cao</span>
+                                <img
+                                    class="icon"
+                                    *ngIf="!group_devided._open"
+                                    src="../../../assets/icon/DownArrow.svg"
+                                />
+                                <img class="icon" *ngIf="group_devided._open" src="../../../assets/icon/UpArrow.svg" />
+                            </ng-template>
+                            <ng-template kendoDropDownListItemTemplate let-dataItem>
+                                <span class="template">{{ dataItem.name }}</span>
+                            </ng-template>
+                        </kendo-dropdownlist>
+                    </div>
+
+                    <div class="box-field">
+                        <p class="box-title">Vai trò sử dụng tài nguyên hệ thống</p>
+                        <kendo-multiselect [allowCustom]="fasle"></kendo-multiselect>
+                    </div>
+
+                    <div class="box-field">
+                        <p class="box-title">Tình trạng</p>
+                        <kendo-dropdownlist
+                            #group_devided
+                            [data]="Under"
+                            textField="name"
+                            valueField="value"
+                            [value]="selectedUnder"
+                            (closed)="onClose($event)"
+                            (opened)="onOpen($event)"
+                            [valuePrimitive]="true"
+                        >
+                            <ng-template kendoDropDownListValueTemplate let-dataItem>
+                                <span class="template">Đang áp dụng</span>
+                                <img
+                                    class="icon"
+                                    *ngIf="!group_devided._open"
+                                    src="../../../assets/icon/DownArrow.svg"
+                                />
+                                <img class="icon" *ngIf="group_devided._open" src="../../../assets/icon/UpArrow.svg" />
+                            </ng-template>
+                            <ng-template kendoDropDownListItemTemplate let-dataItem>
+                                <span class="template">{{ dataItem.name }}</span>
+                            </ng-template>
+                        </kendo-dropdownlist>
+                    </div>
+
+                    <div class="action-wrapper">
+                        <button class="close-btn" type="button" (click)="handeCloseForm()">ĐÓNG</button>
+                        <button class="update-btn">CẬP NHẬT</button>
+                    </div>
+                </ng-container>
+
+                <!-- Render default for Location form -->
+            </container-element>
+
+            <!-- <div class="box-field">
                 <p class="box-title">Tên điểm làm việc</p>
                 <textarea
                     type="text"
@@ -19,7 +507,7 @@
 
             <div class="two-box-in-line">
                 <div class="box-field">
-                    <p class="box-title ">Mã điểm làm việc</p>
+                    <p class="box-title">Mã điểm làm việc</p>
                     <textarea
                         type="text"
                         name="LocationID"
@@ -46,11 +534,20 @@
 
             <div class="box-field">
                 <p class="box-title">Trực thuộc</p>
-                <kendo-dropdownlist #under_dropdown [data]="Under" textField="name" valueField="value" [value]="selectedUnder" (closed)="onClose($event)" (opened)="onOpen($event)" [valuePrimitive]="true" >
+                <kendo-dropdownlist
+                    #under_dropdown
+                    [data]="Under"
+                    textField="name"
+                    valueField="value"
+                    [value]="selectedUnder"
+                    (closed)="onClose($event)"
+                    (opened)="onOpen($event)"
+                    [valuePrimitive]="true"
+                >
                     <ng-template kendoDropDownListValueTemplate let-dataItem>
                         <span class="template">{{ dataItem?.name }}</span>
-                        <img class="icon" *ngIf="!under_dropdown._open" src="../../../assets/icon/DownArrow.svg">
-                        <img class="icon" *ngIf="under_dropdown._open" src="../../../assets/icon/UpArrow.svg">
+                        <img class="icon" *ngIf="!under_dropdown._open" src="../../../assets/icon/DownArrow.svg" />
+                        <img class="icon" *ngIf="under_dropdown._open" src="../../../assets/icon/UpArrow.svg" />
                     </ng-template>
                     <ng-template kendoDropDownListItemTemplate let-dataItem>
                         <span class="template">{{ dataItem.name }}</span>
@@ -68,18 +565,25 @@
                     cols="50"
                     formControlName="Address"
                     class="small-textarea"
-                    
                 ></textarea>
             </div>
 
             <div class="box-field">
                 <p class="box-title">Tỉnh thành</p>
-                <kendo-dropdownlist #province_dropdown [data]="Provinces" textField="name" [valuePrimitive]="true" (closed)="onClose($event)" (opened)="onOpen($event)" valueField="value"
-                [value]="selectedProvince">
+                <kendo-dropdownlist
+                    #province_dropdown
+                    [data]="Provinces"
+                    textField="name"
+                    [valuePrimitive]="true"
+                    (closed)="onClose($event)"
+                    (opened)="onOpen($event)"
+                    valueField="value"
+                    [value]="selectedProvince"
+                >
                     <ng-template kendoDropDownListValueTemplate let-dataItem>
                         <span class="template">{{ dataItem?.name }}</span>
-                        <img class="icon" *ngIf="!province_dropdown._open" src="../../../assets/icon/DownArrow.svg">
-                        <img class="icon" *ngIf="province_dropdown._open" src="../../../assets/icon/UpArrow.svg">
+                        <img class="icon" *ngIf="!province_dropdown._open" src="../../../assets/icon/DownArrow.svg" />
+                        <img class="icon" *ngIf="province_dropdown._open" src="../../../assets/icon/UpArrow.svg" />
                     </ng-template>
                     <ng-template kendoDropDownListItemTemplate let-dataItem>
                         <span class="template">{{ dataItem.name }}</span>
@@ -89,11 +593,20 @@
 
             <div class="box-field">
                 <p class="box-title">Quận huyện</p>
-                <kendo-dropdownlist #district_dropdown [data]="Districts" textField="name" valueField="value" [value]="selectedDistrict" (closed)="onClose($event)" (opened)="onOpen($event)" [valuePrimitive]="true" >
+                <kendo-dropdownlist
+                    #district_dropdown
+                    [data]="Districts"
+                    textField="name"
+                    valueField="value"
+                    [value]="selectedDistrict"
+                    (closed)="onClose($event)"
+                    (opened)="onOpen($event)"
+                    [valuePrimitive]="true"
+                >
                     <ng-template kendoDropDownListValueTemplate let-dataItem>
                         <span class="template">{{ dataItem?.name }}</span>
-                        <img class="icon" *ngIf="!district_dropdown._open" src="../../../assets/icon/DownArrow.svg">
-                        <img class="icon" *ngIf="district_dropdown._open" src="../../../assets/icon/UpArrow.svg">
+                        <img class="icon" *ngIf="!district_dropdown._open" src="../../../assets/icon/DownArrow.svg" />
+                        <img class="icon" *ngIf="district_dropdown._open" src="../../../assets/icon/UpArrow.svg" />
                     </ng-template>
                     <ng-template kendoDropDownListItemTemplate let-dataItem>
                         <span class="template">{{ dataItem.name }}</span>
@@ -103,11 +616,20 @@
 
             <div class="box-field">
                 <p class="box-title">Phường/xã</p>
-                <kendo-dropdownlist #ward_dropdown [data]="Wards" textField="name" valueField="value" [value]="selectedWard" (closed)="onClose($event)" (opened)="onOpen($event)" [valuePrimitive]="true" >
+                <kendo-dropdownlist
+                    #ward_dropdown
+                    [data]="Wards"
+                    textField="name"
+                    valueField="value"
+                    [value]="selectedWard"
+                    (closed)="onClose($event)"
+                    (opened)="onOpen($event)"
+                    [valuePrimitive]="true"
+                >
                     <ng-template kendoDropDownListValueTemplate let-dataItem>
                         <span class="template">{{ dataItem?.name }}</span>
-                        <img class="icon" *ngIf="!ward_dropdown._open" src="../../../assets/icon/DownArrow.svg">
-                        <img class="icon" *ngIf="ward_dropdown._open" src="../../../assets/icon/UpArrow.svg">
+                        <img class="icon" *ngIf="!ward_dropdown._open" src="../../../assets/icon/DownArrow.svg" />
+                        <img class="icon" *ngIf="ward_dropdown._open" src="../../../assets/icon/UpArrow.svg" />
                     </ng-template>
                     <ng-template kendoDropDownListItemTemplate let-dataItem>
                         <span class="template">{{ dataItem.name }}</span>
@@ -131,6 +653,7 @@
         <div class="action-wrapper">
             <button class="close-btn" type="button" (click)="handeCloseForm()">ĐÓNG</button>
             <button class="update-btn">CẬP NHẬT</button>
+        </div> -->
         </div>
     </form>
 </div>

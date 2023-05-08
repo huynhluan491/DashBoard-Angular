@@ -29,7 +29,8 @@
                 color: #343a40;
                 font-size: 1.3rem;
                 font-weight: 600;
-
+                display: flex;
+                flex-direction: column;
                 textarea {
                     width: 100%;
                     border: 2px solid #dbdee7;
@@ -76,6 +77,12 @@
 
                 .small-textarea {
                     width: 145px !important;
+                }
+
+                .isleader-wrap {
+                    display: flex;
+                    align-items: flex-end;
+                    gap: 15px;
                 }
             }
             .product-properties {
@@ -131,8 +138,12 @@
     min-width: 145px !important;
     display: flex;
     background-color: white;
-    border: 2px solid #DBDEE7;
+    border: 2px solid #dbdee7;
     height: 37px;
+
+    &.admin-cbbx {
+        width: 188px !important;
+    }
 
     .k-button-solid-base {
         background-color: unset;
@@ -145,12 +156,12 @@
         padding-block: unset;
         padding: 10px 0 9px 10px;
     }
-    
+
     .k-picker-md {
         display: flex;
     }
 
-    .template { 
+    .template {
         display: inline-block;
     }
 
@@ -169,7 +180,7 @@
         .template {
             min-width: 92px;
         }
-        
+
         .icon {
             padding-right: 10px;
         }
@@ -181,22 +192,57 @@
 }
 
 ::ng-deep .k-list-md {
-
     .k-list-item {
-        color: #26282E;
+        color: #26282e;
     }
-    
+
     .k-list-item:hover {
-        background-color: #F5F6F8;
+        background-color: #f5f6f8;
     }
-    
+
     .k-list-item.k-selected {
-        background-color: #F5F6F8;
+        background-color: #f5f6f8;
         color: unset;
     }
- 
+
     .k-list-item.k-focus {
         box-shadow: unset;
     }
 }
 
+::ng-deep .isleader-wrap {
+    .k-checkbox {
+        border-color: #008000;
+        width: 14px;
+        height: 14px;
+        box-shadow: unset;
+    }
+
+    .k-checkbox:checked:focus {
+        box-shadow: unset;
+    }
+
+    .k-checkbox:checked {
+        background-color: #008000;
+        border-color: transparent;
+    }
+}
+
+::ng-deep .box-field .k-multiselect {
+    border: 2px solid #dbdee7;
+    box-shadow: unset !important;
+
+    .k-chip-solid-base {
+        background-image: unset;
+        background-color: unset;
+        border: unset;
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    .k-i-x-circle {
+        content: url('../../../assets/icon/DeleteIcon.svg');
+        width: 8px;
+        height: 8px;
+    }
+}
