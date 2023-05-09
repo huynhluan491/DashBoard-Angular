@@ -1,6 +1,7 @@
 .location-list-wrapper {
     margin-top: 12px;
     padding-right: 27px;
+    height: 100%;
 }
 
 ::ng-deep .location-list-wrapper {
@@ -8,14 +9,24 @@
         background-color: #edeff3;
         border-width: unset;
         border-style: unset;
+        height: 100%;
     }
 
     .k-grid-content {
         overflow-y: unset;
+        background-color: unset;
     }
 
     .k-table-row {
         background-color: white !important;
+
+        &:hover {
+            background-color: rgba(26, 102, 52, 0.33) !important;
+        }
+    }
+
+    .k-table-row.k-selected > .k-table-td {
+        background-color: #1a6634;
     }
 
     .k-grid .k-table-tbody > .k-table-row:not(.k-detail-row):hover,
@@ -34,11 +45,14 @@
         border-style: unset !important;
         padding-inline: unset;
         padding-block: unset;
-        padding-top: 20px;
-        padding-bottom: 24px;
+        // padding-top: 20px;
+        // padding-bottom: 16px;
+        height: 58px;
+        width: 100%;
         &:last-child {
             border-left: 1px solid #edeff3 !important;
             text-align: center;
+            height: 58px;
         }
 
         .box-icon {
@@ -51,12 +65,14 @@
         display: flex;
     }
     .k-table-row {
+        border-top: 4px solid #edeff3;
         border-bottom: 4px solid #edeff3;
         position: relative;
     }
 
     .k-icon {
         padding-left: 23px;
+        height: 100%;
     }
 
     .location-icon {
@@ -74,10 +90,27 @@
         content: url('../../../assets/icon/UpArrow.svg');
     }
 
+    .text-name {
+        color: #5a6276;
+        font-weight: 400;
+    }
+
+    .text-id {
+        color: #26282e;
+        font-weight: 400;
+        width: 147px;
+    }
+
+    .isLeader {
+        padding-left: 94px;
+        color: #26282e;
+        font-weight: 400;
+    }
+
     .menu-wrapper {
         position: absolute;
         right: 3.5%;
-        top: 30%;
+        top: 15%;
         z-index: 2;
     }
 
@@ -85,6 +118,24 @@
         -webkit-user-select: none; /* Safari */
         -ms-user-select: none; /* IE 10 and IE 11 */
         user-select: none; /* Standard syntax */
+        height: 100%;
+        margin-top: 20px;
+        .box-icon {
+            img {
+                // margin-bottom: 100%;
+            }
+        }
+    }
+
+    .active {
+        background-color: #1a6634;
+        color: white !important;
+    }
+
+    .info-wrapper {
+        display: flex;
+        align-items: center;
+        width: 100%;
     }
 }
 
@@ -141,4 +192,8 @@
     .k-drawer-wrapper {
         width: 420px !important;
     }
+}
+
+.parent {
+    font-weight: 700;
 }

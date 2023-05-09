@@ -1,4 +1,4 @@
-<app-filter-bar [filterBoxItems]="filterBoxItems"></app-filter-bar>
+<app-filter-bar [filterBoxItems]="filterBoxItems" [drawerView]="drawer"></app-filter-bar>
 <div class="location-list-wrapper">
     <kendo-treelist
         [data]="departmentList"
@@ -9,16 +9,38 @@
         [isExpanded]="isExpanded"
         (expand)="onExpand($event)"
         (collapse)="onCollapse($event)"
+        kendoTreeListSelectable
+        [selectable]="settings"
+        (selectionChange)="onChange($event)"
+        [isSelected]="isSelected"
     >
         <kendo-treelist-column [expandable]="true" field="Department" title="Department" [width]="270">
             <ng-template kendoTreeListCellTemplate let-dataItem>
-                <div style="display: flex">
-                    <img class="location-icon" src="../../assets/icon/Location.svg" />
-                    <p style="width: 310px">
+                <div class="info-wrapper">
+                    <img
+                        *ngIf="dataItem.PositionID"
+                        class="location-icon"
+                        src="../../../assets/icon/DepartmentListUserIcon.svg"
+                    />
+                    <img
+                        *ngIf="dataItem.PositionID == null"
+                        class="location-icon"
+                        src="../../../assets/icon/DepartmentListIcon.svg"
+                    />
+                    <p class="text-name" style="width: 310px" [ngClass]="{ parent: dataItem.PositionID == null }">
                         {{ dataItem.Department || dataItem.Position }}
                     </p>
-                    <p [ngClass]="{ 'child-text': dataItem.ParentID != null || dataItem.DepartmentCode == null }">
+                    <p
+                        class="text-id"
+                        [ngClass]="{
+                                    'child-text': dataItem.ParentID != null || dataItem.DepartmentCode == null,
+                                }"
+                    >
                         {{ dataItem.PositionID || dataItem.DepartmentID }}
+                    </p>
+
+                    <p class="isLeader">
+                        {{ dataItem.IsLeader ? 'Trưởng đơn vị' : '' }}
                     </p>
                 </div>
             </ng-template>
@@ -47,7 +69,7 @@
                 <div class="menu-wrapper" *ngIf="selectedPopupMenu.includes(dataItem.Department || dataItem.Position)">
                     <div class="wrapper">
                         <ul class="item-list" *ngFor="let item of menuItemList">
-                            <li class="item-wrapper" (click)="onOpenForm(item.fnName)">
+                            <li class="item-wrapper" (click)="onOpenForm(item.fnName, dataItem)">
                                 <img class="icon" src="../../assets/icon/{{ item.iconName }}.svg" />
                                 <p class="text">{{ item.textName }}</p>
                             </li>
