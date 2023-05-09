@@ -1,5 +1,5 @@
-import { Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { ExpandEvent } from '@progress/kendo-angular-treelist';
+import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ColumnBase, ExpandEvent, SelectableSettings, SelectionChangeEvent } from '@progress/kendo-angular-treelist';
 import { LocationFormService } from '../HumanResource/services/location-form.service';
 
 const treeListData = [
@@ -202,18 +202,26 @@ const treeListData = [
     templateUrl: './test-lisst.component.html',
     styleUrls: ['./test-lisst.component.scss'],
 })
-export class TestLisstComponent {
+export class TestLisstComponent implements OnInit {
     @ViewChild('boxIcon') boxIcon?: ElementRef;
     @ViewChildren('boxIcon') boxIcons?: QueryList<ElementRef>;
     public treeNodes: any[] = treeListData;
     public selectedPopupMenu: any[] = [];
     private expandedIds: number[] = [];
-
+    public selectItem: any[] = [];
     @Input() menuItemList: any;
     @Input() drawerView: any;
 
     constructor(private locationFormService: LocationFormService) {}
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.clearSelection(this.treeNodes);
+    }
+
+    public settings: SelectableSettings = {
+        mode: 'row',
+        multiple: true,
+        drag: false,
+    };
 
     // Use an arrow function to capture the 'this' execution context of the class.
     public fetchChildren = (item: any): any[] => {
@@ -265,9 +273,59 @@ export class TestLisstComponent {
         console.log(this.expandedIds);
     }
 
-    onOpenForm(type: string) {
+    onOpenForm(type: string, data: any) {
         this.drawerView.toggle();
-        this.locationFormService.setTypeOfForm(type);
+        this.locationFormService.setTypeOfForm(type, data);
         this.selectedPopupMenu = [];
+    }
+
+    public isSelected(dataItem: any, column?: ColumnBase, columnIndex?: number) {
+        return dataItem.selected;
+    }
+
+    onChange(e: SelectionChangeEvent) {
+        // set items selected property to false before set new selected item `selected` prop to true
+        if (e.action === 'select') {
+            this.clearSelection(this.treeNodes);
+        }
+
+        const data = e.items[0].dataItem;
+        let name = '';
+        let newArr = [];
+
+        if (data.Department) {
+            name = data.Department;
+        } else if (data.DepartmentName) {
+            name = data.DepartmentName;
+        } else if (data.Position) {
+            name = data.Position;
+        }
+
+        // this.selectedDepartmentItem = [{ ...data }];
+        // console.log(this.selectedDepartmentItem);
+
+        if (this.selectItem.length == 0) {
+            this.selectItem.push(name);
+        } else {
+            if (!this.selectItem.includes(name)) {
+                newArr.push(name);
+                this.selectItem = [...newArr];
+            } else if (this.selectItem.includes(name)) {
+                this.selectItem.shift();
+            }
+        }
+
+        const selected = e.action === 'select';
+        e.items.forEach((item) => (item.dataItem.selected = selected));
+    }
+
+    // Using recursion to set items selected to false
+    private clearSelection(items: any[]): void {
+        items.forEach((item: any) => {
+            item.selected = false;
+            if (item.ListChild) {
+                this.clearSelection(item.ListChild);
+            }
+        });
     }
 }

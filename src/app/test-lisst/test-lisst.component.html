@@ -8,15 +8,29 @@
         [isExpanded]="isExpanded"
         (expand)="onExpand($event)"
         (collapse)="onCollapse($event)"
+        kendoTreeListSelectable
+        [selectable]="settings"
+        (selectionChange)="onChange($event)"
+        [isSelected]="isSelected"
     >
         <kendo-treelist-column [expandable]="true" field="LocationName" title="LocationName" [width]="270">
             <ng-template kendoTreeListCellTemplate let-dataItem>
-                <div style="display: flex">
+                <div class="info-wrapper">
                     <img class="location-icon" src="../../assets/icon/Location.svg" />
-                    <p style="width: 164px">
+                    <p
+                        class="text-name"
+                        style="width: 164px"
+                        [ngClass]="{ 'parent-text-name': dataItem.ParentID == null }"
+                    >
                         {{ dataItem.LocationName }}
                     </p>
-                    <p [ngClass]="{ 'child-text': dataItem.ParentID != null }">
+                    <p
+                        class="text-id"
+                        [ngClass]="{
+                            'child-text': dataItem.ParentID != null,
+                            'parent-text-id': dataItem.ParentID == null
+                        }"
+                    >
                         {{ dataItem.LocationID }}
                     </p>
                 </div>
@@ -41,7 +55,7 @@
                 <div class="menu-wrapper" *ngIf="selectedPopupMenu.includes(dataItem.Code)">
                     <div class="wrapper">
                         <ul class="item-list" *ngFor="let item of menuItemList">
-                            <li class="item-wrapper" (click)="onOpenForm(item.fnName)">
+                            <li class="item-wrapper" (click)="onOpenForm(item.fnName, dataItem)">
                                 <img class="icon" src="../../assets/icon/{{ item.iconName }}.svg" />
                                 <p class="text">{{ item.textName }}</p>
                             </li>

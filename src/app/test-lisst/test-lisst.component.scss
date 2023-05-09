@@ -11,6 +11,7 @@
 
     .k-grid-content {
         overflow-y: unset;
+        height: 100vh;
     }
 
     .k-table-row {
@@ -33,8 +34,7 @@
         border-style: unset !important;
         padding-inline: unset;
         padding-block: unset;
-        padding-top: 20px;
-        padding-bottom: 24px;
+
         &:last-child {
             border-left: 1px solid #edeff3 !important;
             text-align: center;
@@ -51,16 +51,19 @@
     }
     .k-table-row {
         border-bottom: 4px solid #edeff3;
+        border-top: 4px solid #edeff3;
         position: relative;
     }
 
     .k-icon {
         padding-left: 23px;
+        height: 100%;
     }
 
     .location-icon {
         padding-left: 17px;
         padding-right: 9px;
+        height: 14px;
     }
 
     .k-i-caret-alt-down::before {
@@ -73,10 +76,20 @@
         content: url('../../assets/icon/UpArrow.svg');
     }
 
+    .text-name {
+        color: #5a6276;
+        font-size: 13px;
+    }
+
+    .text-id {
+        color: #26282e;
+        font-size: 13px;
+    }
+
     .menu-wrapper {
         position: absolute;
         right: 3.5%;
-        top: 30%;
+        top: 15%;
         z-index: 2;
     }
 }
@@ -117,4 +130,9 @@
             background-color: #959db3;
         }
     }
+}
+
+.parent-text-name,
+.parent-text-id {
+    font-weight: 700;
 }
