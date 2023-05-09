@@ -30,6 +30,8 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
         Fax: new FormControl(''),
         Feature: new FormControl(''),
         StatusID: new FormControl(''),
+        Under: new FormControl(['Baseball']),
+        selectedUnder: new FormControl(1),
     });
 
     positionForm: FormGroup = new FormGroup({
@@ -50,22 +52,20 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
     public downArrow: any;
 
     // Declaring variables of selection value
-    public selectedUnder = 1;
     public selectedProvince = 1;
     public selectedDistrict = 1;
     public selectedWard = 1;
 
     //Type of form
     public formType: string = '';
+    isEdit: boolean = false;
+    selectedItem: any;
 
     listDropDownButton: any = [];
 
     @Input() drawerView: any;
 
-    Under: any[] = [
-        { name: 'Văn phòng', value: 1 },
-        { name: 'Kho', value: 1 },
-    ];
+    Under: any[] = [];
 
     Provinces: any[] = [
         {
@@ -133,14 +133,41 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
         'Tennis',
         'Volleyball',
     ];
-    public value: any = ['Baseball'];
 
     constructor(private locationFormService: LocationFormService) {}
 
     ngOnInit(): void {
-        this.locationFormService.typeOfForm.subscribe((value) => {
-            this.formType = value;
+        this.formType = this.locationFormService._typeOfForm;
+        this.selectedItem = this.locationFormService._selectedItem;
+        let name = this.locationFormService._UnderParentName;
+        console.log(name);
+
+        this.Under.push({
+            name: name,
+            value: 1,
         });
+
+        if (
+            this.formType == 'editChildLocation' ||
+            this.formType == 'editDepartment' ||
+            this.formType == 'editLocation'
+        ) {
+            this.isEdit = true;
+        } else {
+            this.isEdit = false;
+        }
+
+        if (this.formType == 'editLocation') {
+            this.locationForm.controls['LocationName'].setValue(this.selectedItem.LocationName);
+        } else if (this.formType == 'editDepartment') {
+            if (this.selectedItem.Department) {
+                this.departmentForm.controls['DepartmentName'].setValue(this.selectedItem.Department);
+                this.departmentForm.controls['DepartmentID'].setValue(this.selectedItem.DepartmentID);
+            } else if (this.selectedItem.Position) {
+                this.departmentForm.controls['DepartmentName'].setValue(this.selectedItem.Position);
+                this.departmentForm.controls['DepartmentID'].setValue(this.selectedItem.PositionID);
+            }
+        }
     }
 
     ngAfterViewInit(): void {

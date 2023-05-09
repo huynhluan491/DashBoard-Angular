@@ -12,10 +12,12 @@ export class LocationComponent implements OnInit {
         {
             addTypeName: 'THÊM ĐIỂM LÀM VIỆC',
             iconUrl: 'DepartmentIcon.svg',
+            fnName: 'addLocation',
         },
         {
             addTypeName: 'THÊM ĐIỂM LÀM VIỆC CON',
             iconUrl: 'DepartmentIcon.svg',
+            fnName: 'addChildLocation',
         },
     ];
 
