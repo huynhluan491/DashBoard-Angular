@@ -15,7 +15,20 @@
     >
         <kendo-treelist-column [expandable]="true" field="LocationName" title="LocationName" [width]="270">
             <ng-template kendoTreeListCellTemplate let-dataItem>
-                <div class="info-wrapper">
+                <img class="location-icon" src="../../assets/icon/Location.svg" />
+                <p class="text-name" style="width: 164px" [ngClass]="{ 'parent-text-name': dataItem.ParentID == null }">
+                    {{ dataItem.LocationName }}
+                </p>
+                <p
+                    class="text-id"
+                    [ngClass]="{
+                        'child-text': dataItem.ParentID != null,
+                        'parent-text-id': dataItem.ParentID == null
+                    }"
+                >
+                    {{ dataItem.LocationID }}
+                </p>
+                <!-- <div class="info-wrapper">
                     <img class="location-icon" src="../../assets/icon/Location.svg" />
                     <p
                         class="text-name"
@@ -33,7 +46,7 @@
                     >
                         {{ dataItem.LocationID }}
                     </p>
-                </div>
+                </div> -->
             </ng-template>
         </kendo-treelist-column>
         <kendo-treelist-column title="Size" [width]="10">
