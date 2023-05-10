@@ -37,7 +37,7 @@
             ></app-department-position-add-button>
         </div> -->
 
-        <button class="add-button" *ngFor="let item of filterBoxItems" (click)="onOpenForm(item.fnName, item)">
+        <button class="add-button" *ngFor="let item of filterBoxItems" (click)="onOpenForm(item.fnName)">
             <img class="icon" src="../../../../assets/icon/{{ item.iconUrl }}" />
             <p class="text">{{ item.addTypeName }}</p>
         </button>

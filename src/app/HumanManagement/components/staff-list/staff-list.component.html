@@ -1,0 +1,200 @@
+<div class="staff-list-wrapper">
+    <kendo-grid
+        [data]="gridView"
+        kendoGridSelectBy="id"
+        [sortable]="false"
+        [groupable]="false"
+        [reorderable]="true"
+        [resizable]="false"
+        [columnMenu]="{ filter: false }"
+        [pageSize]="state.take"
+        [skip]="state.skip"
+        [sort]="state.sort"
+        [filter]="state.filter"
+        [pageable]="{
+            pageSizes: true
+        }"
+        type="numeric"
+        scrollable="scrollable"
+        [(selectedKeys)]="mySelection"
+        [selectable]="{ checkboxOnly: true, mode: 'multiple' }"
+    >
+        <!-- Function handle data change but still not used because can't call api -->
+        <!-- kendoGridSelectBy="Code" -->
+        <!-- (pageChange)="onPageChange($event)"
+    (dataStateChange)="dataStateChange($event)" -->
+        <!-- --------------------------------- -->
+
+        <kendo-grid-checkbox-column
+            [width]="29"
+            [headerClass]="{ 'text-center': true }"
+            [class]="{ 'text-center': true }"
+            [resizable]="false"
+            [columnMenu]="false"
+            [showSelectAll]="true"
+        ></kendo-grid-checkbox-column>
+
+        <kendo-grid-column title="Họ và tên" [width]="200">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="fullname-column">
+                    <div class="staff-avt">
+                        <img src="../../../../assets/images/staffAvt.png" />
+                    </div>
+                    <div class="position-wrapper">
+                        <p class="text-name">
+                            {{ dataItem.FirstName + ' ' + dataItem.MiddleName + ' ' + dataItem.LastName }}
+                        </p>
+                        <p>{{ dataItem.Code + ' | ' + dataItem.Position }}</p>
+                    </div>
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column title="Đơn vị công tác">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <p>{{ dataItem.Department }}</p>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column title="Điểm làm việc">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <p>{{ dataItem.LocationName }}</p>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column title="Giới tính">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <p>{{ dataItem.Gender }}</p>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column title="Năm sinh">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <p>{{ dataItem.Birth }}</p>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column title="Ngày vào làm">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <p>{{ dataItem.Birth }}</p>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column title="Loại nhân viên">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <p>{{ dataItem.TypeOfStaff }}</p>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column title="Tình trạng">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <p>{{ dataItem.Status }}</p>
+            </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column [width]="40">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <div class="see-more">
+                    <div class="show-menu-btn">
+                        <!-- [class.selected]="dataItem.id === activeButton[0]" -->
+                        <div class="icon">
+                            <svg
+                                className="see-more-icon"
+                                width="13px"
+                                height="3px"
+                                stroke="currentColor"
+                                fill="currentColor"
+                                viewBox="0 0 16 3"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M2 3C2.82843 3 3.5 2.32843 3.5 1.5C3.5 0.671573 2.82843 0 2 0C1.17157 0 0.5 0.671573 0.5 1.5C0.5 2.32843 1.17157 3 2 3Z"
+                                    fill="currentColor"
+                                />
+                                <path
+                                    d="M8 3C8.82843 3 9.5 2.32843 9.5 1.5C9.5 0.671573 8.82843 0 8 0C7.17157 0 6.5 0.671573 6.5 1.5C6.5 2.32843 7.17157 3 8 3Z"
+                                    fill="currentColor"
+                                />
+                                <path
+                                    d="M14 3C14.8284 3 15.5 2.32843 15.5 1.5C15.5 0.671573 14.8284 0 14 0C13.1716 0 12.5 0.671573 12.5 1.5C12.5 2.32843 13.1716 3 14 3Z"
+                                    fill="currentColor"
+                                />
+                                />
+                            </svg>
+                        </div>
+                    </div>
+                    <!-- <app-mapping-popup></app-mapping-popup> -->
+                    <div *ngIf="false" class="grid-command">
+                        <button kendoGridEditCommand>
+                            <span class="icon">
+                                <svg
+                                    width="13"
+                                    height="14"
+                                    viewBox="0 0 13 14"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M3.03852e-05 13.9999V10.8889C-0.0138189 10.4607 0.100008 10.0382 0.32703 9.67489L9.24303 0.340891C9.34396 0.23314 9.46592 0.147248 9.60138 0.0885284C9.73683 0.0298089 9.8829 -0.000488281 10.0305 -0.000488281C10.1782 -0.000488281 10.3242 0.0298089 10.4597 0.0885284C10.5951 0.147248 10.7171 0.23314 10.818 0.340891L12.675 2.28489C12.884 2.50861 13.0002 2.80329 13.0002 3.10939C13.0002 3.41549 12.884 3.71018 12.675 3.93389L4.08603 13.2219C3.76227 13.4606 3.37403 13.5962 2.97203 13.6109L3.03852e-05 13.9999ZM10.03 1.16589L1.11403 10.4999L2.97203 12.4449L11.887 3.10989L10.03 1.16589Z"
+                                        fill="white"
+                                    />
+                                </svg>
+                            </span>
+                            Chỉnh sửa
+                        </button>
+                        <button kendoGridRemoveCommand>
+                            <span class="icon">
+                                <svg
+                                    width="17"
+                                    height="18"
+                                    viewBox="0 0 17 18"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M13.5 17.8768H3.11497C2.80677 17.8739 2.51231 17.7489 2.29617 17.5292C2.08002 17.3095 1.95983 17.013 1.96197 16.7048V4.59282H1.57697C1.42155 4.59282 1.2725 4.53108 1.1626 4.42118C1.05271 4.31129 0.990967 4.16224 0.990967 4.00682C0.990967 3.8514 1.05271 3.70235 1.1626 3.59245C1.2725 3.48256 1.42155 3.42082 1.57697 3.42082H4.87697C5.1529 2.67583 5.64927 2.0326 6.29997 1.57682C6.94406 1.1236 7.7124 0.880371 8.49997 0.880371C9.28753 0.880371 10.0559 1.1236 10.7 1.57682C11.3503 2.03338 11.846 2.67733 12.121 3.42282H15.421C15.5764 3.42282 15.7254 3.48456 15.8353 3.59445C15.9452 3.70435 16.007 3.8534 16.007 4.00882C16.007 4.16424 15.9452 4.31329 15.8353 4.42318C15.7254 4.53308 15.5764 4.59482 15.421 4.59482H14.651V16.7048C14.6531 17.0127 14.5332 17.3088 14.3175 17.5285C14.1018 17.7481 13.8078 17.8734 13.5 17.8768ZM11.385 9.47682C11.5392 9.47814 11.6865 9.54059 11.7947 9.65046C11.9029 9.76033 11.963 9.90863 11.962 10.0628V16.7048H13.5V4.59282H3.11497V16.7048H4.65397V10.0628C4.65397 9.98705 4.66889 9.91201 4.69789 9.84201C4.72689 9.77201 4.76939 9.7084 4.82297 9.65482C4.87655 9.60124 4.94015 9.55874 5.01016 9.52974C5.08016 9.50074 5.15519 9.48582 5.23097 9.48582C5.30674 9.48582 5.38177 9.50074 5.45178 9.52974C5.52178 9.55874 5.58539 9.60124 5.63897 9.65482C5.69255 9.7084 5.73505 9.77201 5.76405 9.84201C5.79304 9.91201 5.80797 9.98705 5.80797 10.0628V16.7048H7.73097V7.71782C7.73097 7.56479 7.79176 7.41803 7.89997 7.30982C8.00817 7.20161 8.15494 7.14082 8.30797 7.14082C8.461 7.14082 8.60776 7.20161 8.71597 7.30982C8.82418 7.41803 8.88497 7.56479 8.88497 7.71782V16.7038H10.808V10.0628C10.8069 9.90863 10.8671 9.76033 10.9752 9.65046C11.0834 9.54059 11.2308 9.47814 11.385 9.47682ZM8.49997 2.05282C8.00665 2.00858 7.51158 2.11582 7.0808 2.36025C6.65002 2.60467 6.30402 2.97465 6.08897 3.42082H10.911C10.6919 2.97786 10.3451 2.61075 9.91537 2.36689C9.48558 2.12303 8.99256 2.01363 8.49997 2.05282Z"
+                                        fill="white"
+                                    />
+                                </svg>
+                            </span>
+                            Hủy mapping link
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+
+        <!-- Pagination but still not used yet -->
+        <ng-template kendoPagerTemplate let-currentPage="currentPage" let-totalPages="totalPages">
+            <label class="sizes-label">Hiển thị mỗi trang</label>
+            <div class="paging-wrapper">
+                <kendo-pager-page-sizes [pageSizes]="sizes"> </kendo-pager-page-sizes>
+                <div class="page-controller">
+                    <span class="first-last-buttons" [class.disabled]="state.skip === 0" (click)="goToFirstPage()"
+                        >Đầu</span
+                    >
+                    <span class="prev-next-buttons" [class.disabled]="state.skip === 0" (click)="goToPreviousPage()">
+                        <svg width="8" height="13" viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M0.279047 5.6821C0.24436 5.72741 0.213583 5.77558 0.187047 5.8261C0.143604 5.8812 0.105751 5.9405 0.0740474 6.0031C0.0534004 6.06819 0.0393301 6.13519 0.0320474 6.2031C-0.0104383 6.33134 -0.0104383 6.46986 0.0320474 6.5981C0.0393301 6.666 0.0534004 6.733 0.0740474 6.7981C0.105809 6.86035 0.14366 6.91931 0.187047 6.9741C0.213384 7.02599 0.244166 7.07551 0.279047 7.1221L5.92005 12.4051C6.12668 12.5853 6.3952 12.6783 6.66903 12.6644C6.94286 12.6505 7.20061 12.5309 7.38796 12.3307C7.57531 12.1305 7.67763 11.8654 7.67336 11.5913C7.66908 11.3171 7.55855 11.0553 7.36505 10.8611L2.54905 6.3411L7.36505 1.8211C7.55855 1.62685 7.66908 1.36506 7.67336 1.09092C7.67763 0.816768 7.57531 0.551667 7.38796 0.35148C7.20061 0.151292 6.94286 0.0316544 6.66903 0.0177784C6.3952 0.00390244 6.12668 0.0968733 5.92005 0.277097L0.279047 5.6821Z"
+                                fill="#959DB3"
+                            />
+                        </svg>
+                    </span>
+                    <kendo-pager-numeric-buttons [buttonCount]="buttonCount"></kendo-pager-numeric-buttons>
+                    <span
+                        class="prev-next-buttons"
+                        [class.disabled]="currentPage == totalPages"
+                        (click)="goToNextPage()"
+                    >
+                        <svg width="8" height="13" viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M7.41089 7.00003C7.44558 6.95472 7.47636 6.90655 7.50289 6.85603C7.54634 6.80093 7.58419 6.74163 7.61589 6.67903C7.63654 6.61394 7.65061 6.54694 7.65789 6.47903C7.70038 6.35079 7.70038 6.21227 7.65789 6.08403C7.65061 6.01613 7.63654 5.94913 7.61589 5.88403C7.58413 5.82178 7.54628 5.76282 7.50289 5.70803C7.47656 5.65614 7.44578 5.60662 7.41089 5.56003L1.76989 0.277032C1.56327 0.0968088 1.29474 0.00383869 1.02091 0.0177143C0.747083 0.0315899 0.489333 0.151228 0.301981 0.351415C0.11463 0.551602 0.01231 0.816704 0.0165844 1.09085C0.0208588 1.365 0.131393 1.62678 0.324894 1.82103L5.14089 6.34103L0.324894 10.861C0.131393 11.0553 0.0208588 11.3171 0.0165844 11.5912C0.01231 11.8654 0.11463 12.1305 0.301981 12.3306C0.489333 12.5308 0.747083 12.6505 1.02091 12.6644C1.29474 12.6782 1.56327 12.5853 1.76989 12.405L7.41089 7.00003Z"
+                                fill="#959DB3"
+                            />
+                        </svg>
+                    </span>
+                    <span
+                        class="first-last-buttons"
+                        [class.disabled]="page === totalPages"
+                        (click)="goToLastPage(totalPages)"
+                        >Cuối</span
+                    >
+                </div>
+            </div>
+        </ng-template>
+    </kendo-grid>
+</div>

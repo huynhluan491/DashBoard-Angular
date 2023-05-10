@@ -1,0 +1,60 @@
+.wrapper {
+    display: flex;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #bdc2d2;
+    justify-content: space-between;
+
+    .states-box-list {
+        display: flex;
+        .state-box {
+            background-color: white;
+            height: 28px;
+            margin-left: 13px;
+            display: flex;
+            align-items: center;
+            padding: 0 13px;
+            gap: 7px;
+            border-radius: 14px;
+            .state-label {
+                color: rgba(149, 157, 179, 1);
+                font-size: 13px;
+                font-weight: 600;
+            }
+        }
+    }
+
+    .button-wrapper {
+        padding-right: 6px;
+        .add-button {
+            display: flex;
+            background-color: #1a6634;
+            width: 99px;
+            padding: 10px 6px 8px 19px;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0px 3px 8px 0px #0aaffe6b;
+            border-radius: 3px;
+            .text {
+                color: white;
+                font-size: 11px;
+                font-weight: 600px;
+            }
+        }
+    }
+}
+
+::ng-deep .wrapper .state-box {
+    .k-checkbox {
+        border: 1px solid #999999;
+        background-color: transparent;
+
+        &:focus {
+            box-shadow: unset;
+        }
+
+        &:checked {
+            background-color: #008000;
+            border: unset;
+        }
+    }
+}

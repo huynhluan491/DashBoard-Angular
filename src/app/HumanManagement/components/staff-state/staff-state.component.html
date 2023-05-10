@@ -1,0 +1,15 @@
+<div class="wrapper">
+    <div class="states-box-list">
+        <div class="state-box" *ngFor="let item of staffStates">
+            <label class="state-label" for="state">{{ item.quantity + ' - ' + item.stateName }}</label>
+            <input type="checkbox" id="state" kendoCheckBox />
+        </div>
+    </div>
+
+    <div class="button-wrapper">
+        <button class="add-button">
+            <img src="../../../../assets/icon/AddIcon.svg" />
+            <p class="text">TẠO MỚI</p>
+        </button>
+    </div>
+</div>

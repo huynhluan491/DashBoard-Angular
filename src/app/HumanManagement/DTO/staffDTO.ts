@@ -1,0 +1,35 @@
+export interface Staff {
+    CurrentPositionCode: number;
+    LocationCode: number;
+    GenderCode: number;
+    StatusName: string;
+    PositionGroup: any;
+    Email: string;
+    DepartmentID: number;
+    TypeData: number;
+    DirectManager: string;
+    IndirectManager: number;
+    ListOfRoles: string[];
+    ListOfStaffRoles: string[];
+    Code: number;
+    ProfileID: number;
+    StaffID: string;
+    FirstName: string;
+    MiddleName: string;
+    LastName: string;
+    Position: string;
+    Department: string;
+    JoinDate: Date;
+    CurrentPosition: string;
+    Location: string;
+    ProbationFrom: string;
+    ProbationTo: string;
+    SecurityID: number;
+    MemberCardID: number;
+    Gender: string;
+    GenderName: string;
+    UserName: string;
+    Pwd: string;
+    IsSysAdmin: boolean;
+    StatusID: number;
+}

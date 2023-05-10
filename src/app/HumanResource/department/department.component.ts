@@ -129,14 +129,6 @@ export class DepartmentComponent implements OnInit {
 
     onOpenForm(type: string, data?: any) {
         this.selectedPopupMenu = [];
-        if (data.ParentID == null && data.Department) {
-            this.recursionCheck(this.departmentList, -1);
-        } else if (data.Department && data.ParentID != null) {
-            this.recursionCheck(this.departmentList, data.ParentID);
-        } else if (data.Position && data.DepartmentID) {
-            this.recursionCheck(this.departmentList, data.DepartmentID);
-        }
-        this.structureFormService.setUnderParentName(this.underParentName);
         this.drawer?.toggle();
         this.structureFormService.setTypeOfForm(type, data);
     }
@@ -194,6 +186,15 @@ export class DepartmentComponent implements OnInit {
 
         const selected = e.action === 'select';
         e.items.forEach((item) => (item.dataItem.selected = selected));
+
+        if (data.ParentID == null && data.Department) {
+            this.recursionCheck(this.departmentList, -1);
+        } else if (data.Department && data.ParentID != null) {
+            this.recursionCheck(this.departmentList, data.ParentID);
+        } else if (data.Position && data.DepartmentID) {
+            this.recursionCheck(this.departmentList, data.DepartmentID);
+        }
+        this.structureFormService.setUnderParentName(this.underParentName);
     }
 
     // Using recursion to set items selected to false
