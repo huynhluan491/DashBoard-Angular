@@ -13,7 +13,7 @@ export const items = [
         icon: 'k-i-inbox',
         expanded: false,
         children: true,
-        selected: true,
+        selected: false,
         level: 0,
         id: 2,
     },
@@ -43,6 +43,15 @@ export const items = [
         selected: false,
         level: 0,
         id: 5,
+    },
+    {
+        text: 'HỒ SƠ NHÂN SỰ',
+        icon: 'k-i-inbox',
+        expanded: false,
+        children: true,
+        selected: true,
+        level: 0,
+        id: 6,
     },
 
     {
@@ -86,5 +95,12 @@ export const items = [
         selected: false,
         level: 1,
         parentId: 2,
+    },
+    {
+        text: 'Danh sách nhân sự',
+        children: false,
+        selected: true,
+        level: 1,
+        parentId: 6,
     },
 ];

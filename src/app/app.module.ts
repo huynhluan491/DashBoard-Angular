@@ -74,6 +74,10 @@ import { LocationFormComponent } from './HumanResource/location-form/location-fo
 import { SelectedLocationMenuComponent } from './HumanResource/components/selected-location-menu/selected-location-menu.component';
 import { DepartmentComponent } from './HumanResource/department/department.component';
 import { DepartmentFormComponent } from './HumanResource/components/department-form/department-form.component';
+import { HumanManagementComponent } from './HumanManagement/human-management/human-management.component';
+import { StaffListComponent } from './HumanManagement/components/staff-list/staff-list.component';
+import { StaffStateComponent } from './HumanManagement/components/staff-state/staff-state.component';
+import { StaffDetailComponent } from './HumanManagement/components/staff-detail/staff-detail.component';
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }
@@ -118,6 +122,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         DepartmentComponent,
         SelectedLocationMenuComponent,
         DepartmentFormComponent,
+        HumanManagementComponent,
+        StaffListComponent,
+        StaffStateComponent,
+        StaffDetailComponent,
     ],
     imports: [
         BrowserModule,
