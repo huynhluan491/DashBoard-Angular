@@ -16,7 +16,37 @@
     >
         <kendo-treelist-column [expandable]="true" field="Department" title="Department" [width]="270">
             <ng-template kendoTreeListCellTemplate let-dataItem>
-                <div class="info-wrapper">
+                <img
+                    *ngIf="dataItem.PositionID"
+                    class="location-icon"
+                    src="../../../assets/icon/DepartmentListUserIcon.svg"
+                />
+                <img
+                    *ngIf="dataItem.PositionID == null"
+                    class="location-icon"
+                    src="../../../assets/icon/DepartmentListIcon.svg"
+                />
+                <p
+                    class="text-name"
+                    style="width: 310px"
+                    [ngClass]="{ parent: dataItem.PositionID == null, 'selected-color': dataItem.selected }"
+                >
+                    {{ dataItem.Department || dataItem.Position }}
+                </p>
+                <p
+                    class="text-id"
+                    [ngClass]="{
+                        'child-text': dataItem.ParentID != null || dataItem.DepartmentCode == null,
+                        'selected-color': dataItem.selected
+                    }"
+                >
+                    {{ dataItem.PositionID || dataItem.DepartmentID }}
+                </p>
+
+                <p class="isLeader" [ngClass]="{ 'selected-color': dataItem.selected }">
+                    {{ dataItem.IsLeader ? 'Trưởng đơn vị' : '' }}
+                </p>
+                <!-- <div class="info-wrapper">
                     <img
                         *ngIf="dataItem.PositionID"
                         class="location-icon"
@@ -42,7 +72,7 @@
                     <p class="isLeader">
                         {{ dataItem.IsLeader ? 'Trưởng đơn vị' : '' }}
                     </p>
-                </div>
+                </div> -->
             </ng-template>
         </kendo-treelist-column>
         <kendo-treelist-column title="Size" [width]="10">
