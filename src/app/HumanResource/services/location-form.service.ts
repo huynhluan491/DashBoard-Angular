@@ -8,7 +8,7 @@ export class LocationFormService {
     public isOpenForm: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public typeOfForm: string = '';
     selectedItem: any;
-    underInfo?: any;
+    underInfo?: string = 'Root';
 
     constructor() {}
 
@@ -33,7 +33,6 @@ export class LocationFormService {
             this.selectedItem = { ...selectedItem };
         }
         this.typeOfForm = type;
-        console.log(this.typeOfForm);
     }
 
     get _UnderParentName() {

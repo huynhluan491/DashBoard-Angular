@@ -3,8 +3,8 @@
         <img src="../../../assets/icon/ColoredDepartmentIcon.svg" />
         <p class="title">
             {{
-                formType == 'editChildLocation'
-                    ? 'CHỈNH SỬA ĐIỂM LÀM VIỆC CON'
+                formType == 'addChildLocation'
+                    ? 'THÊM ĐIỂM LÀM VIỆC CON'
                     : formType == 'addLocation'
                     ? 'THÊM ĐIỂM LÀM VIỆC'
                     : formType == 'editLocation'
@@ -21,7 +21,7 @@
     </div>
     <form
         [formGroup]="
-            formType == 'editChildLocation' || formType == 'addLocation' || formType == 'editLocation'
+            formType == 'addChildLocation' || formType == 'addLocation' || formType == 'editLocation'
                 ? locationForm
                 : formType == 'editDepartment' || formType == 'addNewSubDepartment' || formType == 'addNewDepartment'
                 ? departmentForm

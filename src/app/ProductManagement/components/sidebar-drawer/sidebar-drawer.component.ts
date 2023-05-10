@@ -8,9 +8,9 @@ import { items } from 'src/app/item';
     styleUrls: ['./sidebar-drawer.component.scss'],
 })
 export class SidebarDrawerComponent {
-    public selected = 'Cơ cấu tổ chức';
+    public selected = 'Danh sách nhân sự';
     public expanded = true;
-    public expandedIndices = [2];
+    public expandedIndices = [6];
 
     public isItemExpanded: DrawerItemExpandedFn = (item): boolean => {
         return this.expandedIndices.indexOf(item.id) >= 0;

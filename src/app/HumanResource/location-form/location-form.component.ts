@@ -139,19 +139,16 @@ export class LocationFormComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
         this.formType = this.locationFormService._typeOfForm;
         this.selectedItem = this.locationFormService._selectedItem;
+        console.log('data', this.selectedItem);
+
         let name = this.locationFormService._UnderParentName;
-        console.log(name);
 
         this.Under.push({
             name: name,
             value: 1,
         });
 
-        if (
-            this.formType == 'editChildLocation' ||
-            this.formType == 'editDepartment' ||
-            this.formType == 'editLocation'
-        ) {
+        if (this.formType == 'editDepartment' || this.formType == 'editLocation') {
             this.isEdit = true;
         } else {
             this.isEdit = false;
