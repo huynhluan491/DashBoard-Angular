@@ -78,6 +78,7 @@ import { HumanManagementComponent } from './HumanManagement/human-management/hum
 import { StaffListComponent } from './HumanManagement/components/staff-list/staff-list.component';
 import { StaffStateComponent } from './HumanManagement/components/staff-state/staff-state.component';
 import { StaffDetailComponent } from './HumanManagement/components/staff-detail/staff-detail.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }
@@ -126,6 +127,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         StaffListComponent,
         StaffStateComponent,
         StaffDetailComponent,
+        SearchBarComponent,
     ],
     imports: [
         BrowserModule,

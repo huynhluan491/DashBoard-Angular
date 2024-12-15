@@ -1,0 +1,11 @@
+<div>
+    <input type="text" [(ngModel)]="searchInput" placeholder="Type to search..." (input)="onSearchInputChange()" />
+    <button (click)="clearSearchInput()">Clear</button>
+    <button (click)="sortDataAscending()">Sort Asc</button>
+    <button (click)="sortDataDescending()">Sort Desc</button>
+    <button (click)="logFilteredData()">Log Data</button>
+    <button (click)="resetData()">Reset</button>
+</div>
+<ul>
+    <li *ngFor="let item of filteredData">{{ item.name }}</li>
+</ul>
